@@ -23,7 +23,7 @@ export default function VechicalMain() {
             <option>Star Trek</option>
           </select>
         </div>
-        <div className="divider divider-horizontal bg-red-500 mx-10"></div>
+        <div className="divider divider-horizontal mx-10"></div>
         <div className="grid grid-cols-4 gap-4">
           <div className="col-span-4">Maintenance History</div>
         </div>
