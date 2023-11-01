@@ -37,7 +37,7 @@ export default function Sidebar() {
             <a>Dashboard</a>
           </li>
           <li>
-            <a>Insert New Maintenance Record</a>
+            <a>Vechicle Maintance</a>
           </li>
         </ul>
       </div>
