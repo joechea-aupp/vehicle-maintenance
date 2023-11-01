@@ -30,11 +30,11 @@ export default function GlobalSearch() {
       </button>
       <dialog id="my_modal_2" className="modal">
         <div className="modal-box ">
-          <div className="flex items-center">
-            <span className="mr-2">
+          <div className="relative">
+            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-auto">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5"
+                className="absolute h-5 w-5"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -46,16 +46,17 @@ export default function GlobalSearch() {
                   d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
                 />
               </svg>
-            </span>
+            </div>
             <input
               type="text"
               placeholder="Type here"
-              className="input input-bordered"
+              className="input input-bordered block pl-10"
               style={{ width: "100%" }}
             />
           </div>
           {/* New row for search results or recent searches */}
-          <div className="flex flex-wrap pt-5">
+          <div className="divider"></div>
+          <div>
             <div className="overflow-x-auto">
               <table className="table-auto ml-10">
                 <tbody>
