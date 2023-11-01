@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export default function Sidebar() {
   return (
     <div className="drawer">
@@ -34,10 +36,8 @@ export default function Sidebar() {
         <ul className="menu p-4 w-80 min-h-full bg-base-200 text-base-content">
           {/* Sidebar content here */}
           <li>
-            <a>Dashboard</a>
-          </li>
-          <li>
-            <a>Vechicle Maintance</a>
+            <Link to={"index"}>Vechicle Maintance</Link>
+            <Link to={"report"}>Report</Link>
           </li>
         </ul>
       </div>

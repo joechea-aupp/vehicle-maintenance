@@ -3,7 +3,6 @@ export default function Footer() {
     <footer
       className="footer footer-center p-4 bg-base-300 text-base-content"
       style={{
-        position: "fixed",
         left: 0,
         bottom: 0,
         width: "100%",
