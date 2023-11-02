@@ -7,14 +7,6 @@ export default function Header() {
       <div className="navbar-start">
         <Sidebar />
       </div>
-      <div className="navbar-center">
-        <a
-          className="btn btn-ghost normal-case text-xl"
-          href="http://localhost:3000"
-        >
-          daisyUI
-        </a>
-      </div>
       <div className="navbar-end">
         <GlobalSearch />
         <button className="btn btn-ghost btn-circle">

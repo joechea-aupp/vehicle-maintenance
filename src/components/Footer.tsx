@@ -1,13 +1,6 @@
 export default function Footer() {
   return (
-    <footer
-      className="footer footer-center p-4 bg-base-300 text-base-content"
-      style={{
-        left: 0,
-        bottom: 0,
-        width: "100%",
-      }}
-    >
+    <footer className="footer footer-center p-4 bg-base-300 text-base-content inset-0 w-screen">
       <aside>
         <p>Copyright © 2023 - All right reserved by ACME Industries Ltd</p>
       </aside>

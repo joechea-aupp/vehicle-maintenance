@@ -1,74 +1,41 @@
-import { Datepicker } from "flowbite-react";
+import { Datepicker, Checkbox } from "flowbite-react";
+import { Flowbite } from "flowbite-react";
+import type { CustomFlowbiteTheme } from "flowbite-react";
+
+const customDatepickerTheme: CustomFlowbiteTheme = {
+  datepicker: {
+    popup: {
+      root: {
+        inner:
+          "inline-block rounded-lg bg-white p-4 shadow-lg dark:bg-[#1d232a]",
+      },
+    },
+  },
+
+  textInput: {
+    field: {
+      input: {
+        colors: {
+          primary:
+            "bg-gray-50 border-gray-300 text-gray-900 focus:border-cyan-500 focus:ring-cyan-500 dark:border-gray-600 dark:bg-[#1d232a] dark:text-white dark:placeholder-gray-400 dark:focus:border-cyan-500 dark:focus:ring-cyan-500",
+        },
+      },
+    },
+  },
+};
 
 export default function VechicalMain() {
   return (
-    <div className="container mx-auto my-10 h-screen">
-      <div className="flex justify-start">
-        <h1 className="text-xl">Vehical Maintenance</h1>
+    <div className="container md:mx-auto mx-10 md:h-screen h-full flow-root">
+      <div className="flex justify-center">
+        <h1 className="text-xl font-extrabold">Vehical Maintenance</h1>
       </div>
 
       <div className="divider"></div>
 
-      <div className="flex">
-        <div className="flex flex-col gap-10">
-          <div className="form-control w-full max-w-xs">
-            <label className="label">
-              <span className="label-text">Browse Template</span>
-            </label>
-            <select className="select select-bordered">
-              <option disabled selected>
-                Pick one
-              </option>
-              <option>Star Wars</option>
-              <option>Harry Potter</option>
-              <option>Lord of the Rings</option>
-              <option>Planet of the Apes</option>
-              <option>Star Trek</option>
-            </select>
-          </div>
-
-          <div className="w-full">
-            <table className="table">
-              {/* head */}
-              <thead>
-                <tr>
-                  <th></th>
-                  <th>Name</th>
-                  <th>Description</th>
-                  <th>Price</th>
-                </tr>
-              </thead>
-              <tbody>
-                {/* row 1 */}
-                <tr>
-                  <th>1</th>
-                  <td>Cy Ganderton</td>
-                  <td>Quality Control Specialist</td>
-                  <td>$10.0</td>
-                </tr>
-                {/* row 2 */}
-                <tr>
-                  <th>2</th>
-                  <td>Hart Hagerty</td>
-                  <td>Desktop Support Technician</td>
-                  <td>$25.2</td>
-                </tr>
-                {/* row 3 */}
-                <tr>
-                  <th>3</th>
-                  <td>Brice Swyre</td>
-                  <td>Tax Accountant</td>
-                  <td>$40.1</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        <div className="divider divider-horizontal mx-10"></div>
-        <div className="grid grid-cols-2 gap-10">
-          {/* Title form */}
-          <div className="col-span-2">Maintenance History</div>
+      <div className="flex md:flex-row flex-col justify-center">
+        {/* start left side panel, maintenance record insertion */}
+        <div className="grid grid-cols-2 md:gap-y-0.5 gap-5">
           {/* row 1 */}
           <div className="form-control w-full max-w-xs">
             <label className="label">
@@ -88,7 +55,9 @@ export default function VechicalMain() {
             <label className="label">
               <span className="label-text">Maintenance Date</span>
             </label>
-            <Datepicker className="dark" />
+            <Flowbite theme={{ theme: customDatepickerTheme }}>
+              <Datepicker className="dark" color={"primary"} />
+            </Flowbite>
           </div>
 
           {/* row 2 */}
@@ -98,7 +67,7 @@ export default function VechicalMain() {
             </label>
             <input
               type="text"
-              placeholder="000"
+              placeholder="00000"
               className="input input-bordered w-full max-w-xs"
             />
           </div>
@@ -109,7 +78,7 @@ export default function VechicalMain() {
             </label>
             <input
               type="text"
-              placeholder="000"
+              placeholder="00000"
               className="input input-bordered w-full max-w-xs"
             />
           </div>
@@ -172,8 +141,100 @@ export default function VechicalMain() {
           </div>
 
           {/* row 4 */}
-          <input type="submit" value="Submit" className="btn" />
+          <div className="form-control w-full max-w-xs col-span-1">
+            <label className="label">
+              <span className="label-text">Upload service invoice</span>
+            </label>
+            <input
+              type="file"
+              className="file-input file-input-bordered w-full max-w-xs"
+            />
+          </div>
         </div>
+        {/* end maintenance record insertion */}
+
+        <div className="divider md:divider-horizontal"></div>
+
+        {/* Starting right side, template and item pricing */}
+        <div className="flex flex-col gap-10  ml-1 pb-5">
+          <div className="form-control w-full max-w-xs md:self-start self-center">
+            <div className="md:block flex justify-center w-full">
+              <label className="label">
+                <span className="label-text whitespace-nowrap overflow-hidden pr-3">
+                  Browse Template
+                </span>
+              </label>
+
+              <select className="select select-bordered w-4/5">
+                <option disabled selected>
+                  Pick one
+                </option>
+                <option>Star Wars</option>
+                <option>Harry Potter</option>
+                <option>Lord of the Rings</option>
+                <option>Planet of the Apes</option>
+                <option>Star Trek</option>
+              </select>
+            </div>
+          </div>
+
+          <div className="w-full">
+            <table className="table">
+              {/* head */}
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>Name</th>
+                  <th>Description</th>
+                  <th>Price</th>
+                </tr>
+              </thead>
+              <tbody>
+                {/* row 1 */}
+                <tr>
+                  <th>1</th>
+                  <td>Cy Ganderton</td>
+                  <td>Quality Control Specialist</td>
+                  <td>$10.0</td>
+                </tr>
+                {/* row 2 */}
+                <tr>
+                  <th>2</th>
+                  <td>Hart Hagerty</td>
+                  <td>Desktop Support Technician</td>
+                  <td>$25.2</td>
+                </tr>
+                {/* row 3 */}
+                <tr>
+                  <th>3</th>
+                  <td>Brice Swyre</td>
+                  <td>Tax Accountant</td>
+                  <td>$40.1</td>
+                </tr>
+                <tr className="bg-base-200">
+                  <th></th>
+                  <td colSpan={2} className="text-right">
+                    Total:
+                  </td>
+                  <td>$75.3</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div className="flex gap-5 justify-end items-baseline">
+            <div className="flex items-center gap-2 dark self-end pb-1.5">
+              <label className="label">
+                <span className="label-text">Use as template</span>
+              </label>
+              <Checkbox id="template" />
+            </div>
+            <div className="self-end">
+              <input type="submit" value="Submit" className="btn" />
+            </div>
+          </div>
+        </div>
+        {/* end right side panel */}
       </div>
     </div>
   );
