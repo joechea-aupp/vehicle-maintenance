@@ -17,7 +17,10 @@ const customDatepickerTheme: CustomFlowbiteTheme = {
       input: {
         colors: {
           primary:
-            "bg-gray-50 border-gray-300 text-gray-900 focus:border-cyan-500 focus:ring-cyan-500 dark:border-gray-600 dark:bg-[#1d232a] dark:text-white dark:placeholder-gray-400 dark:focus:border-cyan-500 dark:focus:ring-cyan-500",
+            "bg-gray-50 border-gray-300 text-gray-900 focus:border-cyan-500 focus:ring-cyan-500 dark:border-[#393f47] dark:bg-[#1d232a] dark:text-[#a7adba] dark:placeholder-gray-400 dark:focus:border-cyan-500 dark:focus:ring-cyan-500",
+        },
+        sizes: {
+          base: "p-2.5 text-base",
         },
       },
     },
@@ -26,16 +29,16 @@ const customDatepickerTheme: CustomFlowbiteTheme = {
 
 export default function VechicalMain() {
   return (
-    <div className="container md:mx-auto mx-10 md:h-screen h-full flow-root">
+    <div className="container md:mx-auto mx-10 md:h-screen h-full mb-20">
       <div className="flex justify-center">
         <h1 className="text-xl font-extrabold">Vehical Maintenance</h1>
       </div>
 
       <div className="divider"></div>
 
-      <div className="flex md:flex-row flex-col justify-center">
+      <div className="flex md:flex-row flex-col justify-center items-baseline">
         {/* start left side panel, maintenance record insertion */}
-        <div className="grid grid-cols-2 md:gap-y-0.5 gap-5">
+        <div className="grid grid-cols-2 md:gap-y-1 gap-2">
           {/* row 1 */}
           <div className="form-control w-full max-w-xs">
             <label className="label">
@@ -56,7 +59,7 @@ export default function VechicalMain() {
               <span className="label-text">Maintenance Date</span>
             </label>
             <Flowbite theme={{ theme: customDatepickerTheme }}>
-              <Datepicker className="dark" color={"primary"} />
+              <Datepicker className="dark" color={"primary"} sizing={"base"} />
             </Flowbite>
           </div>
 
@@ -156,7 +159,7 @@ export default function VechicalMain() {
         <div className="divider md:divider-horizontal"></div>
 
         {/* Starting right side, template and item pricing */}
-        <div className="flex flex-col gap-10  ml-1 pb-5">
+        <div className="flex flex-col gap-10  ml-1 pb-5 md:w-auto w-full">
           <div className="form-control w-full max-w-xs md:self-start self-center">
             <div className="md:block flex justify-center w-full">
               <label className="label">
@@ -207,6 +210,18 @@ export default function VechicalMain() {
                 {/* row 3 */}
                 <tr>
                   <th>3</th>
+                  <td>Brice Swyre</td>
+                  <td>Tax Accountant</td>
+                  <td>$40.1</td>
+                </tr>
+                <tr>
+                  <th>4</th>
+                  <td>Brice Swyre</td>
+                  <td>Tax Accountant</td>
+                  <td>$40.1</td>
+                </tr>
+                <tr>
+                  <th>5</th>
                   <td>Brice Swyre</td>
                   <td>Tax Accountant</td>
                   <td>$40.1</td>
