@@ -1,31 +1,5 @@
-import { Datepicker, Checkbox } from "flowbite-react";
-import { Flowbite } from "flowbite-react";
-import type { CustomFlowbiteTheme } from "flowbite-react";
-
-const customDatepickerTheme: CustomFlowbiteTheme = {
-  datepicker: {
-    popup: {
-      root: {
-        inner:
-          "inline-block rounded-lg bg-white p-4 shadow-lg dark:bg-[#1d232a]",
-      },
-    },
-  },
-
-  textInput: {
-    field: {
-      input: {
-        colors: {
-          primary:
-            "bg-gray-50 border-gray-300 text-gray-900 focus:border-cyan-500 focus:ring-cyan-500 dark:border-[#393f47] dark:bg-[#1d232a] dark:text-[#a7adba] dark:placeholder-gray-400 dark:focus:border-cyan-500 dark:focus:ring-cyan-500",
-        },
-        sizes: {
-          base: "p-2.5 text-base",
-        },
-      },
-    },
-  },
-};
+import { Flowbite, Datepicker, Checkbox } from "flowbite-react";
+import { customDatepickerTheme } from "../types/CustomTheme";
 
 export default function VechicalMain() {
   return (
