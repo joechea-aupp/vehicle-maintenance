@@ -1,0 +1,69 @@
+{
+  "reports": [
+    {
+      "id": 1,
+      "vehicle": "Rush 2022",
+      "maintenance_date": "06-11-2023",
+      "current_odo": "10000",
+      "next_odo": "20000",
+      "garage": "Toyota",
+      "service": [
+        {
+          "service_name": "Oil Change",
+          "description": "Change oil and filter",
+          "price": 10
+        },
+        {
+          "service_name": "Roof Rack",
+          "description": "Install roof rack",
+          "price": 540
+        },
+        {
+          "service_name": "Front Wheel Alignment",
+          "description": "Align front wheels",
+          "price": 52
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "vehicle": "Rush 2022",
+      "maintenance_date": "06-10-2023",
+      "current_odo": "9000",
+      "next_odo": "10000",
+      "garage": "Toyota",
+      "service": [
+        {
+          "service_name": "Oil Change",
+          "description": "Change oil and filter",
+          "price": 10
+        },
+        {
+          "service_name": "Roof Rack",
+          "description": "Install roof rack",
+          "price": 540
+        },
+        {
+          "service_name": "Front Wheel Alignment",
+          "description": "Align front wheels",
+          "price": 52
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "vehicle": "MSX 2018",
+      "maintenance_date": "09-03-2023",
+      "current_odo": "9000",
+      "next_odo": "10000",
+      "garage": "Toyota",
+      "service": [
+        {
+          "service_name": "Oil Change",
+          "description": "Change oil and filter",
+          "price": 10
+        }
+      ]
+    }
+  ]
+}

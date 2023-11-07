@@ -13,9 +13,32 @@ import {
 } from "../types/CustomTheme";
 import { FiSearch } from "react-icons/fi";
 import { useState, useEffect } from "react";
+import { useLoaderData, Await } from "react-router-dom";
+import {
+  assertIsMaintenances,
+  getMaintenance,
+} from "../maintenances/getMaintenance";
+import { MaintenanceData } from "../types";
+import VReportItem from "./VReportItem";
+import { Suspense } from "react";
+
+type Data = {
+  reports: MaintenanceData[];
+};
+export function assertIsData(data: unknown): asserts data is Data {
+  if (typeof data !== "object") {
+    throw new Error("Data isn't an object");
+  }
+  if (data === null) {
+    throw new Error("Data is null");
+  }
+  if (!("reports" in data)) {
+    throw new Error("data doesn't contain posts");
+  }
+}
 
 export default function VechicalReport() {
-  const [currentPage, setCurrentPage] = useState(1);
+  // pagination screen resize control
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 680);
 
   useEffect(() => {
@@ -31,7 +54,14 @@ export default function VechicalReport() {
     };
   }, []);
 
+  // pagination control
+  const [currentPage, setCurrentPage] = useState(1);
   const onPageChange = (page: number) => setCurrentPage(page);
+
+  // useLoaderData get the data from the intial loader from this route
+  const data = useLoaderData();
+  // make sure that the data is queryclient of reports with data type of MaintenanceData[]
+  assertIsData(data);
   return (
     <div className="container mx-auto h-screen flex flex-col items-center md:block ">
       <div className="flex justify-center">
@@ -140,73 +170,25 @@ export default function VechicalReport() {
               <Table.HeadCell className="p-4">
                 <Checkbox />
               </Table.HeadCell>
-              <Table.HeadCell>Product name</Table.HeadCell>
-              <Table.HeadCell>Color</Table.HeadCell>
-              <Table.HeadCell>Category</Table.HeadCell>
+              <Table.HeadCell>Vehicle Name</Table.HeadCell>
+              <Table.HeadCell>Maintenance Date</Table.HeadCell>
+              <Table.HeadCell>Garage</Table.HeadCell>
               <Table.HeadCell>Price</Table.HeadCell>
               <Table.HeadCell>
                 <span className="sr-only">Edit</span>
               </Table.HeadCell>
             </Table.Head>
-            <Table.Body className="divide-y">
-              <Table.Row className="bg-white dark:border-gray-700 dark:bg-[#1d232a]">
-                <Table.Cell className="p-4">
-                  <Checkbox />
-                </Table.Cell>
-                <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-[#9ca3af]">
-                  {'Apple MacBook Pro 17"'}
-                </Table.Cell>
-                <Table.Cell>Sliver</Table.Cell>
-                <Table.Cell>Laptop</Table.Cell>
-                <Table.Cell>$2999</Table.Cell>
-                <Table.Cell>
-                  <a
-                    href="#"
-                    className="font-medium text-cyan-600 hover:underline dark:text-cyan-500"
-                  >
-                    Edit
-                  </a>
-                </Table.Cell>
-              </Table.Row>
-              <Table.Row className="bg-white dark:border-gray-700 dark:bg-[#1d232a]">
-                <Table.Cell className="p-4">
-                  <Checkbox />
-                </Table.Cell>
-                <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-[#9ca3af]">
-                  Microsoft Surface Pro
-                </Table.Cell>
-                <Table.Cell>White</Table.Cell>
-                <Table.Cell>Laptop PC</Table.Cell>
-                <Table.Cell>$1999</Table.Cell>
-                <Table.Cell>
-                  <a
-                    href="#"
-                    className="font-medium text-cyan-600 hover:underline dark:text-cyan-500"
-                  >
-                    Edit
-                  </a>
-                </Table.Cell>
-              </Table.Row>
-              <Table.Row className="bg-white dark:border-gray-700  dark:bg-[#1d232a]">
-                <Table.Cell className="p-4">
-                  <Checkbox />
-                </Table.Cell>
-                <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-[#9ca3af]">
-                  Magic Mouse 2
-                </Table.Cell>
-                <Table.Cell>Black</Table.Cell>
-                <Table.Cell>Accessories</Table.Cell>
-                <Table.Cell>$99</Table.Cell>
-                <Table.Cell>
-                  <a
-                    href="#"
-                    className="font-medium text-cyan-600 hover:underline dark:text-cyan-500"
-                  >
-                    Edit
-                  </a>
-                </Table.Cell>
-              </Table.Row>
-            </Table.Body>
+            {/* suspend is use to hold on the data (async) until it's complete and ready to render */}
+            <Suspense fallback={<div>Loading...</div>}>
+              {/* await act as await to resolve data from promise or async */}
+
+              <Await resolve={data.reports}>
+                {(reports) => {
+                  assertIsMaintenances(reports);
+                  return <VReportItem reports={reports} />;
+                }}
+              </Await>
+            </Suspense>
           </Table>
         </div>
         <div className="dark flex overflow-x-auto sm:justify-center self-end">
