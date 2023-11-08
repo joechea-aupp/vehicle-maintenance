@@ -14,13 +14,11 @@ import {
 import { FiSearch } from "react-icons/fi";
 import { useState, useEffect } from "react";
 import { useLoaderData, Await } from "react-router-dom";
-import {
-  assertIsMaintenances,
-  getMaintenance,
-} from "../maintenances/getMaintenance";
+import { assertIsMaintenances } from "../maintenances/getMaintenance";
 import { MaintenanceData } from "../types";
 import VReportItem from "./VReportItem";
 import { Suspense } from "react";
+import ErrorBlock from "../components/Error";
 
 type Data = {
   reports: MaintenanceData[];
@@ -182,7 +180,7 @@ export default function VechicalReport() {
             <Suspense fallback={<div>Loading...</div>}>
               {/* await act as await to resolve data from promise or async */}
 
-              <Await resolve={data.reports}>
+              <Await resolve={data.reports} errorElement={<ErrorBlock />}>
                 {(reports) => {
                   assertIsMaintenances(reports);
                   return <VReportItem reports={reports} />;

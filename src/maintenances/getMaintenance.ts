@@ -3,6 +3,10 @@ import { MaintenanceData } from "../types";
 // get data from endpoint, and assert the data is valid
 export async function getMaintenance() {
   const response = await fetch(process.env.REACT_APP_API_URL!);
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch maintenance data");
+  }
   // type unknow need to be asserted before it can be use!
   const body = (await response.json()) as unknown;
   assertIsMaintenances(body);
