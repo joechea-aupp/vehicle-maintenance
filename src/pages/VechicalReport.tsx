@@ -19,6 +19,7 @@ import { MaintenanceData } from "../types";
 import VReportItem from "./VReportItem";
 import { Suspense } from "react";
 import ErrorBlock from "../components/Error";
+import { getMaintenance } from "../maintenances/getMaintenance";
 
 type Data = {
   reports: MaintenanceData[];
@@ -60,6 +61,14 @@ export default function VechicalReport() {
   const data = useLoaderData();
   // make sure that the data is queryclient of reports with data type of MaintenanceData[]
   assertIsData(data);
+
+  const [reports, setReports] = useState(data.reports);
+
+  async function handleSearch(event: React.ChangeEvent<HTMLInputElement>) {
+    const newReports = await getMaintenance(event.target.value);
+    setReports(newReports);
+  }
+
   return (
     <div className="container mx-auto h-screen flex flex-col items-center md:block ">
       <div className="flex justify-center">
@@ -147,17 +156,18 @@ export default function VechicalReport() {
       <div className="flex flex-col gap-5 items-center mx-32">
         <div className="max-w-md self-end">
           <div className="mb-2 block">
-            <Label htmlFor="email4" />
+            <Label htmlFor="search" />
           </div>
           <Flowbite theme={{ theme: customTextInputTheme }}>
             <TextInput
-              id="email4"
-              type="email"
+              id="search"
+              type="input"
               icon={FiSearch}
               placeholder="Searching..."
               required
               color={"primary"}
               className="dark"
+              onChange={handleSearch}
             />
           </Flowbite>
         </div>
@@ -180,7 +190,7 @@ export default function VechicalReport() {
             <Suspense fallback={<div>Loading...</div>}>
               {/* await act as await to resolve data from promise or async */}
 
-              <Await resolve={data.reports} errorElement={<ErrorBlock />}>
+              <Await resolve={reports} errorElement={<ErrorBlock />}>
                 {(reports) => {
                   assertIsMaintenances(reports);
                   return <VReportItem reports={reports} />;

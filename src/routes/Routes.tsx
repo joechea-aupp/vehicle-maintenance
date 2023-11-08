@@ -25,9 +25,10 @@ const router = createBrowserRouter([
 
           return defer({
             // create a new query for "report" and fetch the data from getMaintenance function
+            // because getMaintenance take and optional search parameter, that's why we pass an empty string
             reports: queryClient.fetchQuery({
-              queryKey: ["report"],
-              queryFn: getMaintenance,
+              queryKey: ["report", ""],
+              queryFn: () => getMaintenance(),
             }),
           });
         },

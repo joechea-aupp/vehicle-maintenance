@@ -1,8 +1,9 @@
 import { MaintenanceData } from "../types";
 
 // get data from endpoint, and assert the data is valid
-export async function getMaintenance() {
-  const response = await fetch(process.env.REACT_APP_API_URL!);
+export async function getMaintenance(search?: string) {
+  search = search ? `?q=${search}` : "";
+  const response = await fetch(`${process.env.REACT_APP_API_URL!}${search}`);
 
   if (!response.ok) {
     throw new Error("Failed to fetch maintenance data");
