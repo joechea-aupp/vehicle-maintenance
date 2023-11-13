@@ -1,6 +1,10 @@
 import GlobalSearch from "./GlobalSearch";
 import Sidebar from "./Sidebar";
 
+//todo: 
+// - add nav link to the current selection
+// - separate and nested sidebar in header.
+
 export default function Header() {
   return (
     <div className="navbar bg-base-100">
