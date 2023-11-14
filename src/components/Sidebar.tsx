@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 export default function Sidebar() {
   return (
@@ -36,8 +36,8 @@ export default function Sidebar() {
         <ul className="menu p-4 w-80 min-h-full bg-base-200 text-base-content">
           {/* Sidebar content here */}
           <li>
-            <Link to={"/"}>Vechicle Maintance</Link>
-            <Link to={"report"}>Report</Link>
+            <NavLink to={"/"}>Vechicle Maintance</NavLink>
+            <NavLink to={"report"}>Report</NavLink>
           </li>
         </ul>
       </div>

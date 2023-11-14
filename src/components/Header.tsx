@@ -1,14 +1,18 @@
-import GlobalSearch from "./GlobalSearch";
-import Sidebar from "./Sidebar";
+import React from "react";
 
-export default function Header() {
+type Props = {
+  children: React.ReactNode;
+};
+
+export default function Header({ children }: Props) {
+  // destructure children
+  const [sidebar, globalSearch] = React.Children.toArray(children);
+
   return (
     <div className="navbar bg-base-100">
-      <div className="navbar-start">
-        <Sidebar />
-      </div>
+      <div className="navbar-start">{sidebar}</div>
       <div className="navbar-end">
-        <GlobalSearch />
+        {globalSearch}
         <button className="btn btn-ghost btn-circle">
           <div className="indicator">
             <svg
