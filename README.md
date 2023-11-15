@@ -19,6 +19,6 @@ npm run server
 
 - [x] add validation on post vehicle form
 - [x] add skeleton loading on report table
-- [ ] add animation when submit form loading/submitted
+- [x] add animation when submit form loading/submitted
 - [ ] post data to json-server on submit
 - [ ] beautify error message
