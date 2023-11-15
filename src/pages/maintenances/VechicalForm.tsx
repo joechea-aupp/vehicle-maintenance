@@ -1,7 +1,7 @@
 import { Flowbite, Datepicker, Checkbox } from "flowbite-react";
 import { customDatepickerTheme } from "../../types/CustomTheme";
 import { useForm, FieldError } from "react-hook-form";
-import { MaintenancePost, Service } from "../../types";
+import { MaintenancePost, Service } from "../../routes/types";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
