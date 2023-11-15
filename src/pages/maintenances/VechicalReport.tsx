@@ -10,16 +10,16 @@ import {
 import {
   customDatepickerTheme,
   customTextInputTheme,
-} from "../types/CustomTheme";
+} from "../../types/CustomTheme";
 import { FiSearch } from "react-icons/fi";
 import { useState, useEffect } from "react";
 import { useLoaderData, Await } from "react-router-dom";
-import { assertIsMaintenances } from "../maintenances/getMaintenance";
-import { MaintenanceData } from "../types";
+import { assertIsMaintenances } from "../../externals/getMaintenance";
+import { MaintenanceData } from "../../types";
 import VReportItem from "./VReportItem";
 import { Suspense } from "react";
-import ErrorBlock from "../components/Error";
-import { getMaintenance } from "../maintenances/getMaintenance";
+import ErrorBlock from "../../components/Error";
+import { getMaintenance } from "../../externals/getMaintenance";
 
 type Data = {
   reports: MaintenanceData[];

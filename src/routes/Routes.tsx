@@ -1,8 +1,8 @@
 import { createBrowserRouter, RouterProvider, defer } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { getMaintenance } from "../maintenances/getMaintenance";
-import VechicalMain from "../pages/VechicalMain";
-import VechicalReport from "../pages/VechicalReport";
+import { getMaintenance } from "../externals/getMaintenance";
+import VechicalMain from "../pages/maintenances/VechicalMain";
+import VechicalReport from "../pages/maintenances/VechicalReport";
 import App from "../App";
 
 const queryClient = new QueryClient();

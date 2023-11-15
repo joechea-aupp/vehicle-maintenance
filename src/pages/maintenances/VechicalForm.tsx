@@ -1,15 +1,15 @@
 import { Flowbite, Datepicker, Checkbox } from "flowbite-react";
-import { customDatepickerTheme } from "../types/CustomTheme";
+import { customDatepickerTheme } from "../../types/CustomTheme";
+import { useForm } from "react-hook-form";
 
-export default function VechicalMain() {
+export default function VechicalForm() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting, isSubmitSuccessful },
+  } = useForm<FormData>();
   return (
-    <div className="container md:mx-auto mx-10 md:h-screen h-full mb-20">
-      <div className="flex justify-center">
-        <h1 className="text-xl font-extrabold">Vehical Maintenance</h1>
-      </div>
-
-      <div className="divider"></div>
-
+    <form>
       <div className="flex md:flex-row flex-col justify-center items-baseline">
         {/* start left side panel, maintenance record insertion */}
         <div className="grid grid-cols-2 md:gap-y-1 gap-2">
@@ -225,6 +225,6 @@ export default function VechicalMain() {
         </div>
         {/* end right side panel */}
       </div>
-    </div>
+    </form>
   );
 }
