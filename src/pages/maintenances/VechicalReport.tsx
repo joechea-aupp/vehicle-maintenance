@@ -20,6 +20,7 @@ import VReportItem from "./VReportItem";
 import { Suspense } from "react";
 import ErrorBlock from "../../components/Errors/Error";
 import { getMaintenance } from "../../externals/getMaintenance";
+import SkeletonRow from "../../components/Skeletons/SkeletonRow";
 
 type Data = {
   reports: MaintenanceData[];
@@ -187,7 +188,7 @@ export default function VechicalReport() {
               </Table.HeadCell>
             </Table.Head>
             {/* suspend is use to hold on the data (async) until it's complete and ready to render */}
-            <Suspense fallback={<div>Loading...</div>}>
+            <Suspense fallback={<SkeletonRow />}>
               {/* await act as await to resolve data from promise or async */}
 
               <Await resolve={reports} errorElement={<ErrorBlock />}>
