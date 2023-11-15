@@ -71,7 +71,7 @@ export default function VechicalReport() {
   }
 
   return (
-    <div className="container mx-auto h-screen flex flex-col items-center md:block ">
+    <div className="container mx-auto h-screen flex flex-col items-center md:block mb-28">
       <div className="flex justify-center">
         <h1 className="text-xl font-extrabold">Report</h1>
       </div>
@@ -174,7 +174,7 @@ export default function VechicalReport() {
         </div>
 
         <div className="w-full">
-          <Table hoverable className="dark">
+          <Table hoverable className="dark bg-transparent shadow-md">
             <Table.Head>
               <Table.HeadCell className="p-4">
                 <Checkbox />
