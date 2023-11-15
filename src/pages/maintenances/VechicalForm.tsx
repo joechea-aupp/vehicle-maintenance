@@ -1,14 +1,16 @@
 import { Flowbite, Datepicker, Checkbox } from "flowbite-react";
 import { customDatepickerTheme } from "../../types/CustomTheme";
-import { useForm, FieldError } from "react-hook-form";
+import { useForm, FieldError, Controller } from "react-hook-form";
 import { MaintenancePost, Service } from "../../routes/types";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import ErrorLabel from "../../components/Errors/ErrorLabel";
 
 export default function VechicalForm() {
   const {
     register,
     handleSubmit,
+    control,
     formState: { errors, isSubmitting, isSubmitSuccessful },
   } = useForm<MaintenancePost>();
 
@@ -55,13 +57,14 @@ export default function VechicalForm() {
           <div className="form-control w-full max-w-xs">
             <label className="label">
               <span className="label-text">Select Vechicle</span>
+              {errors.vehicle && <ErrorLabel fieldError={errors.vehicle} />}
             </label>
             <select
               className={`select select-bordered ${getEditorStyle(
                 errors.vehicle
               )}`}
               {...register("vehicle", {
-                required: "Vechical must be identify",
+                required: "Vechical must be provided",
               })}
             >
               <option value="" disabled selected>
@@ -76,15 +79,30 @@ export default function VechicalForm() {
           <div>
             <label className="label">
               <span className="label-text">Maintenance Date</span>
+              {errors.maintenance_date && (
+                <ErrorLabel fieldError={errors.maintenance_date} />
+              )}
             </label>
             <Flowbite theme={{ theme: customDatepickerTheme }}>
-              <Datepicker
-                className="dark"
-                color={"primary"}
-                sizing={"base"}
-                {...register("maintenance_date", {
-                  required: "Maintenance date must be provided",
-                })}
+              <Controller
+                name="maintenance_date"
+                control={control}
+                rules={{ required: "Date must be provided" }}
+                render={({ field }) => (
+                  <Datepicker
+                    {...field}
+                    onSelectedDateChanged={(date) => {
+                      const formattedDate = new Date(date).toLocaleDateString(
+                        "en-GB"
+                      );
+                      field.onChange(formattedDate);
+                    }}
+                    value={field.value}
+                    className="dark"
+                    color="primary"
+                    sizing="base"
+                  />
+                )}
               />
             </Flowbite>
           </div>
@@ -93,6 +111,9 @@ export default function VechicalForm() {
           <div className="form-control w-full max-w-xs">
             <label className="label">
               <span className="label-text">Current ODO</span>
+              {errors.current_odo && (
+                <ErrorLabel fieldError={errors.current_odo} />
+              )}
             </label>
             <input
               type="text"
@@ -109,6 +130,7 @@ export default function VechicalForm() {
           <div className="form-control w-full max-w-xs">
             <label className="label">
               <span className="label-text">Future ODO</span>
+              {errors.next_odo && <ErrorLabel fieldError={errors.next_odo} />}
             </label>
             <input
               type="text"
@@ -127,13 +149,14 @@ export default function VechicalForm() {
           <div className="form-control w-full max-w-xs">
             <label className="label">
               <span className="label-text">Select Garage</span>
+              {errors.garage && <ErrorLabel fieldError={errors.garage} />}
             </label>
             <select
               className={`select select-bordered ${getEditorStyle(
                 errors.garage
               )}`}
               {...register("garage", {
-                required: "Garage must be identify",
+                required: "Garage must be provided",
               })}
             >
               <option value="" disabled selected>
@@ -147,6 +170,9 @@ export default function VechicalForm() {
           <div className="form-control w-full max-w-xs">
             <label className="label">
               <span className="label-text">Search Service</span>
+              {errors.service?.[0]?.name && (
+                <ErrorLabel fieldError={errors.service?.[0]?.name} />
+              )}
             </label>
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-auto">

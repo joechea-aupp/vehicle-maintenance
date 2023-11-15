@@ -18,7 +18,7 @@ import { assertIsMaintenances } from "../../externals/getMaintenance";
 import { MaintenanceData } from "../../routes/types";
 import VReportItem from "./VReportItem";
 import { Suspense } from "react";
-import ErrorBlock from "../../components/Error";
+import ErrorBlock from "../../components/Errors/Error";
 import { getMaintenance } from "../../externals/getMaintenance";
 
 type Data = {
