@@ -1,4 +1,4 @@
-import { MaintenanceData } from "../routes/types";
+import { MaintenanceData } from "../types/types";
 
 // get data from endpoint, and assert the data is valid
 export async function getMaintenance(search?: string) {

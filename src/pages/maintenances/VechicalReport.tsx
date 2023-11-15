@@ -15,7 +15,7 @@ import { FiSearch } from "react-icons/fi";
 import { useState, useEffect } from "react";
 import { useLoaderData, Await } from "react-router-dom";
 import { assertIsMaintenances } from "../../externals/getMaintenance";
-import { MaintenanceData } from "../../routes/types";
+import { MaintenanceData } from "../../types/types";
 import VReportItem from "./VReportItem";
 import { Suspense } from "react";
 import ErrorBlock from "../../components/Errors/Error";
