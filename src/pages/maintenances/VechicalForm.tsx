@@ -5,6 +5,7 @@ import { MaintenancePost, Service } from "../../routes/types";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import ErrorLabel from "../../components/Errors/ErrorLabel";
+import SubmitBtn from "../../components/Button/SubmitBtn";
 
 export default function VechicalForm() {
   const {
@@ -36,11 +37,12 @@ export default function VechicalForm() {
   const disabledInputStyle =
     "border-none bg-transparent focus:border-none focus:ring-0 w-full text-sm";
 
+  const [isLoading, setIsLoading] = useState(false);
   function onSubmit(data: MaintenancePost) {
     // Include tableRows in the form data
     const formData = { ...data, Rows };
-    console.log(formData);
-    console.log(data);
+
+    setIsLoading(true);
     // navigate("/maintenances/vechical-report");
   }
 
@@ -66,6 +68,7 @@ export default function VechicalForm() {
               {...register("vehicle", {
                 required: "Vechical must be provided",
               })}
+              disabled={isLoading}
             >
               <option value="" disabled selected>
                 Pick one
@@ -101,6 +104,7 @@ export default function VechicalForm() {
                     className="dark"
                     color="primary"
                     sizing="base"
+                    disabled={isLoading}
                   />
                 )}
               />
@@ -124,6 +128,7 @@ export default function VechicalForm() {
               className={`input input-bordered w-full max-w-xs ${getEditorStyle(
                 errors.current_odo
               )}`}
+              disabled={isLoading}
             />
           </div>
 
@@ -141,6 +146,7 @@ export default function VechicalForm() {
               className={`input input-bordered w-full max-w-xs ${getEditorStyle(
                 errors.next_odo
               )}`}
+              disabled={isLoading}
             />
           </div>
 
@@ -158,6 +164,7 @@ export default function VechicalForm() {
               {...register("garage", {
                 required: "Garage must be provided",
               })}
+              disabled={isLoading}
             >
               <option value="" disabled selected>
                 Pick one
@@ -192,7 +199,10 @@ export default function VechicalForm() {
                 </svg>
               </div>
 
-              <button className="btn btn-square btn-outline absolute inset-y-0 right-0 btn-sm my-auto mr-1">
+              <button
+                className="btn btn-square btn-outline absolute inset-y-0 right-0 btn-sm my-auto mr-1"
+                disabled={isLoading}
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   height="1em"
@@ -210,6 +220,7 @@ export default function VechicalForm() {
                   errors.service?.[0]?.name ?? undefined
                 )}`}
                 style={{ width: "100%" }}
+                disabled={isLoading}
               />
             </div>
           </div>
@@ -222,6 +233,7 @@ export default function VechicalForm() {
             <input
               type="file"
               className="file-input file-input-bordered w-full max-w-xs"
+              disabled={isLoading}
             />
           </div>
         </div>
@@ -239,7 +251,10 @@ export default function VechicalForm() {
                 </span>
               </label>
 
-              <select className="select select-bordered w-4/5">
+              <select
+                className="select select-bordered w-4/5"
+                disabled={isLoading}
+              >
                 <option disabled selected>
                   Pick one
                 </option>
@@ -317,10 +332,11 @@ export default function VechicalForm() {
               <label className="label">
                 <span className="label-text">Use as template</span>
               </label>
-              <Checkbox id="template" />
+              <Checkbox id="template" disabled={isLoading} />
             </div>
             <div className="self-end">
-              <input type="submit" value="Submit" className="btn" />
+              {/* <input type="submit" value="Submit" className="btn" /> */}
+              <SubmitBtn isSubmitting={isLoading} />
             </div>
           </div>
         </div>
