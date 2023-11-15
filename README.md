@@ -18,6 +18,6 @@ npm run server
 # Todo
 
 - [x] add validation on post vehicle form
-- [] add skeleton loading on report table
-- [] add animation when submit form loading/submitted
-- [] post data to json-server on submit
+- [ ] add skeleton loading on report table
+- [ ] add animation when submit form loading/submitted
+- [ ] post data to json-server on submit
