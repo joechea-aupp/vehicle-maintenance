@@ -1,15 +1,53 @@
 import { Flowbite, Datepicker, Checkbox } from "flowbite-react";
 import { customDatepickerTheme } from "../../types/CustomTheme";
-import { useForm } from "react-hook-form";
+import { useForm, FieldError } from "react-hook-form";
+import { MaintenancePost, Service } from "../../types";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 export default function VechicalForm() {
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting, isSubmitSuccessful },
-  } = useForm<FormData>();
+  } = useForm<MaintenancePost>();
+
+  const navigate = useNavigate();
+
+  const [Rows, setTableRows] = useState<Service[]>([]);
+
+  const tableRows: Service[] = [
+    {
+      name: "Cy Ganderton",
+      description: "Quality Control Specialist",
+      price: 10.0,
+    },
+    {
+      name: "Hart Hagerty",
+      description: "Desktop Support Technician",
+      price: 25.2,
+    },
+    { name: "Brice Swyre", description: "Tax Accountant", price: 40.1 },
+    // Add more rows as needed
+  ];
+
+  const disabledInputStyle =
+    "border-none bg-transparent focus:border-none focus:ring-0 w-full text-sm";
+
+  function onSubmit(data: MaintenancePost) {
+    // Include tableRows in the form data
+    const formData = { ...data, Rows };
+    console.log(formData);
+    console.log(data);
+    // navigate("/maintenances/vechical-report");
+  }
+
+  function getEditorStyle(fieldError: FieldError | undefined) {
+    return fieldError ? "border-red-500" : "";
+  }
+
   return (
-    <form>
+    <form noValidate onSubmit={handleSubmit(onSubmit)}>
       <div className="flex md:flex-row flex-col justify-center items-baseline">
         {/* start left side panel, maintenance record insertion */}
         <div className="grid grid-cols-2 md:gap-y-1 gap-2">
@@ -18,8 +56,15 @@ export default function VechicalForm() {
             <label className="label">
               <span className="label-text">Select Vechicle</span>
             </label>
-            <select className="select select-bordered">
-              <option disabled selected>
+            <select
+              className={`select select-bordered ${getEditorStyle(
+                errors.vehicle
+              )}`}
+              {...register("vehicle", {
+                required: "Vechical must be identify",
+              })}
+            >
+              <option value="" disabled selected>
                 Pick one
               </option>
               <option>Toyota Rush</option>
@@ -33,7 +78,14 @@ export default function VechicalForm() {
               <span className="label-text">Maintenance Date</span>
             </label>
             <Flowbite theme={{ theme: customDatepickerTheme }}>
-              <Datepicker className="dark" color={"primary"} sizing={"base"} />
+              <Datepicker
+                className="dark"
+                color={"primary"}
+                sizing={"base"}
+                {...register("maintenance_date", {
+                  required: "Maintenance date must be provided",
+                })}
+              />
             </Flowbite>
           </div>
 
@@ -45,7 +97,12 @@ export default function VechicalForm() {
             <input
               type="text"
               placeholder="00000"
-              className="input input-bordered w-full max-w-xs"
+              {...register("current_odo", {
+                required: "Current ODO must be provided",
+              })}
+              className={`input input-bordered w-full max-w-xs ${getEditorStyle(
+                errors.current_odo
+              )}`}
             />
           </div>
 
@@ -56,7 +113,12 @@ export default function VechicalForm() {
             <input
               type="text"
               placeholder="00000"
-              className="input input-bordered w-full max-w-xs"
+              {...register("next_odo", {
+                required: "Next ODO must be provided",
+              })}
+              className={`input input-bordered w-full max-w-xs ${getEditorStyle(
+                errors.next_odo
+              )}`}
             />
           </div>
 
@@ -66,8 +128,15 @@ export default function VechicalForm() {
             <label className="label">
               <span className="label-text">Select Garage</span>
             </label>
-            <select className="select select-bordered">
-              <option disabled selected>
+            <select
+              className={`select select-bordered ${getEditorStyle(
+                errors.garage
+              )}`}
+              {...register("garage", {
+                required: "Garage must be identify",
+              })}
+            >
+              <option value="" disabled selected>
                 Pick one
               </option>
               <option>Toyota AUPP</option>
@@ -111,7 +180,9 @@ export default function VechicalForm() {
               <input
                 type="text"
                 placeholder="Type here"
-                className="input input-bordered block pl-10"
+                className={`input input-bordered block pl-10 ${getEditorStyle(
+                  errors.service?.[0]?.name ?? undefined
+                )}`}
                 style={{ width: "100%" }}
               />
             </div>
@@ -167,45 +238,49 @@ export default function VechicalForm() {
                 </tr>
               </thead>
               <tbody>
-                {/* row 1 */}
-                <tr>
-                  <th>1</th>
-                  <td>Cy Ganderton</td>
-                  <td>Quality Control Specialist</td>
-                  <td>$10.0</td>
-                </tr>
-                {/* row 2 */}
-                <tr>
-                  <th>2</th>
-                  <td>Hart Hagerty</td>
-                  <td>Desktop Support Technician</td>
-                  <td>$25.2</td>
-                </tr>
-                {/* row 3 */}
-                <tr>
-                  <th>3</th>
-                  <td>Brice Swyre</td>
-                  <td>Tax Accountant</td>
-                  <td>$40.1</td>
-                </tr>
-                <tr>
-                  <th>4</th>
-                  <td>Brice Swyre</td>
-                  <td>Tax Accountant</td>
-                  <td>$40.1</td>
-                </tr>
-                <tr>
-                  <th>5</th>
-                  <td>Brice Swyre</td>
-                  <td>Tax Accountant</td>
-                  <td>$40.1</td>
-                </tr>
+                {tableRows.map((row, index) => (
+                  <tr key={index}>
+                    <th>{index + 1}</th>
+                    <td>
+                      <input
+                        className={disabledInputStyle}
+                        type="text"
+                        {...register(`service.${index}.name`, {
+                          required: "Service name is missing",
+                        })}
+                        defaultValue={row.name}
+                        readOnly
+                      />
+                    </td>
+                    <td>
+                      <input
+                        className={disabledInputStyle}
+                        type="text"
+                        {...register(`service.${index}.description`, {
+                          required: "Service description is missing",
+                        })}
+                        defaultValue={row.description}
+                        readOnly
+                      />
+                    </td>
+                    <td
+                      {...register(`service.${index}.price`)}
+                    >{`$${row.price.toFixed(2)}`}</td>
+                  </tr>
+                ))}
+
+                {/* Total row */}
                 <tr className="bg-base-200">
                   <th></th>
                   <td colSpan={2} className="text-right">
                     Total:
                   </td>
-                  <td>$75.3</td>
+                  <td>
+                    $
+                    {tableRows
+                      .reduce((acc, row) => acc + row.price, 0)
+                      .toFixed(2)}
+                  </td>
                 </tr>
               </tbody>
             </table>
