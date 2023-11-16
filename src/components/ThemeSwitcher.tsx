@@ -5,11 +5,9 @@ export default function ThemeSwitcher() {
   const theme = useContext(ThemeContext);
 
   const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.checked) {
-      theme?.setTheme("light");
-    } else {
-      theme?.setTheme("dark");
-    }
+    const newTheme = event.target.checked ? "light" : "dark";
+    theme?.setTheme(newTheme);
+    localStorage.setItem("theme", newTheme);
   };
 
   return (
@@ -20,6 +18,7 @@ export default function ThemeSwitcher() {
         className="theme-controller hidden bg-transparent"
         value={theme?.theme}
         onChange={handleInput}
+        checked={theme?.theme === "light"}
       />
 
       {/* sun icon */}

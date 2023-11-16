@@ -23,5 +23,5 @@ npm run server
 - [ ] post data to json-server on submit
 - [ ] beautify error message
 - [x] toggle dark and light mode
-- [ ] save user's toggle dark and light mode in localstorage
+- [x] save user's toggle dark and light mode in localstorage
 - [ ] add spotlight like for global search

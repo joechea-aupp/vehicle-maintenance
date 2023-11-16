@@ -10,7 +10,10 @@ import { Outlet } from "react-router-dom";
 import { useState } from "react";
 
 function App() {
-  const [theme, setTheme] = useState<string>("dark");
+  const [theme, setTheme] = useState<string>(
+    localStorage.getItem("theme") || "dark"
+  );
+
   const themeContextValue: ThemeContextType = { theme, setTheme };
   return (
     <ThemeContext.Provider value={themeContextValue}>
