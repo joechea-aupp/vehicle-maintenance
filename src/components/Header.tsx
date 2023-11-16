@@ -12,7 +12,7 @@ export default function Header({ children }: Props) {
   return (
     <div className="navbar bg-base-100">
       <div className="navbar-start">
-        <div className="flex">
+        <div className="flex ml-5">
           {sidebar}
           {globalSearch}
         </div>

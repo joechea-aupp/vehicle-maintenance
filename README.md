@@ -22,5 +22,6 @@ npm run server
 - [x] add animation when submit form loading/submitted
 - [ ] post data to json-server on submit
 - [ ] beautify error message
-- [ ] toggle dark and light mode
+- [x] toggle dark and light mode
+- [ ] save user's toggle dark and light mode in localstorage
 - [ ] add spotlight like for global search

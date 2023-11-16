@@ -21,6 +21,8 @@ import { Suspense } from "react";
 import ErrorBlock from "../../components/Errors/Error";
 import { getMaintenance } from "../../externals/getMaintenance";
 import SkeletonRow from "../../components/Skeletons/SkeletonRow";
+import { ThemeContext } from "../../contexts/ThemeContext";
+import { useContext } from "react";
 
 type Data = {
   reports: MaintenanceData[];
@@ -40,6 +42,7 @@ export function assertIsData(data: unknown): asserts data is Data {
 export default function VechicalReport() {
   // pagination screen resize control
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 680);
+  const theme = useContext(ThemeContext);
 
   useEffect(() => {
     const handleResize = () => {
@@ -95,7 +98,11 @@ export default function VechicalReport() {
             <span className="label-text-alt">Start</span>
           </label>
           <Flowbite theme={{ theme: customDatepickerTheme }}>
-            <Datepicker className="dark" color={"primary"} sizing={"sm"} />
+            <Datepicker
+              className={theme?.theme}
+              color={"primary"}
+              sizing={"sm"}
+            />
           </Flowbite>
         </div>
 
@@ -104,7 +111,11 @@ export default function VechicalReport() {
             <span className="label-text-alt">End</span>
           </label>
           <Flowbite theme={{ theme: customDatepickerTheme }}>
-            <Datepicker className="dark" color={"primary"} sizing={"sm"} />
+            <Datepicker
+              className={theme?.theme}
+              color={"primary"}
+              sizing={"sm"}
+            />
           </Flowbite>
         </div>
 
@@ -167,14 +178,17 @@ export default function VechicalReport() {
               placeholder="Searching..."
               required
               color={"primary"}
-              className="dark"
+              className={theme?.theme}
               onChange={handleSearch}
             />
           </Flowbite>
         </div>
 
         <div className="w-full">
-          <Table hoverable className="dark bg-transparent shadow-md">
+          <Table
+            hoverable
+            className={`bg-transparent shadow-md ${theme?.theme}`}
+          >
             <Table.Head>
               <Table.HeadCell className="p-4">
                 <Checkbox />
@@ -200,7 +214,9 @@ export default function VechicalReport() {
             </Suspense>
           </Table>
         </div>
-        <div className="dark flex overflow-x-auto sm:justify-center self-end">
+        <div
+          className={`flex overflow-x-auto sm:justify-center self-end ${theme?.theme}`}
+        >
           <Pagination
             currentPage={currentPage}
             totalPages={100}

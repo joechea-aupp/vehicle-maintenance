@@ -6,8 +6,11 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import ErrorLabel from "../../components/Errors/ErrorLabel";
 import SubmitBtn from "../../components/Button/SubmitBtn";
+import { ThemeContext } from "../../contexts/ThemeContext";
+import { useContext } from "react";
 
 export default function VechicalForm() {
+  const theme = useContext(ThemeContext);
   const {
     register,
     handleSubmit,
@@ -101,7 +104,7 @@ export default function VechicalForm() {
                       field.onChange(formattedDate);
                     }}
                     value={field.value}
-                    className="dark"
+                    className={theme?.theme}
                     color="primary"
                     sizing="base"
                     disabled={isLoading}
@@ -332,7 +335,11 @@ export default function VechicalForm() {
               <label className="label">
                 <span className="label-text">Use as template</span>
               </label>
-              <Checkbox id="template" disabled={isLoading} />
+              <Checkbox
+                className={theme?.theme}
+                id="template"
+                disabled={isLoading}
+              />
             </div>
             <div className="self-end">
               {/* <input type="submit" value="Submit" className="btn" /> */}

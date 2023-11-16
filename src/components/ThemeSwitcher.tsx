@@ -1,11 +1,25 @@
+import { useContext } from "react";
+import { ThemeContext } from "../contexts/ThemeContext";
+
 export default function ThemeSwitcher() {
+  const theme = useContext(ThemeContext);
+
+  const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.checked) {
+      theme?.setTheme("light");
+    } else {
+      theme?.setTheme("dark");
+    }
+  };
+
   return (
     <label className="swap swap-rotate">
       {/* this hidden checkbox controls the state */}
       <input
         type="checkbox"
         className="theme-controller hidden bg-transparent"
-        value="synthwave"
+        value={theme?.theme}
+        onChange={handleInput}
       />
 
       {/* sun icon */}
