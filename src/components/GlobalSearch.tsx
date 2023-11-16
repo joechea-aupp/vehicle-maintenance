@@ -1,6 +1,6 @@
 export default function GlobalSearch() {
   return (
-    <>
+    <div>
       {/* Open the modal using document.getElementById('ID').showModal() method */}
       <button
         className="btn btn-ghost btn-circle"
@@ -72,6 +72,6 @@ export default function GlobalSearch() {
           <button>close</button>
         </form>
       </dialog>
-    </>
+    </div>
   );
 }

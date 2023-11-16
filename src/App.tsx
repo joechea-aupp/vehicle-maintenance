@@ -4,6 +4,7 @@ import Sidebar from "./components/Sidebar";
 import Profile from "./components/Profile";
 import GlobalSearch from "./components/GlobalSearch";
 import Notification from "./components/Notification";
+import ThemeSwitcher from "./components/ThemeSwitcher";
 import { Outlet } from "react-router-dom";
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
         <GlobalSearch />
         <Profile />
         <Notification />
+        <ThemeSwitcher />
       </Header>
       <Outlet />
       <Footer />
