@@ -166,22 +166,41 @@ export default function VechicalReport() {
       </div>
 
       <div className="flex flex-col gap-5 items-center mx-32">
-        <div className="max-w-md self-end">
-          <div className="mb-2 block">
-            <Label htmlFor="search" />
+        <div className="flex space-x-5 self-end">
+          <div className="dropdown">
+            <label tabIndex={0} className="btn m-1 px-8">
+              Action
+            </label>
+            <ul
+              tabIndex={0}
+              className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
+            >
+              <li>
+                <a>Export</a>
+              </li>
+              <li>
+                <a>Delete</a>
+              </li>
+            </ul>
           </div>
-          <Flowbite theme={{ theme: customTextInputTheme }}>
-            <TextInput
-              id="search"
-              type="input"
-              icon={FiSearch}
-              placeholder="Searching..."
-              required
-              color={"primary"}
-              className={theme?.theme}
-              onChange={handleSearch}
-            />
-          </Flowbite>
+
+          <div className="max-w-md ">
+            <div className="mb-2 block">
+              <Label htmlFor="search" />
+            </div>
+            <Flowbite theme={{ theme: customTextInputTheme }}>
+              <TextInput
+                id="search"
+                type="input"
+                icon={FiSearch}
+                placeholder="Searching..."
+                required
+                color={"primary"}
+                className={theme?.theme}
+                onChange={handleSearch}
+              />
+            </Flowbite>
+          </div>
         </div>
 
         <div className="w-full">
@@ -219,7 +238,7 @@ export default function VechicalReport() {
         >
           <Pagination
             currentPage={currentPage}
-            totalPages={100}
+            totalPages={10}
             onPageChange={onPageChange}
             showIcons
             layout={window.innerWidth < 680 ? "table" : undefined}
