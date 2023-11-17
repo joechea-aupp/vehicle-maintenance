@@ -20,7 +20,7 @@ npm run server
 - [x] add validation on post vehicle form
 - [x] add skeleton loading on report table
 - [x] add animation when submit form loading/submitted
-- [ ] post data to json-server on submit
+- [x] post data to json-server on submit
 - [ ] beautify error message
 - [x] toggle dark and light mode
 - [x] save user's toggle dark and light mode in localstorage
