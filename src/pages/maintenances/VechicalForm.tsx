@@ -2,8 +2,6 @@ import { Flowbite, Datepicker, Checkbox } from "flowbite-react";
 import { customDatepickerTheme } from "../../types/CustomTheme";
 import { useForm, FieldError, Controller } from "react-hook-form";
 import { MaintenancePost, Service, MaintenanceData } from "../../types/types";
-import { useNavigate } from "react-router-dom";
-import { useState } from "react";
 import ErrorLabel from "../../components/Errors/ErrorLabel";
 import SubmitBtn from "../../components/Button/SubmitBtn";
 import { ThemeContext } from "../../contexts/ThemeContext";
@@ -20,8 +18,6 @@ export default function VechicalForm() {
     reset,
     formState: { errors, isSubmitting, isSubmitSuccessful },
   } = useForm<MaintenancePost>();
-
-  const navigate = useNavigate();
 
   const tableRows: Service[] = [
     {
@@ -72,7 +68,6 @@ export default function VechicalForm() {
       setTimeout(() => {
         reset();
       }, 3000);
-      // navigate("/report");
     },
   });
 
