@@ -21,6 +21,9 @@ npm run server
 - [x] add skeleton loading on report table
 - [x] add animation when submit form loading/submitted
 - [x] post data to json-server on submit
+- [ ] add remove data functionality from within report
+- [ ] add sort functionality on report table
+- [ ] add pagination on report table
 - [ ] beautify error message
 - [x] toggle dark and light mode
 - [x] save user's toggle dark and light mode in localstorage
