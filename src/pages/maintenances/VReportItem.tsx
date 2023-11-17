@@ -23,10 +23,9 @@ export default function VReportItem({ reports }: Props) {
           <Table.Cell>{report.garage}</Table.Cell>
           <Table.Cell>
             $
-            {report.service.reduce(
-              (total, service) => total + service.price,
-              0
-            )}
+            {report.service
+              .reduce((total, service) => total + service.price, 0)
+              .toFixed(2)}
           </Table.Cell>
           <Table.Cell>
             <a
