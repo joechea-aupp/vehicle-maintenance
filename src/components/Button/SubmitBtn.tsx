@@ -4,14 +4,14 @@ type Props = {
 
 export default function SubmitBtn({ isSubmitting }: Props) {
   return (
-    <button className="btn" disabled={isSubmitting}>
+    <button className="btn px-8" disabled={isSubmitting}>
       {isSubmitting ? (
         <>
           <span className="loading loading-spinner"></span>
           Submitting...
         </>
       ) : (
-        <input type="submit" value="Submit" className="btn" />
+        <>Submit</>
       )}
     </button>
   );

@@ -16,12 +16,17 @@ const router = createBrowserRouter([
         path: "report",
         element: <VechicalReport />,
         loader: async () => {
-          // check if "report" is already in the cache
-          const existingData = queryClient.getQueryData(["report"]);
-          if (existingData) {
-            // if existing, defer existing the data to the compoent
-            return defer({ reports: existingData });
-          }
+          /**
+           * check if "report" is already in the cache
+           * have to disable this, because report is has not loading yet after new data is been supplied.
+           * this code should only benefit if the update and display is not the same page.
+           * ```
+           * const existingData = queryClient.getQueryData(["report"]);
+           * if (existingData) {
+           * // if existing, defer existing the data to the compoent
+           *  return defer({ reports: existingData });
+           *  }
+           */
 
           return defer({
             // create a new query for "report" and fetch the data from getMaintenance function

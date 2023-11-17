@@ -22,3 +22,7 @@ export type MaintenancePost = {
   garage: string;
   service?: Service[];
 };
+
+export type SavedMaintenance = {
+  id: number;
+};

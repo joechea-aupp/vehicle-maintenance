@@ -1,13 +1,15 @@
 import { Flowbite, Datepicker, Checkbox } from "flowbite-react";
 import { customDatepickerTheme } from "../../types/CustomTheme";
 import { useForm, FieldError, Controller } from "react-hook-form";
-import { MaintenancePost, Service } from "../../types/types";
+import { MaintenancePost, Service, MaintenanceData } from "../../types/types";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import ErrorLabel from "../../components/Errors/ErrorLabel";
 import SubmitBtn from "../../components/Button/SubmitBtn";
 import { ThemeContext } from "../../contexts/ThemeContext";
 import { useContext } from "react";
+import postMaintenance from "../../externals/postMaintenance";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 export default function VechicalForm() {
   const theme = useContext(ThemeContext);
@@ -15,12 +17,11 @@ export default function VechicalForm() {
     register,
     handleSubmit,
     control,
+    reset,
     formState: { errors, isSubmitting, isSubmitSuccessful },
   } = useForm<MaintenancePost>();
 
   const navigate = useNavigate();
-
-  const [Rows, setTableRows] = useState<Service[]>([]);
 
   const tableRows: Service[] = [
     {
@@ -40,21 +41,45 @@ export default function VechicalForm() {
   const disabledInputStyle =
     "border-none bg-transparent focus:border-none focus:ring-0 w-full text-sm";
 
-  const [isLoading, setIsLoading] = useState(false);
-  function onSubmit(data: MaintenancePost) {
-    // Include tableRows in the form data
-    const formData = { ...data, Rows };
-
-    setIsLoading(true);
-    // navigate("/maintenances/vechical-report");
-  }
-
   function getEditorStyle(fieldError: FieldError | undefined) {
     return fieldError ? "border-red-500" : "";
   }
 
+  const queryClient = useQueryClient();
+  const { mutate } = useMutation({
+    // new version of react-query use mutationfn to run function with parameter provided
+    // the mutate is eq to mutateFn which need one parameter which is data.
+    mutationFn: (newMaintenance: MaintenancePost) =>
+      postMaintenance(newMaintenance),
+    onSuccess: (saveMaintenance) => {
+      // after successfully post data, send this data new and older data to the cache
+      queryClient.setQueryData<MaintenanceData[] | undefined>(
+        ["report"],
+        (oldData) => {
+          if (oldData === undefined) {
+            return [
+              { ...saveMaintenance, service: saveMaintenance.service || [] },
+            ];
+          } else {
+            return [
+              { ...saveMaintenance, service: saveMaintenance.service || [] },
+              ...oldData,
+            ];
+          }
+        }
+      );
+
+      setTimeout(() => {
+        reset();
+      }, 3000);
+      // navigate("/report");
+    },
+  });
+
   return (
-    <form noValidate onSubmit={handleSubmit(onSubmit)}>
+    // this therefore values must be pass to the mutate function
+
+    <form noValidate onSubmit={handleSubmit((values) => mutate(values))}>
       <div className="flex md:flex-row flex-col justify-center items-baseline">
         {/* start left side panel, maintenance record insertion */}
         <div className="grid grid-cols-2 md:gap-y-1 gap-2">
@@ -71,7 +96,7 @@ export default function VechicalForm() {
               {...register("vehicle", {
                 required: "Vechical must be provided",
               })}
-              disabled={isLoading}
+              disabled={isSubmitting}
             >
               <option value="" disabled selected>
                 Pick one
@@ -98,16 +123,27 @@ export default function VechicalForm() {
                   <Datepicker
                     {...field}
                     onSelectedDateChanged={(date) => {
-                      const formattedDate = new Date(date).toLocaleDateString(
-                        "en-GB"
-                      );
+                      // const formattedDate = new Date(date).toLocaleDateString(
+                      //   "en-GB"
+                      // ); dd/mm/yyyy format
+                      const selectedDate = new Date(date);
+                      const day = selectedDate.getDate();
+                      const month = selectedDate.getMonth() + 1; // Months are zero-based
+                      const year = selectedDate.getFullYear();
+
+                      // Ensure leading zeros for day and month
+                      const formattedDate = `${day < 10 ? "0" : ""}${day}-${
+                        month < 10 ? "0" : ""
+                      }${month}-${year}`;
+
+                      field.onChange(formattedDate);
                       field.onChange(formattedDate);
                     }}
                     value={field.value}
                     className={theme?.theme}
                     color="primary"
                     sizing="base"
-                    disabled={isLoading}
+                    disabled={isSubmitting}
                   />
                 )}
               />
@@ -131,7 +167,7 @@ export default function VechicalForm() {
               className={`input input-bordered w-full max-w-xs ${getEditorStyle(
                 errors.current_odo
               )}`}
-              disabled={isLoading}
+              disabled={isSubmitting}
             />
           </div>
 
@@ -149,7 +185,7 @@ export default function VechicalForm() {
               className={`input input-bordered w-full max-w-xs ${getEditorStyle(
                 errors.next_odo
               )}`}
-              disabled={isLoading}
+              disabled={isSubmitting}
             />
           </div>
 
@@ -167,7 +203,7 @@ export default function VechicalForm() {
               {...register("garage", {
                 required: "Garage must be provided",
               })}
-              disabled={isLoading}
+              disabled={isSubmitting}
             >
               <option value="" disabled selected>
                 Pick one
@@ -204,7 +240,7 @@ export default function VechicalForm() {
 
               <button
                 className="btn btn-square btn-outline absolute inset-y-0 right-0 btn-sm my-auto mr-1"
-                disabled={isLoading}
+                disabled={isSubmitting}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -223,7 +259,7 @@ export default function VechicalForm() {
                   errors.service?.[0]?.name ?? undefined
                 )}`}
                 style={{ width: "100%" }}
-                disabled={isLoading}
+                disabled={isSubmitting}
               />
             </div>
           </div>
@@ -236,7 +272,7 @@ export default function VechicalForm() {
             <input
               type="file"
               className="file-input file-input-bordered w-full max-w-xs"
-              disabled={isLoading}
+              disabled={isSubmitting}
             />
           </div>
         </div>
@@ -256,7 +292,7 @@ export default function VechicalForm() {
 
               <select
                 className="select select-bordered w-4/5"
-                disabled={isLoading}
+                disabled={isSubmitting}
               >
                 <option disabled selected>
                   Pick one
@@ -307,9 +343,18 @@ export default function VechicalForm() {
                         readOnly
                       />
                     </td>
-                    <td
-                      {...register(`service.${index}.price`)}
-                    >{`$${row.price.toFixed(2)}`}</td>
+                    <td>
+                      <input
+                        className={disabledInputStyle}
+                        type="text"
+                        {...register(`service.${index}.price`, {
+                          required: "Service price is missing",
+                          setValueAs: (value: string) => parseFloat(value), // set value as a number
+                        })}
+                        defaultValue={parseFloat(row.price.toFixed(2))}
+                        readOnly
+                      />
+                    </td>
                   </tr>
                 ))}
 
@@ -338,13 +383,19 @@ export default function VechicalForm() {
               <Checkbox
                 className={theme?.theme}
                 id="template"
-                disabled={isLoading}
+                disabled={isSubmitting}
               />
             </div>
             <div className="self-end">
-              {/* <input type="submit" value="Submit" className="btn" /> */}
-              <SubmitBtn isSubmitting={isLoading} />
+              <SubmitBtn isSubmitting={isSubmitting} />
             </div>
+            {isSubmitSuccessful && (
+              <div className="toast toast-top toast-start">
+                <div className="alert alert-success">
+                  <span>Message sent successfully.</span>
+                </div>
+              </div>
+            )}
           </div>
         </div>
         {/* end right side panel */}
