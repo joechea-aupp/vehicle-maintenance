@@ -129,7 +129,6 @@ export default function VechicalForm() {
                       }${month}-${year}`;
 
                       field.onChange(formattedDate);
-                      field.onChange(formattedDate);
                     }}
                     value={field.value}
                     className={theme?.theme}

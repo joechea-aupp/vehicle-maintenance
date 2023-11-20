@@ -10,8 +10,6 @@ type Props = {
 };
 
 export default function VReportItem({ reports, onCheckboxChange }: Props) {
-  // let reportIds: number[] = [];
-
   return (
     <Table.Body className="divide-y">
       {reports.map((report) => (

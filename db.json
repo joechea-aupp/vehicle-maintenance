@@ -77,9 +77,9 @@
     },
     {
       "vehicle": "Lexus RX200",
-      "current_odo": "123564",
-      "next_odo": "66655",
-      "garage": "Toyota Terk Tla",
+      "current_odo": "12345",
+      "next_odo": "67890",
+      "garage": "Toyota AUPP",
       "service": [
         {
           "name": "Cy Ganderton",
@@ -97,7 +97,7 @@
           "price": 40.1
         }
       ],
-      "maintenance_date": "30-12-2023",
+      "maintenance_date": "20-11-2023",
       "id": 4
     }
   ]
