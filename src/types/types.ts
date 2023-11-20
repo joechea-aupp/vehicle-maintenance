@@ -26,3 +26,6 @@ export type MaintenancePost = {
 export type SavedMaintenance = {
   id: number;
 };
+
+export type MaintenanceID = number;
+export type deletedMaintenance = {};

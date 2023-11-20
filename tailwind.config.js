@@ -5,7 +5,17 @@ module.exports = {
     "node_modules/flowbite-react/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      keyframes: {
+        fadeOut: {
+          "0%": { opacity: "1" },
+          "100%": { opacity: "0" },
+        },
+      },
+      animation: {
+        fadeOut: "fadeOut 1s ease-out 1s forwards",
+      },
+    },
   },
   plugins: [require("daisyui"), require("flowbite/plugin")],
   daisyui: {

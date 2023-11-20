@@ -42,7 +42,7 @@ export default function VechicalForm() {
   }
 
   const queryClient = useQueryClient();
-  const { mutate } = useMutation({
+  const { mutate, status } = useMutation({
     // new version of react-query use mutationfn to run function with parameter provided
     // the mutate is eq to mutateFn which need one parameter which is data.
     mutationFn: (newMaintenance: MaintenancePost) =>
@@ -50,7 +50,7 @@ export default function VechicalForm() {
     onSuccess: (saveMaintenance) => {
       // after successfully post data, send this data new and older data to the cache
       queryClient.setQueryData<MaintenanceData[] | undefined>(
-        ["report"],
+        ["report", ""],
         (oldData) => {
           if (oldData === undefined) {
             return [
@@ -64,10 +64,7 @@ export default function VechicalForm() {
           }
         }
       );
-
-      setTimeout(() => {
-        reset();
-      }, 3000);
+      reset();
     },
   });
 
@@ -91,7 +88,7 @@ export default function VechicalForm() {
               {...register("vehicle", {
                 required: "Vechical must be provided",
               })}
-              disabled={isSubmitting}
+              disabled={status === "pending"}
             >
               <option value="" disabled selected>
                 Pick one
@@ -138,7 +135,7 @@ export default function VechicalForm() {
                     className={theme?.theme}
                     color="primary"
                     sizing="base"
-                    disabled={isSubmitting}
+                    disabled={status === "pending"}
                   />
                 )}
               />
@@ -162,7 +159,7 @@ export default function VechicalForm() {
               className={`input input-bordered w-full max-w-xs ${getEditorStyle(
                 errors.current_odo
               )}`}
-              disabled={isSubmitting}
+              disabled={status === "pending"}
             />
           </div>
 
@@ -180,7 +177,7 @@ export default function VechicalForm() {
               className={`input input-bordered w-full max-w-xs ${getEditorStyle(
                 errors.next_odo
               )}`}
-              disabled={isSubmitting}
+              disabled={status === "pending"}
             />
           </div>
 
@@ -198,7 +195,7 @@ export default function VechicalForm() {
               {...register("garage", {
                 required: "Garage must be provided",
               })}
-              disabled={isSubmitting}
+              disabled={status === "pending"}
             >
               <option value="" disabled selected>
                 Pick one
@@ -235,7 +232,7 @@ export default function VechicalForm() {
 
               <button
                 className="btn btn-square btn-outline absolute inset-y-0 right-0 btn-sm my-auto mr-1"
-                disabled={isSubmitting}
+                disabled={status === "pending"}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -254,7 +251,7 @@ export default function VechicalForm() {
                   errors.service?.[0]?.name ?? undefined
                 )}`}
                 style={{ width: "100%" }}
-                disabled={isSubmitting}
+                disabled={status === "pending"}
               />
             </div>
           </div>
@@ -267,7 +264,7 @@ export default function VechicalForm() {
             <input
               type="file"
               className="file-input file-input-bordered w-full max-w-xs"
-              disabled={isSubmitting}
+              disabled={status === "pending"}
             />
           </div>
         </div>
@@ -287,7 +284,7 @@ export default function VechicalForm() {
 
               <select
                 className="select select-bordered w-4/5"
-                disabled={isSubmitting}
+                disabled={status === "pending"}
               >
                 <option disabled selected>
                   Pick one
@@ -378,16 +375,16 @@ export default function VechicalForm() {
               <Checkbox
                 className={theme?.theme}
                 id="template"
-                disabled={isSubmitting}
+                disabled={status === "pending"}
               />
             </div>
             <div className="self-end">
-              <SubmitBtn isSubmitting={isSubmitting} />
+              <SubmitBtn isSubmitting={status === "pending"} />
             </div>
-            {isSubmitSuccessful && (
-              <div className="toast toast-top toast-start">
+            {status === "success" && (
+              <div className="toast toast-start animate-fadeOut delay-1000 duration-1000">
                 <div className="alert alert-success">
-                  <span>Message sent successfully.</span>
+                  <span>Save successfully</span>
                 </div>
               </div>
             )}

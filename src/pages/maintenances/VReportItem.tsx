@@ -3,21 +3,15 @@ import { Checkbox, Table } from "flowbite-react";
 
 type Props = {
   reports: MaintenanceData[];
+  onCheckboxChange: (
+    e: React.ChangeEvent<HTMLInputElement>,
+    id: number
+  ) => void;
 };
 
-export default function VReportItem({ reports }: Props) {
-  let reportIds: number[] = [];
-  const onCheckboxChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    reportId: number
-  ) => {
-    if (e.target.checked) {
-      reportIds.push(reportId);
-    } else {
-      reportIds = reportIds.filter((id) => id !== reportId);
-    }
-    console.log(reportIds);
-  };
+export default function VReportItem({ reports, onCheckboxChange }: Props) {
+  // let reportIds: number[] = [];
+
   return (
     <Table.Body className="divide-y">
       {reports.map((report) => (
