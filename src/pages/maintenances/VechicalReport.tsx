@@ -129,8 +129,7 @@ export default function VechicalReport() {
   const onDelete = async (maintenanceIDs: MaintenanceID[]) => {
     try {
       const deletedMaintenanceItems = maintenanceIDs.map((id) => mutate(id));
-      const results = await Promise.all(deletedMaintenanceItems);
-      // queryClient.invalidateQueries(["reports", ""] as InvalidateQueryFilters);
+      await Promise.all(deletedMaintenanceItems);
     } catch (error) {
       console.error(error);
     }
@@ -230,9 +229,7 @@ export default function VechicalReport() {
 
       <div className="flex flex-col gap-5 items-center mx-32">
         <div className="flex space-x-5 self-end">
-          <div
-            className={`dropdown ${status === "pending" ? "bg-red-500" : ""}`}
-          >
+          <div className={`dropdown`}>
             <label tabIndex={0} className="btn m-1 px-8">
               Action
             </label>
@@ -289,20 +286,30 @@ export default function VechicalReport() {
             {/* suspend is use to hold on the data (async) until it's complete and ready to render */}
             <Suspense fallback={<SkeletonRow />}>
               {/* await act as await to resolve data from promise or async */}
-
               <Await resolve={reports} errorElement={<ErrorBlock />}>
-                {(reports) => {
-                  assertIsMaintenances(reports);
-                  return (
-                    <VReportItem
-                      reports={reports}
-                      onCheckboxChange={onCheckboxChange}
-                    />
-                  );
-                }}
+                {status === "pending" ? (
+                  <SkeletonRow />
+                ) : (
+                  (reports) => {
+                    assertIsMaintenances(reports);
+                    return (
+                      <VReportItem
+                        reports={reports}
+                        onCheckboxChange={onCheckboxChange}
+                      />
+                    );
+                  }
+                )}
               </Await>
             </Suspense>
           </Table>
+          {status === "success" && (
+            <div className="toast toast-start animate-fadeOut delay-1000 duration-1000">
+              <div className="alert alert-success">
+                <span>Deleted successfully.</span>
+              </div>
+            </div>
+          )}
         </div>
         <div
           className={`flex overflow-x-auto sm:justify-center self-end ${theme?.theme}`}
