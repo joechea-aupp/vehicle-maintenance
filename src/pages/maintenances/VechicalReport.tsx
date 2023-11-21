@@ -1,16 +1,12 @@
 import {
   Flowbite,
-  Datepicker,
   Label,
   TextInput,
   Checkbox,
   Table,
   Pagination,
 } from "flowbite-react";
-import {
-  customDatepickerTheme,
-  customTextInputTheme,
-} from "../../types/CustomTheme";
+import { customTextInputTheme } from "../../types/CustomTheme";
 import { FiSearch } from "react-icons/fi";
 import { useState, useEffect } from "react";
 import { useLoaderData, Await } from "react-router-dom";
@@ -26,7 +22,8 @@ import { useContext } from "react";
 import delMaintenance from "../../externals/delMaintenance";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { RxDropdownMenu } from "react-icons/rx";
-import { useForm, FieldError, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
+import Dateselecter from "../../components/Dateselecter";
 
 type Data = {
   reports: MaintenanceData[];
@@ -129,13 +126,7 @@ export default function VechicalReport() {
       console.error(error);
     }
   };
-  const {
-    register,
-    handleSubmit,
-    control,
-    reset,
-    formState: { errors, isSubmitting, isSubmitSuccessful },
-  } = useForm();
+  const { control } = useForm();
 
   return (
     <div className="container mx-auto h-screen flex flex-col items-center md:block mb-28">
@@ -161,68 +152,24 @@ export default function VechicalReport() {
           <label className="label">
             <span className="label-text-alt">Start</span>
           </label>
-          <Flowbite theme={{ theme: customDatepickerTheme }}>
-            <Controller
-              name="start_date"
-              control={control}
-              // rules={{ required: "Start date is required" }}
-              render={({ field }) => (
-                <Datepicker
-                  {...field}
-                  className={theme?.theme}
-                  color={"primary"}
-                  sizing={"sm"}
-                  onSelectedDateChanged={(date) => {
-                    const selectedDate = new Date(date);
-                    const day = selectedDate.getDate();
-                    const month = selectedDate.getMonth();
-                    const year = selectedDate.getFullYear();
-
-                    const formattedDate = `${day < 10 ? "0" + day : day}-${
-                      month < 10 ? "0" + month : month
-                    }-${year}`;
-                    // use formattedDate as value for the input
-                    field.onChange(formattedDate);
-                  }}
-                  value={field.value}
-                />
-              )}
-            />
-          </Flowbite>
+          <Dateselecter
+            name="start_date"
+            theme={theme}
+            control={control}
+            size="sm"
+          />
         </div>
 
         <div>
           <label className="label">
             <span className="label-text-alt">End</span>
           </label>
-          <Flowbite theme={{ theme: customDatepickerTheme }}>
-            <Controller
-              name="end_date"
-              control={control}
-              // rules={{ required: "Start date is required" }}
-              render={({ field }) => (
-                <Datepicker
-                  {...field}
-                  className={theme?.theme}
-                  color={"primary"}
-                  sizing={"sm"}
-                  onSelectedDateChanged={(date) => {
-                    const selectedDate = new Date(date);
-                    const day = selectedDate.getDate();
-                    const month = selectedDate.getMonth();
-                    const year = selectedDate.getFullYear();
-
-                    const formattedDate = `${day < 10 ? "0" + day : day}-${
-                      month < 10 ? "0" + month : month
-                    }-${year}`;
-                    // use formattedDate as value for the input
-                    field.onChange(formattedDate);
-                  }}
-                  value={field.value}
-                />
-              )}
-            />
-          </Flowbite>
+          <Dateselecter
+            name="end_date"
+            theme={theme}
+            control={control}
+            size="sm"
+          />
         </div>
 
         {/* row 2 */}

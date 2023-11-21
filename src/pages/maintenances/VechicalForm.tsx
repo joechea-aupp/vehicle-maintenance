@@ -8,6 +8,7 @@ import { ThemeContext } from "../../contexts/ThemeContext";
 import { useContext } from "react";
 import postMaintenance from "../../externals/postMaintenance";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import Dateselecter from "../../components/Dateselecter";
 
 export default function VechicalForm() {
   const theme = useContext(ThemeContext);
@@ -106,39 +107,11 @@ export default function VechicalForm() {
                 <ErrorLabel fieldError={errors.maintenance_date} />
               )}
             </label>
-            <Flowbite theme={{ theme: customDatepickerTheme }}>
-              <Controller
-                name="maintenance_date"
-                control={control}
-                rules={{ required: "Date must be provided" }}
-                render={({ field }) => (
-                  <Datepicker
-                    {...field}
-                    onSelectedDateChanged={(date) => {
-                      // const formattedDate = new Date(date).toLocaleDateString(
-                      //   "en-GB"
-                      // ); dd/mm/yyyy format
-                      const selectedDate = new Date(date);
-                      const day = selectedDate.getDate();
-                      const month = selectedDate.getMonth() + 1; // Months are zero-based
-                      const year = selectedDate.getFullYear();
-
-                      // Ensure leading zeros for day and month
-                      const formattedDate = `${day < 10 ? "0" : ""}${day}-${
-                        month < 10 ? "0" : ""
-                      }${month}-${year}`;
-
-                      field.onChange(formattedDate);
-                    }}
-                    value={field.value}
-                    className={theme?.theme}
-                    color="primary"
-                    sizing="base"
-                    disabled={status === "pending"}
-                  />
-                )}
-              />
-            </Flowbite>
+            <Dateselecter
+              name="maintenance_date"
+              theme={theme}
+              control={control}
+            />
           </div>
 
           {/* row 2 */}
