@@ -2,83 +2,8 @@
   "reports": [
     {
       "vehicle": "Lexus RX200",
-      "current_odo": "12312321",
-      "next_odo": "32132132",
-      "garage": "Toyota AUPP",
-      "service": [
-        {
-          "name": "Cy Ganderton",
-          "description": "Quality Control Specialist",
-          "price": 10
-        },
-        {
-          "name": "Hart Hagerty",
-          "description": "Desktop Support Technician",
-          "price": 25.2
-        },
-        {
-          "name": "Brice Swyre",
-          "description": "Tax Accountant",
-          "price": 40.1
-        }
-      ],
-      "maintenance_date": "09-12-2023",
-      "id": 1
-    },
-    {
-      "vehicle": "Lexus RX200",
-      "current_odo": "12321",
-      "next_odo": "4221312",
-      "garage": "Toyota AUPP",
-      "service": [
-        {
-          "name": "Cy Ganderton",
-          "description": "Quality Control Specialist",
-          "price": 10
-        },
-        {
-          "name": "Hart Hagerty",
-          "description": "Desktop Support Technician",
-          "price": 25.2
-        },
-        {
-          "name": "Brice Swyre",
-          "description": "Tax Accountant",
-          "price": 40.1
-        }
-      ],
-      "maintenance_date": "16-12-2023",
-      "id": 2
-    },
-    {
-      "vehicle": "Toyota Prius",
-      "current_odo": "132131",
+      "current_odo": "123213",
       "next_odo": "12312312",
-      "garage": "Toyota Terk Tla",
-      "service": [
-        {
-          "name": "Cy Ganderton",
-          "description": "Quality Control Specialist",
-          "price": 100
-        },
-        {
-          "name": "Hart Hagerty",
-          "description": "Desktop Support Technician",
-          "price": 25.2
-        },
-        {
-          "name": "Brice Swyre",
-          "description": "Tax Accountant",
-          "price": 40.1
-        }
-      ],
-      "maintenance_date": "30-12-2023",
-      "id": 3
-    },
-    {
-      "vehicle": "Lexus RX200",
-      "current_odo": "12345",
-      "next_odo": "67890",
       "garage": "Toyota AUPP",
       "service": [
         {
@@ -94,11 +19,11 @@
         {
           "name": "Brice Swyre",
           "description": "Tax Accountant",
-          "price": 80.1
+          "price": 40.1
         }
       ],
-      "maintenance_date": "20-11-2023",
-      "id": 4
+      "maintenance_date": "21-10-2023",
+      "id": 3
     }
   ]
 }

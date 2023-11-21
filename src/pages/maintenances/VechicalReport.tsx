@@ -73,11 +73,15 @@ export default function VechicalReport() {
   const [reports, setReports] = useState(data.reports);
   // handle action for search button
   async function handleSearch(event: React.ChangeEvent<HTMLInputElement>) {
-    const newReports = await queryClient.fetchQuery({
-      queryKey: ["report", ""],
-      queryFn: () => getMaintenance(`q=${event.target.value}`),
-    });
-    setReports(newReports);
+    try {
+      const newReports = await queryClient.fetchQuery({
+        queryKey: ["report", ""],
+        queryFn: () => getMaintenance(`q=${event.target.value}`),
+      });
+      setReports(newReports);
+    } catch (error) {
+      console.error(error);
+    }
   }
   // update checkbox action for table report data
   const [checkedReport, setCheckedReport] = useState<number[]>([]);
