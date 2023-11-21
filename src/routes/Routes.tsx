@@ -27,7 +27,7 @@ const router = createBrowserRouter([
            *  return defer({ reports: existingData });
            *  }
            */
-          const existingData = queryClient.getQueryData(["report"]);
+          const existingData = queryClient.getQueryData(["report", ""]);
           if (existingData) {
             // if existing, defer existing the data to the compoent
             return defer({ reports: existingData });

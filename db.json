@@ -59,7 +59,7 @@
         {
           "name": "Cy Ganderton",
           "description": "Quality Control Specialist",
-          "price": 10
+          "price": 100
         },
         {
           "name": "Hart Hagerty",
@@ -94,7 +94,7 @@
         {
           "name": "Brice Swyre",
           "description": "Tax Accountant",
-          "price": 40.1
+          "price": 80.1
         }
       ],
       "maintenance_date": "20-11-2023",

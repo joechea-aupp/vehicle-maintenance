@@ -24,6 +24,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { RxDropdownMenu } from "react-icons/rx";
 import { useForm } from "react-hook-form";
 import Dateselecter from "../../components/Dateselecter";
+import ColumnTitle from "../../components/ColumnTitle";
 
 type Data = {
   reports: MaintenanceData[];
@@ -72,7 +73,10 @@ export default function VechicalReport() {
   const [reports, setReports] = useState(data.reports);
   // handle action for search button
   async function handleSearch(event: React.ChangeEvent<HTMLInputElement>) {
-    const newReports = await getMaintenance(event.target.value);
+    const newReports = await queryClient.fetchQuery({
+      queryKey: ["report", ""],
+      queryFn: () => getMaintenance(`q=${event.target.value}`),
+    });
     setReports(newReports);
   }
   // update checkbox action for table report data
@@ -127,6 +131,53 @@ export default function VechicalReport() {
     }
   };
   const { control } = useForm();
+  // handle sort action on the table report
+  const [sortDescending, setSortDescending] = useState<boolean>(false);
+  const [sortBy, setSortBy] = useState<string>("");
+  const onSort = (fieldName: string) => {
+    const cachedData = queryClient.getQueryData<MaintenanceData[] | undefined>([
+      "report",
+      "",
+    ]);
+
+    if (cachedData) {
+      const isDescending = sortBy === fieldName && !sortDescending;
+      const sortedData = cachedData.slice().sort((a, b) => {
+        if (fieldName === "maintenance_date") {
+          const dateA = String(a[fieldName]) ? a[fieldName] : "";
+          const dateB = String(b[fieldName]) ? b[fieldName] : "";
+
+          const parsedDateA = new Date(dateA.split("-").reverse().join("-"));
+          const parsedDateB = new Date(dateB.split("-").reverse().join("-"));
+          const compareResult = parsedDateA.getTime() - parsedDateB.getTime();
+
+          return isDescending ? -compareResult : compareResult;
+        } else if (fieldName === "price") {
+          // For the 'price' field, directly compare the numbers
+          return isDescending
+            ? b.service.reduce((acc, service) => acc + service.price, 0) -
+                a.service.reduce((acc, service) => acc + service.price, 0)
+            : a.service.reduce((acc, service) => acc + service.price, 0) -
+                b.service.reduce((acc, service) => acc + service.price, 0);
+        } else {
+          const valueA = a[fieldName as keyof MaintenanceData];
+          const valueB = b[fieldName as keyof MaintenanceData];
+          const compareResult = valueA > valueB ? 1 : valueA < valueB ? -1 : 0;
+
+          return isDescending ? -compareResult : compareResult;
+        }
+      });
+
+      queryClient.setQueryData<MaintenanceData[] | undefined>(
+        ["report", ""],
+        sortedData
+      );
+
+      setReports(sortedData);
+      setSortBy(fieldName);
+      setSortDescending(isDescending);
+    }
+  };
 
   return (
     <div className="container mx-auto h-screen flex flex-col items-center md:block mb-28">
@@ -267,10 +318,43 @@ export default function VechicalReport() {
               <Table.HeadCell className="p-4">
                 <Checkbox />
               </Table.HeadCell>
-              <Table.HeadCell>Vehicle Name</Table.HeadCell>
-              <Table.HeadCell>Maintenance Date</Table.HeadCell>
-              <Table.HeadCell>Garage</Table.HeadCell>
-              <Table.HeadCell>Price</Table.HeadCell>
+              <Table.HeadCell>
+                <ColumnTitle
+                  fieldName="vehicle"
+                  isSortable={true}
+                  onSort={onSort}
+                >
+                  Vehicle Name
+                </ColumnTitle>
+              </Table.HeadCell>
+              <Table.HeadCell>
+                <ColumnTitle
+                  fieldName="maintenance_date"
+                  isSortable={true}
+                  onSort={onSort}
+                >
+                  {" "}
+                  Maintenance Date
+                </ColumnTitle>
+              </Table.HeadCell>
+              <Table.HeadCell>
+                <ColumnTitle
+                  fieldName="garage"
+                  isSortable={true}
+                  onSort={onSort}
+                >
+                  Garage
+                </ColumnTitle>
+              </Table.HeadCell>
+              <Table.HeadCell>
+                <ColumnTitle
+                  fieldName="price"
+                  onSort={onSort}
+                  isSortable={true}
+                >
+                  Price
+                </ColumnTitle>
+              </Table.HeadCell>
               <Table.HeadCell>
                 <span className="sr-only">Edit</span>
               </Table.HeadCell>
