@@ -29,7 +29,7 @@ npm run server
 
 - [x] post data to json-server on submit
 - [x] add remove data functionality from within report
-- [ ] add sort functionality on report table
+- [x] add sort functionality on report table
 - [ ] add pagination on report table
 - [x] save user's toggle dark and light mode in localstorage
 
