@@ -1,14 +1,8 @@
-import {
-  Flowbite,
-  Label,
-  TextInput,
-  Checkbox,
-  Table,
-  Pagination,
-} from "flowbite-react";
+import { Flowbite, Label, TextInput, Checkbox, Table } from "flowbite-react";
 import { customTextInputTheme } from "../../types/CustomTheme";
+import Pagination from "../../components/Pagination";
 import { FiSearch } from "react-icons/fi";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useLoaderData, Await } from "react-router-dom";
 import { assertIsMaintenances } from "../../externals/getMaintenance";
 import {
@@ -47,34 +41,15 @@ export function assertIsData(data: unknown): asserts data is Data {
 
 export default function VechicalReport() {
   const theme = useContext(ThemeContext);
-
-  // pagination screen resize control
-  const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 680);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsSmallScreen(window.innerWidth < 680);
-    };
-
-    window.addEventListener("resize", handleResize);
-
-    // Clean up the event listener on unmount
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
-
-  // pagination control
-  const [currentPage, setCurrentPage] = useState(1);
-  const onPageChange = (page: number) => setCurrentPage(page);
-
-  // useLoaderData get the data from the intial loader from this route
   const data = useLoaderData();
   // make sure that the data is queryclient of reports with data type of MaintenanceData[]
   assertIsData(data);
-
+  // pagination control
+  const [currentPage, setCurrentPage] = useState(1);
   // update data to report table
   const [reports, setReports] = useState(data.reports);
+  // useLoaderData get the data from the intial loader from this route
+
   // handle action for search button
   async function handleSearch(event: React.ChangeEvent<HTMLInputElement>) {
     try {
@@ -83,7 +58,6 @@ export default function VechicalReport() {
         queryFn: () => getMaintenance(`q=${event.target.value}`),
       });
       setReports(newReports);
-      console.log(newReports.headers.get("x-total-count"));
     } catch (error) {
       console.error(error);
     }
@@ -191,6 +165,19 @@ export default function VechicalReport() {
       setSortDescending(isDescending);
     }
   };
+
+  async function onPaginationChange(page: number) {
+    try {
+      const newReports = await queryClient.fetchQuery({
+        queryKey: ["report", ""],
+        queryFn: () => getMaintenance(`_page=${page}`),
+      });
+      setReports(newReports);
+      setCurrentPage(page);
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   return (
     <div className="container mx-auto h-screen flex flex-col items-center md:block mb-28">
@@ -381,9 +368,11 @@ export default function VechicalReport() {
                 ) : (
                   (reports) => {
                     assertIsMaintenances(reports.body);
+                    // this to prvent data from cache to display incorrect lenght after added.
+                    const paginatedReports = reports.body.slice(0, 5); // Show only the first 5 records
                     return (
                       <VReportItem
-                        reports={reports.body}
+                        reports={paginatedReports}
                         onCheckboxChange={onCheckboxChange}
                       />
                     );
@@ -403,13 +392,19 @@ export default function VechicalReport() {
         <div
           className={`flex overflow-x-auto sm:justify-center self-end ${theme?.theme}`}
         >
-          <Pagination
-            currentPage={currentPage}
-            totalPages={10}
-            onPageChange={onPageChange}
-            showIcons
-            layout={window.innerWidth < 680 ? "table" : undefined}
-          />
+          <Suspense>
+            <Await resolve={reports}>
+              {(reports) => {
+                return (
+                  <Pagination
+                    totalPages={Number(reports.headers.get("x-total-count"))}
+                    onChange={onPaginationChange}
+                    currentPage={currentPage}
+                  />
+                );
+              }}
+            </Await>
+          </Suspense>
         </div>
       </div>
     </div>

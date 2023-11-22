@@ -1,4 +1,4 @@
-import { MaintenanceResponse, MaintenanceData } from "../../types/types";
+import { MaintenanceResponse } from "../../types/types";
 import { Checkbox, Table } from "flowbite-react";
 
 type Props = {
