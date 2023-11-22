@@ -270,8 +270,17 @@ export default function VechicalReport() {
       </div>
 
       <div className="flex flex-col gap-5 items-center mx-32">
-        <div className="flex space-x-5 self-end">
-          <div className={`dropdown`}>
+        <div className="w-full flex space-x-5 self-end ">
+          <div className="self-start">
+            <select className="select select-bordered w-full max-w-xs">
+              <option disabled selected>
+                Who shot first?
+              </option>
+              <option>Han Solo</option>
+              <option>Greedo</option>
+            </select>
+          </div>
+          <div className={`dropdown self-end`}>
             <label tabIndex={0} className="btn m-1">
               <RxDropdownMenu />
               <span>Action</span>
@@ -290,7 +299,7 @@ export default function VechicalReport() {
             </ul>
           </div>
 
-          <div className="max-w-md ">
+          <div className="max-w-md self-end">
             <div className="mb-2 block">
               <Label htmlFor="search" />
             </div>
