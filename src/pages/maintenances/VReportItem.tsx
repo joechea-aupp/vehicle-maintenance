@@ -1,8 +1,8 @@
-import { MaintenanceData } from "../../types/types";
+import { MaintenanceResponse, MaintenanceData } from "../../types/types";
 import { Checkbox, Table } from "flowbite-react";
 
 type Props = {
-  reports: MaintenanceData[];
+  reports: MaintenanceResponse["body"];
   onCheckboxChange: (
     e: React.ChangeEvent<HTMLInputElement>,
     id: number

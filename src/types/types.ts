@@ -14,6 +14,11 @@ export type MaintenanceData = {
   service: Service[];
 };
 
+export type MaintenanceResponse = {
+  body: MaintenanceData[];
+  headers: Headers;
+};
+
 export type MaintenancePost = {
   vehicle: string;
   maintenance_date: string;

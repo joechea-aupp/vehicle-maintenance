@@ -1,7 +1,10 @@
-import { Flowbite, Datepicker, Checkbox } from "flowbite-react";
-import { customDatepickerTheme } from "../../types/CustomTheme";
-import { useForm, FieldError, Controller } from "react-hook-form";
-import { MaintenancePost, Service, MaintenanceData } from "../../types/types";
+import { Checkbox } from "flowbite-react";
+import { useForm, FieldError } from "react-hook-form";
+import {
+  MaintenanceResponse,
+  MaintenancePost,
+  Service,
+} from "../../types/types";
 import ErrorLabel from "../../components/Errors/ErrorLabel";
 import SubmitBtn from "../../components/Button/SubmitBtn";
 import { ThemeContext } from "../../contexts/ThemeContext";
@@ -17,7 +20,7 @@ export default function VechicalForm() {
     handleSubmit,
     control,
     reset,
-    formState: { errors, isSubmitting, isSubmitSuccessful },
+    formState: { errors },
   } = useForm<MaintenancePost>();
 
   const tableRows: Service[] = [
@@ -50,18 +53,24 @@ export default function VechicalForm() {
       postMaintenance(newMaintenance),
     onSuccess: (saveMaintenance) => {
       // after successfully post data, send this data new and older data to the cache
-      queryClient.setQueryData<MaintenanceData[] | undefined>(
+      queryClient.setQueryData<MaintenanceResponse | undefined>(
         ["report", ""],
         (oldData) => {
           if (oldData === undefined) {
-            return [
-              { ...saveMaintenance, service: saveMaintenance.service || [] },
-            ];
+            return {
+              headers: new Headers(),
+              body: [
+                { ...saveMaintenance, service: saveMaintenance.service || [] },
+              ],
+            };
           } else {
-            return [
-              { ...saveMaintenance, service: saveMaintenance.service || [] },
-              ...oldData,
-            ];
+            return {
+              headers: oldData.headers,
+              body: [
+                { ...saveMaintenance, service: saveMaintenance.service || [] },
+                ...oldData.body,
+              ],
+            };
           }
         }
       );

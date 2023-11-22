@@ -11,7 +11,11 @@ import { FiSearch } from "react-icons/fi";
 import { useState, useEffect } from "react";
 import { useLoaderData, Await } from "react-router-dom";
 import { assertIsMaintenances } from "../../externals/getMaintenance";
-import { MaintenanceData, MaintenanceID } from "../../types/types";
+import {
+  MaintenanceResponse,
+  MaintenanceData,
+  MaintenanceID,
+} from "../../types/types";
 import VReportItem from "./VReportItem";
 import { Suspense } from "react";
 import ErrorBlock from "../../components/Errors/Error";
@@ -27,7 +31,7 @@ import Dateselecter from "../../components/Dateselecter";
 import ColumnTitle from "../../components/ColumnTitle";
 
 type Data = {
-  reports: MaintenanceData[];
+  reports: MaintenanceResponse;
 };
 export function assertIsData(data: unknown): asserts data is Data {
   if (typeof data !== "object") {
@@ -79,6 +83,7 @@ export default function VechicalReport() {
         queryFn: () => getMaintenance(`q=${event.target.value}`),
       });
       setReports(newReports);
+      console.log(newReports.headers.get("x-total-count"));
     } catch (error) {
       console.error(error);
     }
@@ -105,18 +110,19 @@ export default function VechicalReport() {
     mutationFn: (maintenanceID: MaintenanceID) => delMaintenance(maintenanceID),
     onSuccess: () => {
       // after successfully post data, send this data new and older data to the cache
-      queryClient.setQueryData<MaintenanceData[] | undefined>(
+      queryClient.setQueryData<MaintenanceResponse | undefined>(
         ["report", ""],
         (oldData) => {
           if (oldData === undefined) {
-            return [
-              // return data from cache that filter out checkedReport
-            ];
+            return undefined;
           } else {
             // return olddata that filter out checkedReport array
-            const newData = oldData.filter(
-              (item) => !checkedReport.includes(item.id)
-            );
+            const newData = {
+              headers: oldData.headers,
+              body: oldData.body.filter(
+                (item) => !checkedReport.includes(item.id)
+              ),
+            };
 
             setReports(newData);
             return newData;
@@ -139,40 +145,43 @@ export default function VechicalReport() {
   const [sortDescending, setSortDescending] = useState<boolean>(false);
   const [sortBy, setSortBy] = useState<string>("");
   const onSort = (fieldName: string) => {
-    const cachedData = queryClient.getQueryData<MaintenanceData[] | undefined>([
-      "report",
-      "",
-    ]);
+    const cachedData = queryClient.getQueryData<
+      MaintenanceResponse | undefined
+    >(["report", ""]);
 
     if (cachedData) {
       const isDescending = sortBy === fieldName && !sortDescending;
-      const sortedData = cachedData.slice().sort((a, b) => {
-        if (fieldName === "maintenance_date") {
-          const dateA = String(a[fieldName]) ? a[fieldName] : "";
-          const dateB = String(b[fieldName]) ? b[fieldName] : "";
+      const sortedData: MaintenanceResponse = {
+        headers: cachedData.headers,
+        body: cachedData.body.slice().sort((a, b) => {
+          if (fieldName === "maintenance_date") {
+            const dateA = String(a[fieldName]) ? a[fieldName] : "";
+            const dateB = String(b[fieldName]) ? b[fieldName] : "";
 
-          const parsedDateA = new Date(dateA.split("-").reverse().join("-"));
-          const parsedDateB = new Date(dateB.split("-").reverse().join("-"));
-          const compareResult = parsedDateA.getTime() - parsedDateB.getTime();
+            const parsedDateA = new Date(dateA.split("-").reverse().join("-"));
+            const parsedDateB = new Date(dateB.split("-").reverse().join("-"));
+            const compareResult = parsedDateA.getTime() - parsedDateB.getTime();
 
-          return isDescending ? -compareResult : compareResult;
-        } else if (fieldName === "price") {
-          // For the 'price' field, directly compare the numbers
-          return isDescending
-            ? b.service.reduce((acc, service) => acc + service.price, 0) -
-                a.service.reduce((acc, service) => acc + service.price, 0)
-            : a.service.reduce((acc, service) => acc + service.price, 0) -
-                b.service.reduce((acc, service) => acc + service.price, 0);
-        } else {
-          const valueA = a[fieldName as keyof MaintenanceData];
-          const valueB = b[fieldName as keyof MaintenanceData];
-          const compareResult = valueA > valueB ? 1 : valueA < valueB ? -1 : 0;
+            return isDescending ? -compareResult : compareResult;
+          } else if (fieldName === "price") {
+            // For the 'price' field, directly compare the numbers
+            return isDescending
+              ? b.service.reduce((acc, service) => acc + service.price, 0) -
+                  a.service.reduce((acc, service) => acc + service.price, 0)
+              : a.service.reduce((acc, service) => acc + service.price, 0) -
+                  b.service.reduce((acc, service) => acc + service.price, 0);
+          } else {
+            const valueA = a[fieldName as keyof MaintenanceData];
+            const valueB = b[fieldName as keyof MaintenanceData];
+            const compareResult =
+              valueA > valueB ? 1 : valueA < valueB ? -1 : 0;
 
-          return isDescending ? -compareResult : compareResult;
-        }
-      });
+            return isDescending ? -compareResult : compareResult;
+          }
+        }),
+      };
 
-      queryClient.setQueryData<MaintenanceData[] | undefined>(
+      queryClient.setQueryData<MaintenanceResponse | undefined>(
         ["report", ""],
         sortedData
       );
@@ -371,10 +380,10 @@ export default function VechicalReport() {
                   <SkeletonRow />
                 ) : (
                   (reports) => {
-                    assertIsMaintenances(reports);
+                    assertIsMaintenances(reports.body);
                     return (
                       <VReportItem
-                        reports={reports}
+                        reports={reports.body}
                         onCheckboxChange={onCheckboxChange}
                       />
                     );
