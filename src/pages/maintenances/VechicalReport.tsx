@@ -46,6 +46,17 @@ export default function VechicalReport() {
   assertIsData(data);
   // pagination control
   const [currentPage, setCurrentPage] = useState(1);
+  const [displayRow, setDisplayRow] = useState(
+    Number(localStorage.getItem("displayRow")) || 5
+  ); // default display row is 5
+  // on select change, update display row
+  const handleDisplayRow = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setDisplayRow(Number(event.target.value));
+    localStorage.setItem("displayRow", event.target.value);
+    // flush the cache, to get new data from the server after update.
+    queryClient.invalidateQueries({ queryKey: ["report", ""] });
+  };
+
   // update data to report table
   const [reports, setReports] = useState(data.reports);
   // useLoaderData get the data from the intial loader from this route
@@ -55,7 +66,8 @@ export default function VechicalReport() {
     try {
       const newReports = await queryClient.fetchQuery({
         queryKey: ["report", ""],
-        queryFn: () => getMaintenance(`q=${event.target.value}`),
+        queryFn: () =>
+          getMaintenance(`q=${event.target.value}&_limit=${displayRow}`),
       });
       setReports(newReports);
     } catch (error) {
@@ -170,7 +182,7 @@ export default function VechicalReport() {
     try {
       const newReports = await queryClient.fetchQuery({
         queryKey: ["report", ""],
-        queryFn: () => getMaintenance(`_page=${page}`),
+        queryFn: () => getMaintenance(`_limit=${displayRow}&_page=${page}`),
       });
       setReports(newReports);
       setCurrentPage(page);
@@ -270,17 +282,19 @@ export default function VechicalReport() {
       </div>
 
       <div className="flex flex-col gap-5 items-center mx-32">
-        <div className="w-full flex space-x-5 self-end ">
-          <div className="self-start">
-            <select className="select select-bordered w-full max-w-xs">
-              <option disabled selected>
-                Who shot first?
-              </option>
-              <option>Han Solo</option>
-              <option>Greedo</option>
+        <div className="w-full flex space-x-5 justify-center items-center">
+          <div className="w-full">
+            <select
+              className="select select-bordered select-sm text-sm w-[80px] h-1/2 max-w-xs"
+              onChange={handleDisplayRow}
+              value={displayRow}
+            >
+              <option value={5}>5</option>
+              <option value={10}>10</option>
+              <option value="All">All</option>
             </select>
           </div>
-          <div className={`dropdown self-end`}>
+          <div className={`dropdown w-40`}>
             <label tabIndex={0} className="btn m-1">
               <RxDropdownMenu />
               <span>Action</span>
@@ -299,7 +313,7 @@ export default function VechicalReport() {
             </ul>
           </div>
 
-          <div className="max-w-md self-end">
+          <div className="max-w-md pb-2">
             <div className="mb-2 block">
               <Label htmlFor="search" />
             </div>
@@ -378,7 +392,7 @@ export default function VechicalReport() {
                   (reports) => {
                     assertIsMaintenances(reports.body);
                     // this to prvent data from cache to display incorrect lenght after added.
-                    const paginatedReports = reports.body.slice(0, 5); // Show only the first 5 records
+                    const paginatedReports = reports.body.slice(0, displayRow); // Show only the first 5 records
                     return (
                       <VReportItem
                         reports={paginatedReports}
@@ -409,6 +423,7 @@ export default function VechicalReport() {
                     totalPages={Number(reports.headers.get("x-total-count"))}
                     onChange={onPaginationChange}
                     currentPage={currentPage}
+                    displayPerPage={displayRow}
                   />
                 );
               }}

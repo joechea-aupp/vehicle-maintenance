@@ -2,7 +2,8 @@ import { MaintenanceData } from "../types/types";
 
 // get data from endpoint, and assert the data is valid
 export async function getMaintenance(param?: string) {
-  param = param ? `${param}&_limit=5` : "_limit=5";
+  const defaultDisplayRow = Number(localStorage.getItem("displayRow")) || 5;
+  param = param ? `${param}` : `_limit=${defaultDisplayRow}`;
   const response = await fetch(`${process.env.REACT_APP_API_URL!}?${param}`);
 
   if (!response.ok) {

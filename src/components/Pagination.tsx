@@ -3,11 +3,13 @@ type Props = {
   totalPages: number;
   onChange: (page: number) => void;
   currentPage: number;
+  displayPerPage?: number;
 };
 export default function PaginationCustom({
   totalPages,
   onChange,
   currentPage,
+  displayPerPage = 5,
 }: Props) {
   const getTotalPage = (totalRows: number, displayPerPage: number) => {
     const result = totalRows % displayPerPage;
@@ -20,7 +22,7 @@ export default function PaginationCustom({
   return (
     <Pagination
       currentPage={currentPage}
-      totalPages={getTotalPage(totalPages, 5)}
+      totalPages={getTotalPage(totalPages, displayPerPage)}
       onPageChange={(e) => onChange(e)}
       showIcons
       className="pagination-sm"

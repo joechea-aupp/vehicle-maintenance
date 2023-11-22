@@ -64,8 +64,13 @@ export default function VechicalForm() {
               ],
             };
           } else {
+            // If oldData exists, increment x-total-count by 1
+            const totalCount =
+              parseInt(oldData.headers.get("x-total-count") || "0", 10) + 1;
             return {
-              headers: oldData.headers,
+              headers: new Headers({
+                "x-total-count": totalCount.toString(),
+              }),
               body: [
                 { ...saveMaintenance, service: saveMaintenance.service || [] },
                 ...oldData.body,
