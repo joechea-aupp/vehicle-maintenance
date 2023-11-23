@@ -1,9 +1,33 @@
+import { useState, useEffect } from "react";
 export default function GlobalSearch() {
+  const [open, setOpen] = useState(false);
+
+  // Toggle the menu when ⌘K is pressed
+  useEffect(() => {
+    const down = (e: KeyboardEvent) => {
+      if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
+        e.preventDefault();
+        setOpen(true);
+        // set focus on input
+        const input = document.querySelector(".input") as HTMLInputElement;
+        if (input) {
+          input.focus();
+        }
+      }
+      if (e.key === "Escape") {
+        setOpen(false);
+      }
+    };
+
+    document.addEventListener("keydown", down);
+    return () => document.removeEventListener("keydown", down);
+  }, []);
+
   return (
     <div>
       {/* Open the modal using document.getElementById('ID').showModal() method */}
       <button
-        className="btn btn-ghost btn-circle"
+        className="btn btn-ghost w-40"
         onClick={() => {
           const myModel = document.getElementById(
             "my_modal_2"
@@ -27,8 +51,10 @@ export default function GlobalSearch() {
             d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
           />
         </svg>
+        <kbd className="kbd kbd-xs">ctrl</kbd>+
+        <kbd className="kbd kbd-xs">k</kbd>
       </button>
-      <dialog id="my_modal_2" className="modal">
+      <dialog id="my_modal_2" className={`modal ${open ? "modal-open" : ""}`}>
         <div className="modal-box ">
           <div className="relative">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-auto">
