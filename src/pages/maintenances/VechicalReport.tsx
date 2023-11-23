@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import { Flowbite, Label, TextInput, Checkbox, Table } from "flowbite-react";
 import { customTextInputTheme } from "../../types/CustomTheme";
 import Pagination from "../../components/Pagination";
