@@ -50,11 +50,30 @@ export default function VechicalReport() {
     Number(localStorage.getItem("displayRow")) || 5
   ); // default display row is 5
   // on select change, update display row
-  const handleDisplayRow = (event: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleDisplayRow = async (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    const largerRow = displayRow < Number(event.target.value);
     setDisplayRow(Number(event.target.value));
     localStorage.setItem("displayRow", event.target.value);
-    // flush the cache, to get new data from the server after update.
-    queryClient.invalidateQueries({ queryKey: ["report", ""] });
+
+    // condition to check if the data is already in cache and the new display row is larger than the current display row
+    // if cache data is larger than the current display row, no need to fetch for new data, just display the cache data
+    if (largerRow) {
+      const cachedData = queryClient.getQueryData<
+        MaintenanceResponse | undefined
+      >(["report", ""]);
+
+      if (cachedData) {
+        if (cachedData.body.length < Number(event.target.value)) {
+          const newReports = await queryClient.fetchQuery({
+            queryKey: ["report", ""],
+            queryFn: () => getMaintenance(`_limit=${event.target.value}`),
+          });
+          setReports(newReports);
+        }
+      }
+    }
   };
 
   // update data to report table
@@ -94,27 +113,32 @@ export default function VechicalReport() {
     // new version of react-query use mutationfn to run function with parameter provided
     // the mutate is eq to mutateFn which need one parameter which is data.
     mutationFn: (maintenanceID: MaintenanceID) => delMaintenance(maintenanceID),
-    onSuccess: () => {
+    onSuccess: async () => {
       // after successfully post data, send this data new and older data to the cache
-      queryClient.setQueryData<MaintenanceResponse | undefined>(
-        ["report", ""],
-        (oldData) => {
-          if (oldData === undefined) {
-            return undefined;
-          } else {
-            // return olddata that filter out checkedReport array
-            const newData = {
-              headers: oldData.headers,
-              body: oldData.body.filter(
-                (item) => !checkedReport.includes(item.id)
-              ),
-            };
-
-            setReports(newData);
-            return newData;
-          }
-        }
-      );
+      // queryClient.setQueryData<MaintenanceResponse | undefined>(
+      //   ["report", ""],
+      //   (oldData) => {
+      //     if (oldData === undefined) {
+      //       return undefined;
+      //     } else {
+      //       // return olddata that filter out checkedReport array
+      //       const newData = {
+      //         headers: oldData.headers,
+      //         body: oldData.body.filter(
+      //           (item) => !checkedReport.includes(item.id)
+      //         ),
+      //       };
+      //       setReports(newData);
+      //       return newData;
+      //     }
+      //   }
+      // );
+      // this way work better tham the above, update new cache data with the new data from the server
+      const newReports = await queryClient.fetchQuery({
+        queryKey: ["report", ""],
+        queryFn: () => getMaintenance(`_limit=${displayRow}`),
+      });
+      setReports(newReports);
     },
   });
   // handle delete action on the delete button.
@@ -192,7 +216,7 @@ export default function VechicalReport() {
   }
 
   return (
-    <div className="container mx-auto h-screen flex flex-col items-center md:block mb-28">
+    <div className="container mx-auto h-full flex flex-col items-center md:block mb-28">
       <div className="flex justify-center">
         <h1 className="text-xl font-extrabold">Report</h1>
       </div>
@@ -291,7 +315,7 @@ export default function VechicalReport() {
             >
               <option value={5}>5</option>
               <option value={10}>10</option>
-              <option value="All">All</option>
+              <option value={20}>20</option>
             </select>
           </div>
           <div className={`dropdown w-40`}>
@@ -332,7 +356,7 @@ export default function VechicalReport() {
           </div>
         </div>
 
-        <div className="w-full">
+        <div className="w-full h-max">
           <Table
             hoverable
             className={`bg-transparent shadow-md ${theme?.theme}`}
@@ -386,21 +410,17 @@ export default function VechicalReport() {
             <Suspense fallback={<SkeletonRow />}>
               {/* await act as await to resolve data from promise or async */}
               <Await resolve={reports} errorElement={<ErrorBlock />}>
-                {status === "pending" ? (
-                  <SkeletonRow />
-                ) : (
-                  (reports) => {
-                    assertIsMaintenances(reports.body);
-                    // this to prvent data from cache to display incorrect lenght after added.
-                    const paginatedReports = reports.body.slice(0, displayRow); // Show only the first 5 records
-                    return (
-                      <VReportItem
-                        reports={paginatedReports}
-                        onCheckboxChange={onCheckboxChange}
-                      />
-                    );
-                  }
-                )}
+                {(reports) => {
+                  assertIsMaintenances(reports.body);
+                  // this to prvent data from cache to display incorrect lenght after added.
+                  const paginatedReports = reports.body.slice(0, displayRow); // Show only the first 5 records
+                  return (
+                    <VReportItem
+                      reports={paginatedReports}
+                      onCheckboxChange={onCheckboxChange}
+                    />
+                  );
+                }}
               </Await>
             </Suspense>
           </Table>
