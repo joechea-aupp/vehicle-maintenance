@@ -75,7 +75,7 @@ export default function GlobalSearch() {
             </div>
             <input
               type="text"
-              placeholder="Type here"
+              placeholder="Search ..."
               className="input input-bordered block pl-10"
               style={{ width: "100%" }}
             />

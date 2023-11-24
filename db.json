@@ -1,4 +1,16 @@
 {
+  "menu": [
+    {
+      "id": 1,
+      "name": "Vechicle Maintenance",
+      "path": "/"
+    },
+    {
+      "id": 2,
+      "name": "Report",
+      "path": "/report"
+    }
+  ],
   "reports": [
     {
       "vehicle": "Lexus RX200",
