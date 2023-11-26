@@ -1,4 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
+import { useQueryClient } from "@tanstack/react-query";
+import { Await } from "react-router-dom";
+import SearchItem from "./SearchItem";
+import ErrorBlock from "./Errors/Error";
 export default function GlobalSearch() {
   const [open, setOpen] = useState(false);
 
@@ -22,6 +26,36 @@ export default function GlobalSearch() {
     document.addEventListener("keydown", down);
     return () => document.removeEventListener("keydown", down);
   }, []);
+
+  const [search, setSearch] = useState([]);
+
+  // When the search term changes, update the query
+  const queryClient = useQueryClient();
+
+  const handleSearch = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(e.target.value);
+    const searchValue = e.target.value;
+    try {
+      const newSearch = await queryClient.fetchQuery({
+        queryKey: ["search", searchValue],
+        queryFn: async () => {
+          const response = await fetch(
+            `http://localhost:3001/menu?q=${searchValue}`
+          );
+
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+
+          return response.json();
+        },
+      });
+
+      setSearch(newSearch);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div>
@@ -78,6 +112,7 @@ export default function GlobalSearch() {
               placeholder="Search ..."
               className="input input-bordered block pl-10"
               style={{ width: "100%" }}
+              onChange={handleSearch}
             />
           </div>
           {/* New row for search results or recent searches */}
@@ -85,11 +120,13 @@ export default function GlobalSearch() {
           <div>
             <div className="overflow-x-auto">
               <table className="table-auto ml-10">
-                <tbody>
-                  <tr>
-                    <td>Recent Search ...</td>
-                  </tr>
-                </tbody>
+                <Suspense>
+                  <Await resolve={search} errorElement={<ErrorBlock />}>
+                    {(search) => {
+                      return <SearchItem search={search} />;
+                    }}
+                  </Await>
+                </Suspense>
               </table>
             </div>
           </div>

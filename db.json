@@ -3,12 +3,14 @@
     {
       "id": 1,
       "name": "Vechicle Maintenance",
-      "path": "/"
+      "path": "/",
+      "description": "Insert new vehicle maintenance record"
     },
     {
       "id": 2,
       "name": "Report",
-      "path": "/report"
+      "path": "/report",
+      "description": "View or delete vehicle maintenance report"
     }
   ],
   "reports": [
