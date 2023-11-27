@@ -33,7 +33,6 @@ export default function GlobalSearch() {
   const queryClient = useQueryClient();
 
   const handleSearch = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.value);
     const searchValue = e.target.value;
     try {
       const newSearch = await queryClient.fetchQuery({
@@ -113,13 +112,14 @@ export default function GlobalSearch() {
               className="input input-bordered block pl-10"
               style={{ width: "100%" }}
               onChange={handleSearch}
+              onFocus={(e) => e.target.select()}
             />
           </div>
           {/* New row for search results or recent searches */}
           <div className="divider"></div>
           <div>
             <div className="overflow-x-auto">
-              <table className="table-auto ml-10">
+              {/* <table className="table-auto ml-10">
                 <Suspense>
                   <Await resolve={search} errorElement={<ErrorBlock />}>
                     {(search) => {
@@ -127,7 +127,16 @@ export default function GlobalSearch() {
                     }}
                   </Await>
                 </Suspense>
-              </table>
+              </table> */}
+              <ul>
+                <Suspense>
+                  <Await resolve={search} errorElement={<ErrorBlock />}>
+                    {(search) => {
+                      return <SearchItem search={search} setOpen={setOpen} />;
+                    }}
+                  </Await>
+                </Suspense>
+              </ul>
             </div>
           </div>
         </div>
