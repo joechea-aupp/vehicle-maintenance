@@ -4,8 +4,9 @@ import { ThemeContext } from "../contexts/ThemeContext";
 type Props = {
   search: any[];
   setOpen: (open: boolean) => void;
+  searchTerm: string;
 };
-export default function SearchItem({ search, setOpen }: Props) {
+export default function SearchItem({ search, setOpen, searchTerm }: Props) {
   const navigate = useNavigate();
   const [selectIndex, setSelectIndex] = useState(0);
   const theme = useContext(ThemeContext);
@@ -50,6 +51,23 @@ export default function SearchItem({ search, setOpen }: Props) {
     };
   });
 
+  const highlightMatch = (text: string) => {
+    if (!searchTerm) {
+      return text;
+    }
+
+    const regex = new RegExp(`(${searchTerm})`, "i");
+    return text.split(regex).map((chunk, index) => {
+      return regex.test(chunk) ? (
+        <span key={index} className="font-bold">
+          {chunk}
+        </span>
+      ) : (
+        <span key={index}>{chunk}</span>
+      );
+    });
+  };
+
   return (
     <>
       {search.map((item: any, index) => {
@@ -59,9 +77,11 @@ export default function SearchItem({ search, setOpen }: Props) {
             key={item.id}
             onClick={() => handleEnter()}
           >
-            <span className="ml-2">{item.name} </span>
+            <span className="ml-2">{highlightMatch(item.name)}</span>
             <br />
-            <span className="ml-2 text-xs">{item.description}</span>
+            <span className="ml-2 text-xs">
+              {highlightMatch(item.description)}
+            </span>
           </li>
         );
       })}

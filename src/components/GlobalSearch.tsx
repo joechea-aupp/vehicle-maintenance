@@ -5,6 +5,7 @@ import SearchItem from "./SearchItem";
 import ErrorBlock from "./Errors/Error";
 export default function GlobalSearch() {
   const [open, setOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
 
   // Toggle the menu when ⌘K is pressed
   useEffect(() => {
@@ -50,6 +51,7 @@ export default function GlobalSearch() {
         },
       });
 
+      setSearchTerm(searchValue);
       setSearch(newSearch);
     } catch (error) {
       console.log(error);
@@ -123,7 +125,13 @@ export default function GlobalSearch() {
                 <Suspense>
                   <Await resolve={search} errorElement={<ErrorBlock />}>
                     {(search) => {
-                      return <SearchItem search={search} setOpen={setOpen} />;
+                      return (
+                        <SearchItem
+                          search={search}
+                          setOpen={setOpen}
+                          searchTerm={searchTerm}
+                        />
+                      );
                     }}
                   </Await>
                 </Suspense>
