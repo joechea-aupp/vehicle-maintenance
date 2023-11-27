@@ -8,13 +8,14 @@ import {
 import ErrorLabel from "../../components/Errors/ErrorLabel";
 import SubmitBtn from "../../components/Button/SubmitBtn";
 import { ThemeContext } from "../../contexts/ThemeContext";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import postMaintenance from "../../externals/postMaintenance";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Dateselecter from "../../components/Dateselecter";
 
 export default function VechicalForm() {
   const theme = useContext(ThemeContext);
+  const [showDropdown, setShowDropdown] = useState(false);
   const {
     register,
     handleSubmit,
@@ -238,7 +239,17 @@ export default function VechicalForm() {
                 )}`}
                 style={{ width: "100%" }}
                 disabled={status === "pending"}
+                onFocus={() => setShowDropdown(true)}
+                onBlur={() => setShowDropdown(false)}
               />
+              {/* Conditionally render the dropdown based on showDropdown state */}
+              {showDropdown && (
+                <ul className="absolute z-10 bg-white border border-gray-300 mt-2 rounded-md shadow-md w-full">
+                  <li className="list-none">hh</li>
+                  <li className="list-none">hh</li>
+                  <li className="list-none">hh</li>
+                </ul>
+              )}
             </div>
           </div>
 
