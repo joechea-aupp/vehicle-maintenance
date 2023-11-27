@@ -50,12 +50,13 @@ export default function SearchItem({ search, setOpen }: Props) {
       {search.map((item: any, index) => {
         return (
           <li
-            className={selectIndex === index ? "bg-red-500" : ""}
+            className={`py-2 ${selectIndex === index ? "bg-[#297491]" : ""}`}
             key={item.id}
             onClick={() => handleEnter()}
           >
-            {item.name} <br />
-            <span className="text-sm">{item.description}</span>
+            <span className="ml-2">{item.name} </span>
+            <br />
+            <span className="ml-2 text-xs">{item.description}</span>
           </li>
         );
       })}

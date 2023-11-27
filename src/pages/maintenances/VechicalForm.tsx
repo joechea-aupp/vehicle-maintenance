@@ -301,7 +301,7 @@ export default function VechicalForm() {
                     <th>{index + 1}</th>
                     <td>
                       <input
-                        className={disabledInputStyle}
+                        className={`truncate ${disabledInputStyle}`}
                         type="text"
                         {...register(`service.${index}.name`, {
                           required: "Service name is missing",
@@ -312,7 +312,7 @@ export default function VechicalForm() {
                     </td>
                     <td>
                       <input
-                        className={disabledInputStyle}
+                        className={`truncate ${disabledInputStyle}`}
                         type="text"
                         {...register(`service.${index}.description`, {
                           required: "Service description is missing",
