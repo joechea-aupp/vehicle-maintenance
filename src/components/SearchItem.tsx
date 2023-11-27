@@ -1,5 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { ThemeContext } from "../contexts/ThemeContext";
 type Props = {
   search: any[];
   setOpen: (open: boolean) => void;
@@ -7,6 +8,10 @@ type Props = {
 export default function SearchItem({ search, setOpen }: Props) {
   const navigate = useNavigate();
   const [selectIndex, setSelectIndex] = useState(0);
+  const theme = useContext(ThemeContext);
+
+  const highlightColor =
+    theme?.theme === "dark" ? "bg-[#297491]" : "bg-slate-300";
 
   const handleKeyDown = (e: KeyboardEvent) => {
     switch (e.key) {
@@ -50,7 +55,7 @@ export default function SearchItem({ search, setOpen }: Props) {
       {search.map((item: any, index) => {
         return (
           <li
-            className={`py-2 ${selectIndex === index ? "bg-[#297491]" : ""}`}
+            className={`py-2 ${selectIndex === index ? highlightColor : ""}`}
             key={item.id}
             onClick={() => handleEnter()}
           >

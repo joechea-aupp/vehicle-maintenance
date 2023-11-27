@@ -119,15 +119,6 @@ export default function GlobalSearch() {
           <div className="divider"></div>
           <div>
             <div className="overflow-x-auto">
-              {/* <table className="table-auto ml-10">
-                <Suspense>
-                  <Await resolve={search} errorElement={<ErrorBlock />}>
-                    {(search) => {
-                      return <SearchItem search={search} />;
-                    }}
-                  </Await>
-                </Suspense>
-              </table> */}
               <ul>
                 <Suspense>
                   <Await resolve={search} errorElement={<ErrorBlock />}>
