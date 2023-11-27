@@ -9,6 +9,7 @@ type Props = {
 export default function SearchItem({ search, setOpen, searchTerm }: Props) {
   const navigate = useNavigate();
   const [selectIndex, setSelectIndex] = useState(0);
+  const [hoverIndex, setHoverIndex] = useState<number | null>(null);
   const theme = useContext(ThemeContext);
 
   const highlightColor =
@@ -41,6 +42,15 @@ export default function SearchItem({ search, setOpen, searchTerm }: Props) {
       navigate(selectedItem.path);
       setOpen(false);
     }
+  };
+
+  const handleMouseEnter = (index: number) => {
+    setSelectIndex(index);
+    setHoverIndex(index);
+  };
+
+  const handleMouseLeave = () => {
+    setHoverIndex(null);
   };
 
   useEffect(() => {
@@ -76,6 +86,8 @@ export default function SearchItem({ search, setOpen, searchTerm }: Props) {
             className={`py-2 ${selectIndex === index ? highlightColor : ""}`}
             key={item.id}
             onClick={() => handleEnter()}
+            onMouseEnter={() => handleMouseEnter(index)}
+            onMouseLeave={handleMouseLeave}
           >
             <span className="ml-2">{highlightMatch(item.name)}</span>
             <br />
