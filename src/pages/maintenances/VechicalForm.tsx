@@ -8,14 +8,13 @@ import {
 import ErrorLabel from "../../components/Errors/ErrorLabel";
 import SubmitBtn from "../../components/Button/SubmitBtn";
 import { ThemeContext } from "../../contexts/ThemeContext";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import postMaintenance from "../../externals/postMaintenance";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Dateselecter from "../../components/Dateselecter";
-
+import ServiceSearch from "./ServiceSearch";
 export default function VechicalForm() {
   const theme = useContext(ThemeContext);
-  const [showDropdown, setShowDropdown] = useState(false);
   const {
     register,
     handleSubmit,
@@ -191,68 +190,11 @@ export default function VechicalForm() {
               <option>Toyota Terk Tla</option>
             </select>
           </div>
-
-          <div className="form-control w-full max-w-xs">
-            <label className="label">
-              <span className="label-text">Search Service</span>
-              {errors.service?.[0]?.name && (
-                <ErrorLabel fieldError={errors.service?.[0]?.name} />
-              )}
-            </label>
-            <div className="relative">
-              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-auto">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="absolute h-5 w-5"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                  />
-                </svg>
-              </div>
-
-              <button
-                className="btn btn-square btn-outline absolute inset-y-0 right-0 btn-sm my-auto mr-1"
-                disabled={status === "pending"}
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  height="1em"
-                  viewBox="0 0 448 512"
-                  fill="#384151"
-                >
-                  <path d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z" />
-                </svg>
-              </button>
-
-              <input
-                type="text"
-                placeholder="Type here"
-                className={`input input-bordered block pl-10 ${getEditorStyle(
-                  errors.service?.[0]?.name ?? undefined
-                )}`}
-                style={{ width: "100%" }}
-                disabled={status === "pending"}
-                onFocus={() => setShowDropdown(true)}
-                onBlur={() => setShowDropdown(false)}
-              />
-              {/* Conditionally render the dropdown based on showDropdown state */}
-              {showDropdown && (
-                <ul className="absolute z-10 bg-white border border-gray-300 mt-2 rounded-md shadow-md w-full">
-                  <li className="list-none">hh</li>
-                  <li className="list-none">hh</li>
-                  <li className="list-none">hh</li>
-                </ul>
-              )}
-            </div>
-          </div>
-
+          <ServiceSearch
+            errors={errors}
+            status={status}
+            getEditorStyle={getEditorStyle}
+          />
           {/* row 4 */}
           <div className="form-control w-full max-w-xs col-span-1">
             <label className="label">
