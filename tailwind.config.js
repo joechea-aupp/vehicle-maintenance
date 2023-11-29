@@ -15,6 +15,9 @@ module.exports = {
       animation: {
         fadeOut: "fadeOut 1s ease-out 1s forwards",
       },
+      fontFamily: {
+        custom: ["Anton-Regular", "sans-serif"],
+      },
     },
   },
   plugins: [require("daisyui"), require("flowbite/plugin")],
