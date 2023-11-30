@@ -16,7 +16,8 @@ module.exports = {
         fadeOut: "fadeOut 1s ease-out 1s forwards",
       },
       fontFamily: {
-        custom: ["Anton-Regular", "sans-serif"],
+        "custom-one": ["Anton-Regular", "sans-serif"],
+        "custom-two": ["Dashhorizon-eZ5wg", "sans-serif"],
       },
     },
   },

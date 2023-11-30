@@ -219,7 +219,7 @@ export default function VechicalReport() {
   return (
     <div className="container mx-auto h-full flex flex-col items-center md:block mb-28">
       <div className="flex justify-center">
-        <h1 className="text-xl font-extrabold font-custom tracking-wider">
+        <h1 className="text-xl font-extrabold font-custom-two tracking-wider">
           Report
         </h1>
       </div>

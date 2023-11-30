@@ -22,3 +22,11 @@ code {
   font-weight: normal;
   font-style: normal;
 }
+
+@font-face {
+  font-family: "Dashhorizon-eZ5wg";
+  src: url("\\fonts\\Dashhorizon-eZ5wg.otf");
+  format: "truetype";
+  font-weight: normal;
+  font-style: normal;
+}
