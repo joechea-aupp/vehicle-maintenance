@@ -3,6 +3,9 @@ import { useQueryClient } from "@tanstack/react-query";
 import { Await } from "react-router-dom";
 import SearchItem from "./SearchItem";
 import ErrorBlock from "./Errors/Error";
+import { getMenu } from "../externals/searchMenu";
+import { MenuData } from "../types/types";
+
 export default function GlobalSearch() {
   const [open, setOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
@@ -28,7 +31,7 @@ export default function GlobalSearch() {
     return () => document.removeEventListener("keydown", down);
   }, []);
 
-  const [search, setSearch] = useState([]);
+  const [search, setSearch] = useState<MenuData>([]);
 
   // When the search term changes, update the query
   const queryClient = useQueryClient();
@@ -38,17 +41,7 @@ export default function GlobalSearch() {
     try {
       const newSearch = await queryClient.fetchQuery({
         queryKey: ["search", searchValue],
-        queryFn: async () => {
-          const response = await fetch(
-            `http://localhost:3001/menu?q=${searchValue}`
-          );
-
-          if (!response.ok) {
-            throw new Error("Network response was not ok");
-          }
-
-          return response.json();
-        },
+        queryFn: () => getMenu(searchValue),
       });
 
       setSearchTerm(searchValue);

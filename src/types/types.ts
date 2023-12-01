@@ -34,3 +34,10 @@ export type SavedMaintenance = {
 
 export type MaintenanceID = number;
 export type deletedMaintenance = {};
+
+export type MenuData = {
+  id: number;
+  name: string;
+  path: string;
+  description: string;
+};
