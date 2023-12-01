@@ -23,7 +23,7 @@ npm run server
 - [x] add animation when submit form loading/submitted
 - [ ] beautify error message
 - [x] toggle dark and light mode
-- [ ] add spotlight like for global search
+- [x] add spotlight like for global search
 
 ### functionality
 
@@ -32,6 +32,9 @@ npm run server
 - [x] add sort functionality on report table
 - [x] add pagination on report table
 - [x] save user's toggle dark and light mode in localstorage
+- [ ] add service search functionality in the vehicle management page
+  - [ ] add new service item from search service to the vehicle record
+  - [ ] insert new service item to the search result and add it in the vehicle record
 
 ### page
 
