@@ -10,7 +10,7 @@ export default function GlobalSearch() {
   const [open, setOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
 
-  // Toggle the menu when ⌘K is pressed
+  // Toggle the menu when control k is pressed
   useEffect(() => {
     const down = (e: KeyboardEvent) => {
       if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
@@ -22,6 +22,7 @@ export default function GlobalSearch() {
           input.focus();
         }
       }
+      // Close the modal when escape is pressed
       if (e.key === "Escape") {
         setOpen(false);
       }
@@ -31,11 +32,10 @@ export default function GlobalSearch() {
     return () => document.removeEventListener("keydown", down);
   }, []);
 
-  const [search, setSearch] = useState<MenuData>([]);
+  const [search, setSearch] = useState<MenuData[]>([]);
 
   // When the search term changes, update the query
   const queryClient = useQueryClient();
-
   const handleSearch = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const searchValue = e.target.value;
     try {
@@ -43,7 +43,8 @@ export default function GlobalSearch() {
         queryKey: ["search", searchValue],
         queryFn: () => getMenu(searchValue),
       });
-
+      // search term is use to track the text to highlight
+      // in the search results
       setSearchTerm(searchValue);
       setSearch(newSearch);
     } catch (error) {
@@ -122,6 +123,7 @@ export default function GlobalSearch() {
                         <SearchItem
                           search={search}
                           setOpen={setOpen}
+                          // searchTerm is used to highlight the search term
                           searchTerm={searchTerm}
                         />
                       );

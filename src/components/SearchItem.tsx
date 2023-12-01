@@ -11,7 +11,7 @@ export default function SearchItem({ search, setOpen, searchTerm }: Props) {
   const [selectIndex, setSelectIndex] = useState(0);
   const [hoverIndex, setHoverIndex] = useState<number | null>(null);
   const theme = useContext(ThemeContext);
-
+  // will need to move this color to a global configuration
   const highlightColor =
     theme?.theme === "dark" ? "bg-[#297491]" : "bg-slate-300";
 
