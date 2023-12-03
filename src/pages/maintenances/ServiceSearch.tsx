@@ -1,17 +1,58 @@
-import { useState } from "react";
+import { useState, useEffect, useContext } from "react";
 import ErrorLabel from "../../components/Errors/ErrorLabel";
 import { FieldError } from "react-hook-form";
+import { ThemeContext } from "../../contexts/ThemeContext";
 type Props = {
+  items: any[];
   errors?: any;
   status: string;
   getEditorStyle: (error?: FieldError) => string;
 };
 export default function ServiceSearch({
+  items,
   errors,
   status,
   getEditorStyle,
 }: Props) {
   const [showDropdown, setShowDropdown] = useState(false);
+  const [selectIndex, setSelectIndex] = useState(0);
+  const theme = useContext(ThemeContext);
+  const highlightColor =
+    theme?.theme === "dark" ? "bg-[#297491]" : "bg-slate-300";
+  const handleKeyDown = (e: KeyboardEvent) => {
+    switch (e.key) {
+      case "ArrowUp":
+        setSelectIndex((prevIndex) => Math.max(0, prevIndex - 1));
+        break;
+
+      case "ArrowDown":
+        setSelectIndex((prevIndex) =>
+          Math.min(items.length - 1, prevIndex + 1)
+        );
+        break;
+
+      case "Enter":
+        handleEnter();
+        break;
+
+      default:
+        break;
+    }
+  };
+  const handleEnter = () => {
+    const selectedItem = items[selectIndex];
+    if (selectedItem) {
+      // navigate(selectedItem.path);
+      // setOpen(false);
+    }
+  };
+  useEffect(() => {
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  });
   return (
     <div className="form-control w-full max-w-xs">
       <label className="label">
@@ -66,9 +107,16 @@ export default function ServiceSearch({
         {/* Conditionally render the dropdown based on showDropdown state */}
         {showDropdown && (
           <ul className="absolute z-10  border border-[#3f4145] mt-2 rounded-md shadow-md w-full">
-            <li className="mx-2 list-none">hh</li>
-            <li className="mx-2 list-none">hh</li>
-            <li className="mx-2 list-none">hh</li>
+            {items.map((item, index) => (
+              <li
+                key={index}
+                className={`mx-2 list-none ${
+                  selectIndex === index ? highlightColor : ""
+                }`}
+              >
+                {item}
+              </li>
+            ))}
           </ul>
         )}
       </div>

@@ -191,6 +191,7 @@ export default function VechicalForm() {
             </select>
           </div>
           <ServiceSearch
+            items={["item1", "item2"]}
             errors={errors}
             status={status}
             getEditorStyle={getEditorStyle}
