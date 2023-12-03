@@ -17,6 +17,7 @@ export default function ServiceSearch({
   const [showDropdown, setShowDropdown] = useState(false);
   const [selectIndex, setSelectIndex] = useState(0);
   const theme = useContext(ThemeContext);
+  const [hoverIndex, setHoverIndex] = useState<number | null>(null);
   const highlightColor =
     theme?.theme === "dark" ? "bg-[#297491]" : "bg-slate-300";
   const handleKeyDown = (e: KeyboardEvent) => {
@@ -32,6 +33,7 @@ export default function ServiceSearch({
         break;
 
       case "Enter":
+        e.preventDefault();
         handleEnter();
         break;
 
@@ -41,16 +43,36 @@ export default function ServiceSearch({
   };
   const handleEnter = () => {
     const selectedItem = items[selectIndex];
+
     if (selectedItem) {
+      alert("Selected");
       // navigate(selectedItem.path);
       // setOpen(false);
     }
   };
+
+  const handleMouseEnter = (index: number) => {
+    setSelectIndex(index);
+    setHoverIndex(index);
+  };
+
+  const handleMouseLeave = () => {
+    setHoverIndex(null);
+  };
   useEffect(() => {
-    document.addEventListener("keydown", handleKeyDown);
+    const handleGlobalKeyDown = (e: KeyboardEvent) => {
+      handleKeyDown(e);
+    };
+
+    // only load this event listener when the dropdown is open
+    if (showDropdown) {
+      document.addEventListener("keydown", handleGlobalKeyDown);
+    } else {
+      document.removeEventListener("keydown", handleGlobalKeyDown);
+    }
 
     return () => {
-      document.removeEventListener("keydown", handleKeyDown);
+      document.removeEventListener("keydown", handleGlobalKeyDown);
     };
   });
   return (
@@ -107,16 +129,31 @@ export default function ServiceSearch({
         {/* Conditionally render the dropdown based on showDropdown state */}
         {showDropdown && (
           <ul className="absolute z-10  border border-[#3f4145] mt-2 rounded-md shadow-md w-full">
-            {items.map((item, index) => (
+            {items.length === 0 ? (
               <li
-                key={index}
                 className={`mx-2 list-none ${
-                  selectIndex === index ? highlightColor : ""
+                  selectIndex === 0 ? highlightColor : ""
                 }`}
+                onMouseDown={() => handleEnter()}
               >
-                {item}
+                Create new service
               </li>
-            ))}
+            ) : (
+              items.map((item, index) => (
+                <li
+                  key={index}
+                  className={`mx-2 list-none ${
+                    selectIndex === index ? highlightColor : ""
+                  }`}
+                  onMouseEnter={() => handleMouseEnter(index)}
+                  onMouseLeave={handleMouseLeave}
+                  // use onmousedown instead of onclick because onclick does not work in form.
+                  onMouseDown={() => handleEnter()}
+                >
+                  {item}
+                </li>
+              ))
+            )}
           </ul>
         )}
       </div>
