@@ -33,7 +33,7 @@ npm run server
 - [x] add pagination on report table
 - [x] save user's toggle dark and light mode in localstorage
 - [ ] add service search functionality in the vehicle management page
-  - [ ] add new service item from search service to the vehicle record
+  - [x] add new service item from search service to the vehicle record
   - [ ] insert new service item to the search result and add it in the vehicle record
 
 ### page
