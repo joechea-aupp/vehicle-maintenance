@@ -75,9 +75,9 @@ export default function VechicalForm() {
     },
   });
   const [searchService, setSearchService] = useState<Service[]>([]);
-  const [temporarySearch, setTemporarySearch] = useState<Service[]>([]);
   async function handleSearch(event: React.ChangeEvent<HTMLInputElement>) {
     try {
+      let temporarySearch: Service[] = [];
       const newServices = await queryClient.fetchQuery({
         queryKey: ["search", event.target.value],
         queryFn: () => getMaintenance(`q=${event.target.value}`),
@@ -85,9 +85,9 @@ export default function VechicalForm() {
 
       if (Array.isArray(newServices.body) && newServices.body.length > 0) {
         const allServices = newServices.body.flatMap((data) => data.service);
-        setTemporarySearch(allServices);
+        temporarySearch = allServices;
       } else {
-        setTemporarySearch([]);
+        temporarySearch = [];
       }
 
       const uniqueServices = temporarySearch.filter(
@@ -95,10 +95,12 @@ export default function VechicalForm() {
           index === self.findIndex((s) => s.name === service.name)
       );
 
-      const matchedServices = uniqueServices.filter((service) =>
-        service.name.includes(event.target.value)
-      );
-
+      const matchedServices =
+        event.target.value === ""
+          ? uniqueServices
+          : uniqueServices.filter((service) =>
+              service.name.includes(event.target.value)
+            );
       setSearchService(matchedServices);
     } catch (error) {
       console.log(error);

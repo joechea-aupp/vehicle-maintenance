@@ -46,8 +46,16 @@ export default function ServiceSearch({
     }
   };
   const handleEnter = () => {
+    if (items.length === 0) {
+      const modal = document.getElementById(
+        "my_modal_1"
+      ) as HTMLDialogElement | null;
+      if (modal !== null) {
+        modal.showModal();
+      }
+      return null;
+    }
     const selectedItem = items[selectIndex];
-
     if (selectedItem) {
       addService(selectedItem);
     }
@@ -102,7 +110,6 @@ export default function ServiceSearch({
             />
           </svg>
         </div>
-
         <input
           type="text"
           placeholder="Type here"
@@ -123,7 +130,14 @@ export default function ServiceSearch({
                 className={` list-none ${
                   selectIndex === 0 ? highlightColor : ""
                 }`}
-                onMouseDown={() => handleEnter()}
+                onMouseDown={() => {
+                  const modal = document.getElementById(
+                    "my_modal_1"
+                  ) as HTMLDialogElement | null;
+                  if (modal !== null) {
+                    modal.showModal();
+                  }
+                }}
               >
                 <span className="mx-2">Create new service</span>
               </li>
@@ -147,6 +161,21 @@ export default function ServiceSearch({
             )}
           </ul>
         )}
+        {/* Open the modal using document.getElementById('ID').showModal() method */}
+        <dialog id="my_modal_1" className="modal">
+          <div className="modal-box">
+            <h3 className="font-bold text-lg">Hello!</h3>
+            <p className="py-4">
+              Press ESC key or click the button below to close
+            </p>
+            <div className="modal-action">
+              <form method="dialog">
+                {/* if there is a button in form, it will close the modal */}
+                <button className="btn">Close</button>
+              </form>
+            </div>
+          </div>
+        </dialog>
       </div>
     </div>
   );
