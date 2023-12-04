@@ -29,11 +29,6 @@
           "name": "Hart Hagerty",
           "description": "Desktop Support Technician",
           "price": 25.2
-        },
-        {
-          "name": "Brice Swyre",
-          "description": "Tax Accountant",
-          "price": 40.1
         }
       ],
       "maintenance_date": "22-10-2023",
@@ -54,11 +49,6 @@
           "name": "Hart Hagerty",
           "description": "Desktop Support Technician",
           "price": 25.2
-        },
-        {
-          "name": "Brice Swyre",
-          "description": "Tax Accountant",
-          "price": 40.1
         }
       ],
       "maintenance_date": "22-10-2023",
@@ -114,11 +104,6 @@
           "name": "Hart Hagerty",
           "description": "Desktop Support Technician",
           "price": 25.2
-        },
-        {
-          "name": "Brice Swyre",
-          "description": "Tax Accountant",
-          "price": 40.1
         },
         {
           "name": "Cy Ganderton",

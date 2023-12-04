@@ -8,6 +8,7 @@ type Props = {
   status: string;
   getEditorStyle: (error?: FieldError) => string;
   addService: (service: any) => void;
+  handleSearch: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 export default function ServiceSearch({
   items,
@@ -15,6 +16,7 @@ export default function ServiceSearch({
   status,
   getEditorStyle,
   addService,
+  handleSearch,
 }: Props) {
   const [showDropdown, setShowDropdown] = useState(false);
   const [selectIndex, setSelectIndex] = useState(0);
@@ -111,6 +113,7 @@ export default function ServiceSearch({
           disabled={status === "pending"}
           onFocus={() => setShowDropdown(true)}
           onBlur={() => setShowDropdown(false)}
+          onChange={(e) => handleSearch(e)}
         />
         {/* Conditionally render the dropdown based on showDropdown state */}
         {showDropdown && (

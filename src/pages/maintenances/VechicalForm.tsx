@@ -13,23 +13,11 @@ import postMaintenance from "../../externals/postMaintenance";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Dateselecter from "../../components/Dateselecter";
 import ServiceSearch from "./ServiceSearch";
+import { getMaintenance } from "../../externals/getMaintenance";
 
 export default function VechicalForm() {
-  const serviceMockup = [
-    {
-      name: "Cy Ganderton",
-      description: "Quality Control Specialist",
-      price: 10.0,
-    },
-    {
-      name: "Hart Hagerty",
-      description: "Desktop Support Technician",
-      price: 25.2,
-    },
-    { name: "Brice Swyre", description: "Tax Accountant", price: 40.1 },
-    // Add more rows as needed
-  ];
-  const [service, setService] = useState<Service[]>(serviceMockup);
+  const [service, setService] = useState<Service[]>([]);
+
   const theme = useContext(ThemeContext);
   const {
     register,
@@ -86,6 +74,36 @@ export default function VechicalForm() {
       reset();
     },
   });
+  const [searchService, setSearchService] = useState<Service[]>([]);
+  const [temporarySearch, setTemporarySearch] = useState<Service[]>([]);
+  async function handleSearch(event: React.ChangeEvent<HTMLInputElement>) {
+    try {
+      const newServices = await queryClient.fetchQuery({
+        queryKey: ["search", event.target.value],
+        queryFn: () => getMaintenance(`q=${event.target.value}`),
+      });
+
+      if (Array.isArray(newServices.body) && newServices.body.length > 0) {
+        const allServices = newServices.body.flatMap((data) => data.service);
+        setTemporarySearch(allServices);
+      } else {
+        setTemporarySearch([]);
+      }
+
+      const uniqueServices = temporarySearch.filter(
+        (service, index, self) =>
+          index === self.findIndex((s) => s.name === service.name)
+      );
+
+      const matchedServices = uniqueServices.filter((service) =>
+        service.name.includes(event.target.value)
+      );
+
+      setSearchService(matchedServices);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   return (
     // this therefore values must be pass to the mutate function
@@ -195,11 +213,12 @@ export default function VechicalForm() {
             </select>
           </div>
           <ServiceSearch
-            items={serviceMockup}
+            items={searchService}
             errors={errors}
             status={status}
             getEditorStyle={getEditorStyle}
             addService={addService}
+            handleSearch={handleSearch}
           />
           {/* row 4 */}
           <div className="form-control w-full max-w-xs col-span-1">
