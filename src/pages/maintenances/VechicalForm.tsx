@@ -8,22 +8,14 @@ import {
 import ErrorLabel from "../../components/Errors/ErrorLabel";
 import SubmitBtn from "../../components/Button/SubmitBtn";
 import { ThemeContext } from "../../contexts/ThemeContext";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import postMaintenance from "../../externals/postMaintenance";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Dateselecter from "../../components/Dateselecter";
 import ServiceSearch from "./ServiceSearch";
-export default function VechicalForm() {
-  const theme = useContext(ThemeContext);
-  const {
-    register,
-    handleSubmit,
-    control,
-    reset,
-    formState: { errors },
-  } = useForm<MaintenancePost>();
 
-  const tableRows: Service[] = [
+export default function VechicalForm() {
+  const serviceMockup = [
     {
       name: "Cy Ganderton",
       description: "Quality Control Specialist",
@@ -37,7 +29,19 @@ export default function VechicalForm() {
     { name: "Brice Swyre", description: "Tax Accountant", price: 40.1 },
     // Add more rows as needed
   ];
-
+  const [service, setService] = useState<Service[]>(serviceMockup);
+  const theme = useContext(ThemeContext);
+  const {
+    register,
+    handleSubmit,
+    control,
+    reset,
+    formState: { errors },
+  } = useForm<MaintenancePost>();
+  // function that help add service to the service array
+  const addService = (newService: Service) => {
+    setService((prevService) => [...prevService, newService]);
+  };
   const disabledInputStyle =
     "border-none bg-transparent focus:border-none focus:ring-0 w-full text-sm";
 
@@ -191,10 +195,11 @@ export default function VechicalForm() {
             </select>
           </div>
           <ServiceSearch
-            items={["1", "2", "3"]}
+            items={serviceMockup}
             errors={errors}
             status={status}
             getEditorStyle={getEditorStyle}
+            addService={addService}
           />
           {/* row 4 */}
           <div className="form-control w-full max-w-xs col-span-1">
@@ -250,7 +255,7 @@ export default function VechicalForm() {
                 </tr>
               </thead>
               <tbody>
-                {tableRows.map((row, index) => (
+                {service.map((row, index) => (
                   <tr key={index}>
                     <th>{index + 1}</th>
                     <td>
@@ -298,7 +303,7 @@ export default function VechicalForm() {
                   </td>
                   <td>
                     $
-                    {tableRows
+                    {service
                       .reduce((acc, row) => acc + row.price, 0)
                       .toFixed(2)}
                   </td>

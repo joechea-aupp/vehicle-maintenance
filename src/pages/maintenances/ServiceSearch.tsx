@@ -7,12 +7,14 @@ type Props = {
   errors?: any;
   status: string;
   getEditorStyle: (error?: FieldError) => string;
+  addService: (service: any) => void;
 };
 export default function ServiceSearch({
   items,
   errors,
   status,
   getEditorStyle,
+  addService,
 }: Props) {
   const [showDropdown, setShowDropdown] = useState(false);
   const [selectIndex, setSelectIndex] = useState(0);
@@ -45,9 +47,7 @@ export default function ServiceSearch({
     const selectedItem = items[selectIndex];
 
     if (selectedItem) {
-      alert("Selected");
-      // navigate(selectedItem.path);
-      // setOpen(false);
+      addService(selectedItem);
     }
   };
 
@@ -117,18 +117,18 @@ export default function ServiceSearch({
           <ul className="absolute z-10  border border-[#3f4145] mt-2 rounded-md shadow-md w-full">
             {items.length === 0 ? (
               <li
-                className={`mx-2 list-none ${
+                className={` list-none ${
                   selectIndex === 0 ? highlightColor : ""
                 }`}
                 onMouseDown={() => handleEnter()}
               >
-                Create new service
+                <span className="mx-2">Create new service</span>
               </li>
             ) : (
               items.map((item, index) => (
                 <li
                   key={index}
-                  className={`mx-2 list-none ${
+                  className={`list-none ${
                     selectIndex === index ? highlightColor : ""
                   }`}
                   onMouseEnter={() => handleMouseEnter(index)}
@@ -136,7 +136,9 @@ export default function ServiceSearch({
                   // use onmousedown instead of onclick because onclick does not work in form.
                   onMouseDown={() => handleEnter()}
                 >
-                  {item}
+                  <span className="mx-2">
+                    {item.name} - {item.price}$
+                  </span>
                 </li>
               ))
             )}
