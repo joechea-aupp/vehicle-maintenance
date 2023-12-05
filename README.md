@@ -24,6 +24,7 @@ npm run server
 - [ ] beautify error message
 - [x] toggle dark and light mode
 - [x] add spotlight like for global search
+- [ ] add place holder for car service when it is empty
 
 ### functionality
 
