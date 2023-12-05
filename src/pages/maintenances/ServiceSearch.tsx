@@ -1,7 +1,8 @@
 import { useState, useEffect, useContext } from "react";
 import ErrorLabel from "../../components/Errors/ErrorLabel";
-import { FieldError } from "react-hook-form";
 import { ThemeContext } from "../../contexts/ThemeContext";
+import { useForm, FieldError } from "react-hook-form";
+import { Service } from "../../types/types";
 type Props = {
   items: any[];
   errors?: any;
@@ -18,6 +19,12 @@ export default function ServiceSearch({
   addService,
   handleSearch,
 }: Props) {
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors: formErrors },
+  } = useForm<Service>();
   const [showDropdown, setShowDropdown] = useState(false);
   const [selectIndex, setSelectIndex] = useState(0);
   const theme = useContext(ThemeContext);
@@ -85,6 +92,10 @@ export default function ServiceSearch({
       document.removeEventListener("keydown", handleGlobalKeyDown);
     };
   });
+  const handleServiceSubmit = (value: Service) => {
+    addService(value);
+    reset();
+  };
   return (
     <div className="form-control w-full max-w-xs">
       <label className="label">
@@ -171,25 +182,47 @@ export default function ServiceSearch({
             <form method="dialog">
               <div className="pt-5 grid grid-cols-1 gap-2">
                 {/* row 1 */}
+                <label className="label">
+                  {formErrors.name && (
+                    <ErrorLabel fieldError={formErrors.name} />
+                  )}
+                </label>
                 <input
                   type="text"
                   placeholder="Service Name"
                   className="input input-bordered w-full max-w-xs"
+                  {...register("name", {
+                    required: "Service name is required",
+                  })}
                 />
+                <label className="label">
+                  {formErrors.price && (
+                    <ErrorLabel fieldError={formErrors.price} />
+                  )}
+                </label>
                 <input
                   type="number"
                   placeholder="Price"
                   className="input input-bordered w-full max-w-xs"
+                  {...register("price", {
+                    required: "Service price is required",
+                  })}
                 />
                 {/* row 2 */}
                 <textarea
                   className="textarea textarea-bordered h-24"
                   placeholder="The service is for ..."
+                  {...register("description")}
                 ></textarea>
               </div>
             </form>
             <div className="modal-action">
-              <button className="btn">Close</button>
+              <button
+                className="btn px-8"
+                onClick={handleSubmit((value) => handleServiceSubmit(value))}
+              >
+                Add
+              </button>
             </div>
           </div>
         </dialog>

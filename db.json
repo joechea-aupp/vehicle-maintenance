@@ -113,6 +113,26 @@
       ],
       "maintenance_date": "27-11-2023",
       "id": 29
+    },
+    {
+      "vehicle": "Toyota Rush",
+      "current_odo": "1234",
+      "next_odo": "12345",
+      "garage": "Toyota AUPP",
+      "maintenance_date": "05-11-2023",
+      "service": [
+        {
+          "name": "Oil Filter",
+          "description": "Filter oil with new one.",
+          "price": 12
+        },
+        {
+          "name": "Brice Swyre",
+          "description": "Tax Accountant",
+          "price": 40.1
+        }
+      ],
+      "id": 30
     }
   ]
 }

@@ -309,7 +309,7 @@ export default function VechicalForm() {
                           required: "Service price is missing",
                           setValueAs: (value: string) => parseFloat(value), // set value as a number
                         })}
-                        defaultValue={parseFloat(row.price.toFixed(2))}
+                        defaultValue={parseFloat(Number(row.price).toFixed(2))}
                         readOnly
                       />
                     </td>
@@ -325,7 +325,7 @@ export default function VechicalForm() {
                   <td>
                     $
                     {service
-                      .reduce((acc, row) => acc + row.price, 0)
+                      .reduce((acc, row) => Number(acc) + Number(row.price), 0)
                       .toFixed(2)}
                   </td>
                 </tr>
