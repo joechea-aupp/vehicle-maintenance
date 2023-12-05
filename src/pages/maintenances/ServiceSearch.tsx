@@ -163,16 +163,33 @@ export default function ServiceSearch({
         )}
         {/* Open the modal using document.getElementById('ID').showModal() method */}
         <dialog id="my_modal_1" className="modal">
-          <div className="modal-box">
-            <h3 className="font-bold text-lg">Hello!</h3>
-            <p className="py-4">
-              Press ESC key or click the button below to close
-            </p>
+          <div className="modal-box w-3/12  flex flex-col">
+            <h3 className="font-bold text-lg  font-custom-two tracking-wider">
+              Add New Service
+            </h3>
+
+            <form method="dialog">
+              <div className="pt-5 grid grid-cols-1 gap-2">
+                {/* row 1 */}
+                <input
+                  type="text"
+                  placeholder="Service Name"
+                  className="input input-bordered w-full max-w-xs"
+                />
+                <input
+                  type="number"
+                  placeholder="Price"
+                  className="input input-bordered w-full max-w-xs"
+                />
+                {/* row 2 */}
+                <textarea
+                  className="textarea textarea-bordered h-24"
+                  placeholder="The service is for ..."
+                ></textarea>
+              </div>
+            </form>
             <div className="modal-action">
-              <form method="dialog">
-                {/* if there is a button in form, it will close the modal */}
-                <button className="btn">Close</button>
-              </form>
+              <button className="btn">Close</button>
             </div>
           </div>
         </dialog>
