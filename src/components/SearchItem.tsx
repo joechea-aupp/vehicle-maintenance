@@ -5,8 +5,14 @@ type Props = {
   search: any[];
   setOpen: (open: boolean) => void;
   searchTerm: string;
+  isOpen: boolean;
 };
-export default function SearchItem({ search, setOpen, searchTerm }: Props) {
+export default function SearchItem({
+  search,
+  setOpen,
+  searchTerm,
+  isOpen,
+}: Props) {
   const navigate = useNavigate();
   const [selectIndex, setSelectIndex] = useState(0);
   const [hoverIndex, setHoverIndex] = useState<number | null>(null);
@@ -54,7 +60,9 @@ export default function SearchItem({ search, setOpen, searchTerm }: Props) {
   };
 
   useEffect(() => {
-    document.addEventListener("keydown", handleKeyDown);
+    if (isOpen) {
+      document.addEventListener("keydown", handleKeyDown);
+    }
 
     return () => {
       document.removeEventListener("keydown", handleKeyDown);

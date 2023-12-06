@@ -125,6 +125,7 @@ export default function GlobalSearch() {
                           setOpen={setOpen}
                           // searchTerm is used to highlight the search term
                           searchTerm={searchTerm}
+                          isOpen={open}
                         />
                       );
                     }}
