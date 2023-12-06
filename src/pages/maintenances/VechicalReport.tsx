@@ -61,12 +61,13 @@ export default function VechicalReport() {
     // condition to check if the data is already in cache and the new display row is larger than the current display row
     // if cache data is larger than the current display row, no need to fetch for new data, just display the cache data
     if (largerRow) {
-      const cachedData = queryClient.getQueryData<
-        MaintenanceResponse | undefined
-      >(["report", ""]);
+      const data = queryClient.getQueryData<MaintenanceResponse | undefined>([
+        "report",
+        "",
+      ]);
 
-      if (cachedData) {
-        if (cachedData.body.length < Number(event.target.value)) {
+      if (data) {
+        if (data.body.length < Number(event.target.value)) {
           const newReports = await queryClient.fetchQuery({
             queryKey: ["report", ""],
             queryFn: () => getMaintenance(`_limit=${event.target.value}`),
@@ -156,11 +157,7 @@ export default function VechicalReport() {
   const [sortDescending, setSortDescending] = useState<boolean>(false);
   const [sortBy, setSortBy] = useState<string>("");
   const onSort = async (fieldName: string) => {
-    // const cachedData = queryClient.getQueryData<
-    //   MaintenanceResponse | undefined
-    // >(["report", ""]);
-
-    const cachedData = await queryClient.fetchQuery({
+    const data = await queryClient.fetchQuery({
       queryKey: ["report", ""],
       queryFn: () =>
         getMaintenance(
@@ -170,11 +167,11 @@ export default function VechicalReport() {
         ),
     });
 
-    if (cachedData) {
+    if (data) {
       const isDescending = sortBy === fieldName && !sortDescending;
       const sortedData: MaintenanceResponse = {
-        headers: cachedData.headers,
-        body: cachedData.body.slice().sort((a, b) => {
+        headers: data.headers,
+        body: data.body.slice().sort((a, b) => {
           if (fieldName === "maintenance_date") {
             const dateA = String(a[fieldName]) ? a[fieldName] : "";
             const dateB = String(b[fieldName]) ? b[fieldName] : "";
