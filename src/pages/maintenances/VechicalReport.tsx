@@ -19,7 +19,7 @@ import SkeletonRow from "../../components/Skeletons/SkeletonRow";
 import { ThemeContext } from "../../contexts/ThemeContext";
 import { useContext } from "react";
 import delMaintenance from "../../externals/delMaintenance";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient, useQuery } from "@tanstack/react-query";
 import { RxDropdownMenu } from "react-icons/rx";
 import { useForm } from "react-hook-form";
 import Dateselecter from "../../components/Dateselecter";
@@ -155,10 +155,20 @@ export default function VechicalReport() {
   // handle sort action on the table report
   const [sortDescending, setSortDescending] = useState<boolean>(false);
   const [sortBy, setSortBy] = useState<string>("");
-  const onSort = (fieldName: string) => {
-    const cachedData = queryClient.getQueryData<
-      MaintenanceResponse | undefined
-    >(["report", ""]);
+  const onSort = async (fieldName: string) => {
+    // const cachedData = queryClient.getQueryData<
+    //   MaintenanceResponse | undefined
+    // >(["report", ""]);
+
+    const cachedData = await queryClient.fetchQuery({
+      queryKey: ["report", ""],
+      queryFn: () =>
+        getMaintenance(
+          `_limit=${displayRow}&_sort=${fieldName}&_order=${
+            sortDescending ? "asc" : "desc"
+          }`
+        ),
+    });
 
     if (cachedData) {
       const isDescending = sortBy === fieldName && !sortDescending;
