@@ -1,5 +1,5 @@
 import { useState, useEffect, Suspense } from "react";
-import { useQueryClient } from "@tanstack/react-query";
+import { useQueryClient, useQuery } from "@tanstack/react-query";
 import { Await } from "react-router-dom";
 import SearchItem from "./SearchItem";
 import ErrorBlock from "./Errors/Error";
@@ -32,8 +32,18 @@ export default function GlobalSearch() {
     return () => document.removeEventListener("keydown", down);
   }, []);
 
+  const { data: menuQuery } = useQuery({
+    queryKey: ["search", ""],
+    queryFn: () => getMenu(""),
+  });
   const [search, setSearch] = useState<MenuData[]>([]);
 
+  // use useEffect to update search state when menuQuery available.
+  useEffect(() => {
+    if (menuQuery) {
+      setSearch(menuQuery);
+    }
+  }, [menuQuery]);
   // When the search term changes, update the query
   const queryClient = useQueryClient();
   const handleSearch = async (e: React.ChangeEvent<HTMLInputElement>) => {

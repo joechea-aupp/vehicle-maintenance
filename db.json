@@ -29,46 +29,6 @@
           "name": "Hart Hagerty",
           "description": "Desktop Support Technician",
           "price": 25.2
-        }
-      ],
-      "maintenance_date": "22-10-2023",
-      "id": 24
-    },
-    {
-      "vehicle": "Toyota Rush",
-      "current_odo": "123123",
-      "next_odo": "12321321",
-      "garage": "Toyota AUPP",
-      "service": [
-        {
-          "name": "Cy Ganderton",
-          "description": "Quality Control Specialist",
-          "price": 10
-        },
-        {
-          "name": "Hart Hagerty",
-          "description": "Desktop Support Technician",
-          "price": 25.2
-        }
-      ],
-      "maintenance_date": "22-10-2023",
-      "id": 25
-    },
-    {
-      "vehicle": "Toyota Rush",
-      "current_odo": "123123",
-      "next_odo": "12312312",
-      "garage": "Toyota AUPP",
-      "service": [
-        {
-          "name": "Cy Ganderton",
-          "description": "Quality Control Specialist",
-          "price": 10
-        },
-        {
-          "name": "Hart Hagerty",
-          "description": "Desktop Support Technician",
-          "price": 25.2
         },
         {
           "name": "Brice Swyre",
@@ -233,6 +193,31 @@
         }
       ],
       "id": 35
+    },
+    {
+      "vehicle": "Lexus RX200",
+      "current_odo": "1123213",
+      "next_odo": "1321321321",
+      "garage": "Toyota Terk Tla",
+      "maintenance_date": "07-12-2023",
+      "service": [
+        {
+          "name": "Hart Hagerty",
+          "description": "Desktop Support Technician",
+          "price": 25.2
+        },
+        {
+          "name": "Brice Swyre",
+          "description": "Tax Accountant",
+          "price": 40.1
+        },
+        {
+          "name": "Bottom filter",
+          "description": "clean car bottom.",
+          "price": 120
+        }
+      ],
+      "id": 36
     }
   ]
 }
