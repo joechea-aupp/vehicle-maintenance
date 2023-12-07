@@ -10,6 +10,7 @@ type Props = {
   getEditorStyle: (error?: FieldError) => string;
   addService: (service: any) => void;
   handleSearch: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  searchText: string;
 };
 export default function ServiceSearch({
   items,
@@ -18,6 +19,7 @@ export default function ServiceSearch({
   getEditorStyle,
   addService,
   handleSearch,
+  searchText,
 }: Props) {
   const {
     register,
@@ -191,6 +193,7 @@ export default function ServiceSearch({
                   type="text"
                   placeholder="Service Name"
                   className="input input-bordered w-full max-w-xs"
+                  defaultValue={searchText}
                   {...register("name", {
                     required: "Service name is required",
                   })}
