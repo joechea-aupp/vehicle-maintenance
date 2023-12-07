@@ -62,6 +62,8 @@ export default function GlobalSearch() {
     }
   };
 
+  console.log(search);
+
   return (
     <div>
       {/* Open the modal using document.getElementById('ID').showModal() method */}

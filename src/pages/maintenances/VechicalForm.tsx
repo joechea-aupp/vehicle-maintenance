@@ -78,7 +78,7 @@ export default function VechicalForm() {
     setServiceSearchText(event.target.value);
     try {
       const newServices = await queryClient.fetchQuery({
-        queryKey: ["search", event.target.value],
+        queryKey: ["serviceSearch", event.target.value],
         queryFn: () => getMaintenance(`q=${event.target.value}`),
       });
 
