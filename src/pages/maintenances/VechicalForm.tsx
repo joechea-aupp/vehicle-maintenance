@@ -14,10 +14,11 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Dateselecter from "../../components/Dateselecter";
 import ServiceSearch from "./ServiceSearch";
 import { getMaintenance } from "../../externals/getMaintenance";
+import { setTextRange } from "typescript";
 
 export default function VechicalForm() {
   const [service, setService] = useState<Service[]>([]);
-
+  const [ServiceSearchText, setServiceSearchText] = useState<string>("");
   const theme = useContext(ThemeContext);
   const {
     register,
@@ -78,6 +79,7 @@ export default function VechicalForm() {
   });
   const [searchService, setSearchService] = useState<Service[]>([]);
   async function handleSearch(event: React.ChangeEvent<HTMLInputElement>) {
+    setServiceSearchText(event.target.value);
     try {
       let temporarySearch: Service[] = [];
       const newServices = await queryClient.fetchQuery({
@@ -223,6 +225,7 @@ export default function VechicalForm() {
             getEditorStyle={getEditorStyle}
             addService={addService}
             handleSearch={handleSearch}
+            searchText={ServiceSearchText}
           />
           {/* row 4 */}
           <div className="form-control w-full max-w-xs col-span-1">
