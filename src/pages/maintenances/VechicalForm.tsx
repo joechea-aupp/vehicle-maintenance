@@ -10,15 +10,38 @@ import SubmitBtn from "../../components/Button/SubmitBtn";
 import { ThemeContext } from "../../contexts/ThemeContext";
 import { useContext, useState } from "react";
 import postMaintenance from "../../externals/postMaintenance";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient, useQuery } from "@tanstack/react-query";
 import Dateselecter from "../../components/Dateselecter";
 import ServiceSearch from "./ServiceSearch";
 import { getMaintenance } from "../../externals/getMaintenance";
-import { setTextRange } from "typescript";
+
+const getUniqueService = (
+  maintenancePost: MaintenanceResponse,
+  searchText: string
+) => {
+  const allServices = maintenancePost?.body.flatMap((data) => data.service);
+  const uniqueServices = allServices?.filter(
+    (service, index, self) =>
+      index === self.findIndex((s) => s.name === service.name)
+  );
+  const matchedServices =
+    searchText === ""
+      ? uniqueServices
+      : uniqueServices?.filter((service) => service.name.includes(searchText));
+  return matchedServices;
+};
 
 export default function VechicalForm() {
   const [service, setService] = useState<Service[]>([]);
   const [ServiceSearchText, setServiceSearchText] = useState<string>("");
+  const { data: maintenanceQueryData } = useQuery<MaintenanceResponse>({
+    queryKey: ["report", ""],
+    queryFn: () => getMaintenance(""),
+  });
+  const serviceSearchInitial: Service[] = getUniqueService(
+    maintenanceQueryData!,
+    ""
+  );
   const theme = useContext(ThemeContext);
   const {
     register,
@@ -47,33 +70,6 @@ export default function VechicalForm() {
     onSuccess: (saveMaintenance) => {
       // invalidate the cache after new record is added
       queryClient.invalidateQueries({ queryKey: ["report", ""] });
-      // after successfully post data, send this data new and older data to the cache
-      // queryClient.setQueryData<MaintenanceResponse | undefined>(
-      //   ["report", ""],
-      //   (oldData) => {
-      //     if (oldData === undefined) {
-      //       return {
-      //         headers: new Headers(),
-      //         body: [
-      //           { ...saveMaintenance, service: saveMaintenance.service || [] },
-      //         ],
-      //       };
-      //     } else {
-      //       // If oldData exists, increment x-total-count by 1
-      //       const totalCount =
-      //         parseInt(oldData.headers.get("x-total-count") || "0", 10) + 1;
-      //       return {
-      //         headers: new Headers({
-      //           "x-total-count": totalCount.toString(),
-      //         }),
-      //         body: [
-      //           { ...saveMaintenance, service: saveMaintenance.service || [] },
-      //           ...oldData.body,
-      //         ],
-      //       };
-      //     }
-      //   }
-      // );
       reset();
     },
   });
@@ -81,30 +77,12 @@ export default function VechicalForm() {
   async function handleSearch(event: React.ChangeEvent<HTMLInputElement>) {
     setServiceSearchText(event.target.value);
     try {
-      let temporarySearch: Service[] = [];
       const newServices = await queryClient.fetchQuery({
         queryKey: ["search", event.target.value],
         queryFn: () => getMaintenance(`q=${event.target.value}`),
       });
 
-      if (Array.isArray(newServices.body) && newServices.body.length > 0) {
-        const allServices = newServices.body.flatMap((data) => data.service);
-        temporarySearch = allServices;
-      } else {
-        temporarySearch = [];
-      }
-
-      const uniqueServices = temporarySearch.filter(
-        (service, index, self) =>
-          index === self.findIndex((s) => s.name === service.name)
-      );
-
-      const matchedServices =
-        event.target.value === ""
-          ? uniqueServices
-          : uniqueServices.filter((service) =>
-              service.name.includes(event.target.value)
-            );
+      const matchedServices = getUniqueService(newServices, event.target.value);
       setSearchService(matchedServices);
     } catch (error) {
       console.log(error);
@@ -219,7 +197,7 @@ export default function VechicalForm() {
             </select>
           </div>
           <ServiceSearch
-            items={searchService}
+            items={ServiceSearchText ? searchService : serviceSearchInitial}
             errors={errors}
             status={status}
             getEditorStyle={getEditorStyle}
