@@ -44,33 +44,35 @@ export default function VechicalForm() {
     mutationFn: (newMaintenance: MaintenancePost) =>
       postMaintenance(newMaintenance),
     onSuccess: (saveMaintenance) => {
+      // invalidate the cache after new record is added
+      queryClient.invalidateQueries({ queryKey: ["report", ""] });
       // after successfully post data, send this data new and older data to the cache
-      queryClient.setQueryData<MaintenanceResponse | undefined>(
-        ["report", ""],
-        (oldData) => {
-          if (oldData === undefined) {
-            return {
-              headers: new Headers(),
-              body: [
-                { ...saveMaintenance, service: saveMaintenance.service || [] },
-              ],
-            };
-          } else {
-            // If oldData exists, increment x-total-count by 1
-            const totalCount =
-              parseInt(oldData.headers.get("x-total-count") || "0", 10) + 1;
-            return {
-              headers: new Headers({
-                "x-total-count": totalCount.toString(),
-              }),
-              body: [
-                { ...saveMaintenance, service: saveMaintenance.service || [] },
-                ...oldData.body,
-              ],
-            };
-          }
-        }
-      );
+      // queryClient.setQueryData<MaintenanceResponse | undefined>(
+      //   ["report", ""],
+      //   (oldData) => {
+      //     if (oldData === undefined) {
+      //       return {
+      //         headers: new Headers(),
+      //         body: [
+      //           { ...saveMaintenance, service: saveMaintenance.service || [] },
+      //         ],
+      //       };
+      //     } else {
+      //       // If oldData exists, increment x-total-count by 1
+      //       const totalCount =
+      //         parseInt(oldData.headers.get("x-total-count") || "0", 10) + 1;
+      //       return {
+      //         headers: new Headers({
+      //           "x-total-count": totalCount.toString(),
+      //         }),
+      //         body: [
+      //           { ...saveMaintenance, service: saveMaintenance.service || [] },
+      //           ...oldData.body,
+      //         ],
+      //       };
+      //     }
+      //   }
+      // );
       reset();
     },
   });
