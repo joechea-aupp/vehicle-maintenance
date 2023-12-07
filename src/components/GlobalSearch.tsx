@@ -51,7 +51,7 @@ export default function GlobalSearch() {
     try {
       const newSearch = await queryClient.fetchQuery({
         queryKey: ["search", searchValue],
-        queryFn: () => getMenu(searchValue),
+        queryFn: () => getMenu(`q=${searchValue}`),
       });
       // search term is use to track the text to highlight
       // in the search results

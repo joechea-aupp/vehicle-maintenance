@@ -2,7 +2,7 @@
   "menu": [
     {
       "id": 1,
-      "name": "Vechicle Maintenance",
+      "name": "Vehicle Maintenance",
       "path": "/",
       "description": "Insert new vehicle maintenance record"
     },
