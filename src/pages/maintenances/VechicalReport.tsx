@@ -204,6 +204,7 @@ export default function VechicalReport() {
         sortedData
       );
 
+      setCurrentPage(1);
       setReports(sortedData);
       setSortBy(fieldName);
       setSortDescending(isDescending);
