@@ -281,45 +281,55 @@ export default function VechicalForm() {
                 </tr>
               </thead>
               <tbody>
-                {service.map((row, index) => (
-                  <tr key={index}>
-                    <th>{index + 1}</th>
-                    <td>
-                      <input
-                        className={`truncate ${disabledInputStyle}`}
-                        type="text"
-                        {...register(`service.${index}.name`, {
-                          required: "Service name is missing",
-                        })}
-                        defaultValue={row.name}
-                        readOnly
-                      />
-                    </td>
-                    <td>
-                      <input
-                        className={`truncate ${disabledInputStyle}`}
-                        type="text"
-                        {...register(`service.${index}.description`, {
-                          required: "Service description is missing",
-                        })}
-                        defaultValue={row.description}
-                        readOnly
-                      />
-                    </td>
-                    <td>
-                      <input
-                        className={disabledInputStyle}
-                        type="text"
-                        {...register(`service.${index}.price`, {
-                          required: "Service price is missing",
-                          setValueAs: (value: string) => parseFloat(value), // set value as a number
-                        })}
-                        defaultValue={parseFloat(Number(row.price).toFixed(2))}
-                        readOnly
-                      />
+                {service.length > 0 ? (
+                  service.map((row, index) => (
+                    <tr key={index}>
+                      <th>{index + 1}</th>
+                      <td>
+                        <input
+                          className={`truncate ${disabledInputStyle}`}
+                          type="text"
+                          {...register(`service.${index}.name`, {
+                            required: "Service name is missing",
+                          })}
+                          defaultValue={row.name}
+                          readOnly
+                        />
+                      </td>
+                      <td>
+                        <input
+                          className={`truncate ${disabledInputStyle}`}
+                          type="text"
+                          {...register(`service.${index}.description`, {
+                            required: "Service description is missing",
+                          })}
+                          defaultValue={row.description}
+                          readOnly
+                        />
+                      </td>
+                      <td>
+                        <input
+                          className={disabledInputStyle}
+                          type="text"
+                          {...register(`service.${index}.price`, {
+                            required: "Service price is missing",
+                            setValueAs: (value: string) => parseFloat(value), // set value as a number
+                          })}
+                          defaultValue={parseFloat(
+                            Number(row.price).toFixed(2)
+                          )}
+                          readOnly
+                        />
+                      </td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr className="">
+                    <td className="w-[35rem] py-20 text-center" colSpan={4}>
+                      <span className="italic">No service added</span>
                     </td>
                   </tr>
-                ))}
+                )}
 
                 {/* Total row */}
                 <tr className="bg-base-200">
