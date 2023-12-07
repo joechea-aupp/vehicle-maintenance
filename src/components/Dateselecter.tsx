@@ -29,11 +29,11 @@ export default function Dateselecter({
             onSelectedDateChanged={(date) => {
               const selectedDate = new Date(date);
               const day = selectedDate.getDate();
-              const month = selectedDate.getMonth();
+              const month = selectedDate.getMonth() + 1;
               const year = selectedDate.getFullYear();
 
               const formattedDate = `${day < 10 ? "0" + day : day}-${
-                month < 10 ? "0" + month : month
+                month < 11 ? "0" + month : month
               }-${year}`;
               // use formattedDate as value for the input
               field.onChange(formattedDate);
