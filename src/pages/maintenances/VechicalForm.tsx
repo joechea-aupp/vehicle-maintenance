@@ -150,7 +150,7 @@ export default function VechicalForm() {
             </label>
             <input
               type="text"
-              placeholder="00000"
+              placeholder="#####"
               {...register("current_odo", {
                 required: "Current ODO must be provided",
               })}
@@ -168,7 +168,7 @@ export default function VechicalForm() {
             </label>
             <input
               type="text"
-              placeholder="00000"
+              placeholder="#####"
               {...register("next_odo", {
                 required: "Next ODO must be provided",
               })}
