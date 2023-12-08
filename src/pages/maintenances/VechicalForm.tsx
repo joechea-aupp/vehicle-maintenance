@@ -14,7 +14,7 @@ import { useMutation, useQueryClient, useQuery } from "@tanstack/react-query";
 import Dateselecter from "../../components/Dateselecter";
 import ServiceSearch from "./ServiceSearch";
 import { getMaintenance } from "../../externals/getMaintenance";
-
+import { MdDeleteOutline } from "react-icons/md";
 const getUniqueService = (
   maintenancePost: MaintenanceResponse,
   searchText: string
@@ -95,6 +95,13 @@ export default function VechicalForm() {
     }
   }
 
+  const handleRemoveService = (e: React.MouseEvent, index: number) => {
+    e.preventDefault();
+    const newService = [...service];
+    newService.splice(index, 1);
+    setService(newService);
+  };
+
   return (
     // this therefore values must be pass to the mutate function
 
@@ -150,7 +157,7 @@ export default function VechicalForm() {
             </label>
             <input
               type="text"
-              placeholder="00000"
+              placeholder="#####"
               {...register("current_odo", {
                 required: "Current ODO must be provided",
               })}
@@ -168,7 +175,7 @@ export default function VechicalForm() {
             </label>
             <input
               type="text"
-              placeholder="00000"
+              placeholder="#####"
               {...register("next_odo", {
                 required: "Next ODO must be provided",
               })}
@@ -262,6 +269,7 @@ export default function VechicalForm() {
                   <th>Name</th>
                   <th>Description</th>
                   <th>Price</th>
+                  <th></th>
                 </tr>
               </thead>
               <tbody>
@@ -305,11 +313,19 @@ export default function VechicalForm() {
                           readOnly
                         />
                       </td>
+                      <td className="text-center">
+                        <button
+                          className="btn btn-ghost btn-xs"
+                          onClick={(e) => handleRemoveService(e, index)}
+                        >
+                          <MdDeleteOutline />
+                        </button>
+                      </td>
                     </tr>
                   ))
                 ) : (
                   <tr className="">
-                    <td className="w-[35rem] py-20 text-center" colSpan={4}>
+                    <td className="w-[35rem] py-20 text-center" colSpan={5}>
                       <span className="italic">No service added</span>
                     </td>
                   </tr>
@@ -327,6 +343,7 @@ export default function VechicalForm() {
                       .reduce((acc, row) => Number(acc) + Number(row.price), 0)
                       .toFixed(2)}
                   </td>
+                  {/* <td className="bg-base-300"></td> */}
                 </tr>
               </tbody>
             </table>
