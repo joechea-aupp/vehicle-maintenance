@@ -123,6 +123,71 @@
         }
       ],
       "id": 15
+    },
+    {
+      "vehicle": "Lexus RX200",
+      "current_odo": "13213",
+      "next_odo": "13123123",
+      "garage": "Toyota Terk Tla",
+      "maintenance_date": "2023-12-08",
+      "service": [
+        {
+          "name": "Rim replacement",
+          "description": "change 2 rim",
+          "price": 90
+        },
+        {
+          "name": "Car tatton ",
+          "description": "displaying cool text for the car",
+          "price": 100
+        },
+        {
+          "name": "Oil Filtering",
+          "description": "Filter oil and clean oil",
+          "price": 50
+        },
+        {
+          "name": "Rim replacement",
+          "description": "change 2 rim",
+          "price": 90
+        },
+        {
+          "name": "Rim replacement",
+          "description": "change 2 rim",
+          "price": 90
+        },
+        {
+          "name": "Rim replacement",
+          "description": "change 2 rim",
+          "price": 90
+        },
+        {
+          "name": "Rim replacement",
+          "description": "change 2 rim",
+          "price": 90
+        },
+        {
+          "name": "Oil Filtering",
+          "description": "Filter oil and clean oil",
+          "price": 50
+        },
+        {
+          "name": "Oil Filtering",
+          "description": "Filter oil and clean oil",
+          "price": 50
+        },
+        {
+          "name": "Rim replacement",
+          "description": "change 2 rim",
+          "price": 90
+        },
+        {
+          "name": "Rim replacement",
+          "description": "change 2 rim",
+          "price": 90
+        }
+      ],
+      "id": 16
     }
   ]
 }

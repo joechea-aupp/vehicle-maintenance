@@ -269,7 +269,7 @@ export default function VechicalForm() {
                   <th>Name</th>
                   <th>Description</th>
                   <th>Price</th>
-                  <th>Action</th>
+                  <th></th>
                 </tr>
               </thead>
               <tbody>
@@ -314,7 +314,10 @@ export default function VechicalForm() {
                         />
                       </td>
                       <td className="text-center">
-                        <button onClick={(e) => handleRemoveService(e, index)}>
+                        <button
+                          className="btn btn-ghost btn-xs"
+                          onClick={(e) => handleRemoveService(e, index)}
+                        >
                           <MdDeleteOutline />
                         </button>
                       </td>
@@ -340,6 +343,7 @@ export default function VechicalForm() {
                       .reduce((acc, row) => Number(acc) + Number(row.price), 0)
                       .toFixed(2)}
                   </td>
+                  {/* <td className="bg-base-300"></td> */}
                 </tr>
               </tbody>
             </table>
