@@ -378,9 +378,9 @@ export default function VechicalReport() {
                   Price
                 </ColumnTitle>
               </Table.HeadCell>
-              <Table.HeadCell>
+              {/* <Table.HeadCell>
                 <span className="sr-only">Edit</span>
-              </Table.HeadCell>
+              </Table.HeadCell> */}
             </Table.Head>
             {/* suspend is use to hold on the data (async) until it's complete and ready to render */}
             <Suspense fallback={<SkeletonRow />}>

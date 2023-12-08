@@ -31,26 +31,6 @@
     },
     {
       "vehicle": "Lexus RX200",
-      "current_odo": "123213",
-      "next_odo": "2312321",
-      "garage": "Toyota Terk Tla",
-      "maintenance_date": "2023-12-20",
-      "service": [
-        {
-          "name": "Rim replacement",
-          "description": "change 2 rim",
-          "price": 90
-        },
-        {
-          "name": "Car tatton ",
-          "description": "displaying cool text for the car",
-          "price": 100
-        }
-      ],
-      "id": 8
-    },
-    {
-      "vehicle": "Lexus RX200",
       "current_odo": "1232131",
       "next_odo": "1312321",
       "garage": "Toyota AUPP",
@@ -125,66 +105,16 @@
       "id": 15
     },
     {
-      "vehicle": "Lexus RX200",
-      "current_odo": "13213",
-      "next_odo": "13123123",
-      "garage": "Toyota Terk Tla",
-      "maintenance_date": "2023-12-08",
+      "vehicle": "Toyota Rush",
+      "current_odo": "12231",
+      "next_odo": "54421",
+      "garage": "Toyota AUPP",
+      "maintenance_date": "2023-12-31",
       "service": [
         {
-          "name": "Rim replacement",
-          "description": "change 2 rim",
-          "price": 90
-        },
-        {
-          "name": "Car tatton ",
-          "description": "displaying cool text for the car",
-          "price": 100
-        },
-        {
           "name": "Oil Filtering",
           "description": "Filter oil and clean oil",
           "price": 50
-        },
-        {
-          "name": "Rim replacement",
-          "description": "change 2 rim",
-          "price": 90
-        },
-        {
-          "name": "Rim replacement",
-          "description": "change 2 rim",
-          "price": 90
-        },
-        {
-          "name": "Rim replacement",
-          "description": "change 2 rim",
-          "price": 90
-        },
-        {
-          "name": "Rim replacement",
-          "description": "change 2 rim",
-          "price": 90
-        },
-        {
-          "name": "Oil Filtering",
-          "description": "Filter oil and clean oil",
-          "price": 50
-        },
-        {
-          "name": "Oil Filtering",
-          "description": "Filter oil and clean oil",
-          "price": 50
-        },
-        {
-          "name": "Rim replacement",
-          "description": "change 2 rim",
-          "price": 90
-        },
-        {
-          "name": "Rim replacement",
-          "description": "change 2 rim",
-          "price": 90
         }
       ],
       "id": 16

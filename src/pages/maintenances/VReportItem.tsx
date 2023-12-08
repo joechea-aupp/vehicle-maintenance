@@ -31,14 +31,14 @@ export default function VReportItem({ reports, onCheckboxChange }: Props) {
               .reduce((total, service) => total + service.price, 0)
               .toFixed(2)}
           </Table.Cell>
-          <Table.Cell>
+          {/* <Table.Cell>
             <a
               href="#"
               className="font-medium text-cyan-600 hover:underline dark:text-[#bfedff]"
             >
               Edit
             </a>
-          </Table.Cell>
+          </Table.Cell> */}
         </Table.Row>
       ))}
     </Table.Body>
