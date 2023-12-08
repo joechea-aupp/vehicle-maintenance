@@ -44,9 +44,14 @@ export default function SearchItem({
 
   const handleEnter = () => {
     const selectedItem = search[selectIndex];
+    const input = document.querySelector(".input") as HTMLInputElement;
     if (selectedItem) {
       navigate(selectedItem.path);
       setOpen(false);
+      // unfocus the input
+      if (input) {
+        input.blur();
+      }
     }
   };
 

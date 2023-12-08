@@ -13,18 +13,20 @@ export default function GlobalSearch() {
   // Toggle the menu when control k is pressed
   useEffect(() => {
     const down = (e: KeyboardEvent) => {
+      const input = document.querySelector(".input") as HTMLInputElement;
       if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
         e.preventDefault();
         setOpen(true);
         // set focus on input
-        const input = document.querySelector(".input") as HTMLInputElement;
-        if (input) {
-          input.focus();
-        }
+        input.focus();
       }
       // Close the modal when escape is pressed
       if (e.key === "Escape") {
         setOpen(false);
+        // unfocus the input
+        if (input) {
+          input.blur();
+        }
       }
     };
 

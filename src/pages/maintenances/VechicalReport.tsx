@@ -6,11 +6,7 @@ import { FiSearch } from "react-icons/fi";
 import { useState } from "react";
 import { useLoaderData, Await } from "react-router-dom";
 import { assertIsMaintenances } from "../../externals/getMaintenance";
-import {
-  MaintenanceResponse,
-  MaintenanceData,
-  MaintenanceID,
-} from "../../types/types";
+import { MaintenanceResponse, MaintenanceID } from "../../types/types";
 import VReportItem from "./VReportItem";
 import { Suspense } from "react";
 import ErrorBlock from "../../components/Errors/Error";
@@ -19,12 +15,12 @@ import SkeletonRow from "../../components/Skeletons/SkeletonRow";
 import { ThemeContext } from "../../contexts/ThemeContext";
 import { useContext } from "react";
 import delMaintenance from "../../externals/delMaintenance";
-import { useMutation, useQueryClient, useQuery } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { RxDropdownMenu } from "react-icons/rx";
 import { useForm } from "react-hook-form";
 import Dateselecter from "../../components/Dateselecter";
 import ColumnTitle from "../../components/ColumnTitle";
-
+import { Helmet } from "react-helmet";
 type Data = {
   reports: MaintenanceResponse;
 };
@@ -191,7 +187,10 @@ export default function VechicalReport() {
   }
 
   return (
-    <div className="container mx-auto h-full flex flex-col items-center md:block mb-28">
+    <div className="container mx-auto h-screen flex flex-col items-center md:block mb-28">
+      <Helmet>
+        <title>Vehicle Report</title>
+      </Helmet>
       <div className="flex justify-center">
         <h1 className="text-3xl font-extrabold font-custom-two tracking-wider">
           Report
