@@ -146,6 +146,8 @@ export default function VechicalReport() {
   // handle delete action on the delete button.
   const onDelete = async (maintenanceIDs: MaintenanceID[]) => {
     try {
+      const deletedMaintenanceItems = maintenanceIDs.map((id) => mutate(id));
+      await Promise.all(deletedMaintenanceItems);
     } catch (error) {
       console.error(error);
     }

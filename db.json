@@ -90,26 +90,6 @@
       "id": 10
     },
     {
-      "vehicle": "Toyota Prius",
-      "current_odo": "132213",
-      "next_odo": "12312321",
-      "garage": "Toyota AUPP",
-      "service": [
-        {
-          "name": "Rim replacement",
-          "description": "change 2 rim",
-          "price": 90
-        },
-        {
-          "name": "Car tatton ",
-          "description": "displaying cool text for the car",
-          "price": 100
-        }
-      ],
-      "maintenance_date": "2023-01-27",
-      "id": 11
-    },
-    {
       "vehicle": "Lexus RX200",
       "current_odo": "1232131",
       "next_odo": "1312321",
