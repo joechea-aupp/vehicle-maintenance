@@ -59,10 +59,12 @@ export default function VechicalForm() {
     // the mutate is eq to mutateFn which need one parameter which is data.
     mutationFn: (newMaintenance: MaintenancePost) =>
       postMaintenance(newMaintenance),
-    onSuccess: (saveMaintenance) => {
+    onSuccess: () => {
       // invalidate the cache after new record is added
       queryClient.invalidateQueries({ queryKey: ["report", ""] });
       reset();
+      // clear data from the service array
+      setService([]);
     },
   });
   const { data: maintenanceQueryData } = useQuery<MaintenanceResponse>({

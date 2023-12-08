@@ -51,46 +51,6 @@
     },
     {
       "vehicle": "Lexus RX200",
-      "current_odo": "123213",
-      "next_odo": "123213",
-      "garage": "Toyota AUPP",
-      "service": [
-        {
-          "name": "Rim replacement",
-          "description": "change 2 rim",
-          "price": 90
-        },
-        {
-          "name": "Car tatton ",
-          "description": "displaying cool text for the car",
-          "price": 100
-        },
-        {
-          "name": "Rim replacement",
-          "description": "change 2 rim",
-          "price": 90
-        }
-      ],
-      "maintenance_date": "2023-06-27",
-      "id": 9
-    },
-    {
-      "vehicle": "Toyota Rush",
-      "current_odo": "123213",
-      "next_odo": "12321321",
-      "garage": "Toyota AUPP",
-      "maintenance_date": "2023-02-15",
-      "service": [
-        {
-          "name": "Rim replacement",
-          "description": "change 2 rim",
-          "price": 90
-        }
-      ],
-      "id": 10
-    },
-    {
-      "vehicle": "Lexus RX200",
       "current_odo": "1232131",
       "next_odo": "1312321",
       "garage": "Toyota AUPP",
@@ -113,6 +73,56 @@
       ],
       "maintenance_date": "2022-12-01",
       "id": 12
+    },
+    {
+      "vehicle": "Lexus RX200",
+      "current_odo": "132213",
+      "next_odo": "3123213",
+      "garage": "Toyota AUPP",
+      "maintenance_date": "2023-10-18",
+      "service": [
+        {
+          "name": "Rim replacement",
+          "description": "change 2 rim",
+          "price": 90
+        }
+      ],
+      "id": 13
+    },
+    {
+      "vehicle": "Lexus RX200",
+      "current_odo": "123213",
+      "next_odo": "123123213",
+      "garage": "Toyota AUPP",
+      "maintenance_date": "2024-01-04",
+      "service": [
+        {
+          "name": "Oil Filtering",
+          "description": "Filter oil and clean oil",
+          "price": 50
+        }
+      ],
+      "id": 14
+    },
+    {
+      "vehicle": "Lexus RX200",
+      "current_odo": "3123213",
+      "next_odo": "213213213",
+      "garage": "Toyota AUPP",
+      "maintenance_date": "2021-03-04",
+      "service": [
+        {
+          "name": "Rim replacement",
+          "description": "change 2 rim",
+          "price": 90
+        },
+        {
+          "name": "Engine check",
+          "description": "Check engine to make sure that there's no issue",
+          "price": 40
+        }
+      ],
+      "id": 15
     }
   ]
 }
