@@ -161,9 +161,9 @@ export default function VechicalReport() {
       queryKey: ["report", ""],
       queryFn: () =>
         getMaintenance(
-          `_limit=${displayRow}&_sort=${fieldName}&_order=${
-            sortDescending ? "asc" : "desc"
-          }`
+          `_limit=${
+            fieldName === "price" ? "" : displayRow
+          }&_sort=${fieldName}&_order=${sortDescending ? "asc" : "desc"}`
         ),
     });
 
