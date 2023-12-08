@@ -32,9 +32,12 @@ export default function Dateselecter({
               const month = selectedDate.getMonth() + 1;
               const year = selectedDate.getFullYear();
 
-              const formattedDate = `${day < 10 ? "0" + day : day}-${
-                month < 11 ? "0" + month : month
-              }-${year}`;
+              // const formattedDate = `${day < 10 ? "0" + day : day}-${
+              //   month < 10 ? "0" + month : month
+              // }-${year}`;
+              const formattedDate = `${year}-${
+                month < 10 ? "0" + month : month
+              }-${day < 10 ? "0" + day : day}`;
               // use formattedDate as value for the input
               field.onChange(formattedDate);
             }}

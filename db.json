@@ -15,209 +15,124 @@
   ],
   "reports": [
     {
-      "vehicle": "Toyota Rush",
-      "current_odo": "123123",
-      "next_odo": "12312312",
+      "vehicle": "Lexus RX200",
+      "current_odo": "12321",
+      "next_odo": "123213213",
       "garage": "Toyota AUPP",
+      "maintenance_date": "2023-12-31",
       "service": [
         {
-          "name": "Cy Ganderton",
-          "description": "Quality Control Specialist",
-          "price": 10
-        },
-        {
-          "name": "Hart Hagerty",
-          "description": "Desktop Support Technician",
-          "price": 25.2
-        },
-        {
-          "name": "Brice Swyre",
-          "description": "Tax Accountant",
-          "price": 40.1
+          "name": "Oil Filtering",
+          "description": "Filter oil and clean oil",
+          "price": 50
         }
       ],
-      "maintenance_date": "22-10-2023",
-      "id": 26
+      "id": 7
     },
     {
       "vehicle": "Lexus RX200",
       "current_odo": "123213",
-      "next_odo": "12321321",
-      "garage": "Toyota AUPP",
-      "service": [
-        {
-          "name": "Cy Ganderton",
-          "description": "Quality Control Specialist",
-          "price": 10
-        },
-        {
-          "name": "Hart Hagerty",
-          "description": "Desktop Support Technician",
-          "price": 25.2
-        },
-        {
-          "name": "Brice Swyre",
-          "description": "Tax Accountant",
-          "price": 40.1
-        },
-        {
-          "name": "Hart Hagerty",
-          "description": "Desktop Support Technician",
-          "price": 25.2
-        },
-        {
-          "name": "Cy Ganderton",
-          "description": "Quality Control Specialist",
-          "price": 10
-        }
-      ],
-      "maintenance_date": "27-11-2023",
-      "id": 29
-    },
-    {
-      "vehicle": "Toyota Rush",
-      "current_odo": "1234",
-      "next_odo": "12345",
-      "garage": "Toyota AUPP",
-      "maintenance_date": "05-11-2023",
-      "service": [
-        {
-          "name": "Oil Filter",
-          "description": "Filter oil with new one.",
-          "price": 12
-        },
-        {
-          "name": "Brice Swyre",
-          "description": "Tax Accountant",
-          "price": 40.1
-        }
-      ],
-      "id": 30
-    },
-    {
-      "vehicle": "Lexus RX200",
-      "current_odo": "1234",
-      "next_odo": "5678",
-      "garage": "Toyota AUPP",
-      "maintenance_date": "06-11-2023",
-      "service": [
-        {
-          "name": "Oil Filter",
-          "description": "Filter oil with new one.",
-          "price": 12
-        }
-      ],
-      "id": 31
-    },
-    {
-      "vehicle": "Toyota Rush",
-      "current_odo": "123213",
-      "next_odo": "12321321",
-      "garage": "Toyota AUPP",
-      "maintenance_date": "06-11-2023",
-      "service": [
-        {
-          "name": "Cy Ganderton",
-          "description": "Quality Control Specialist",
-          "price": 10
-        },
-        {
-          "name": "Oil Filter",
-          "description": "Filter oil with new one.",
-          "price": 12
-        },
-        {
-          "name": "Brice Swyre",
-          "description": "Tax Accountant",
-          "price": 40.1
-        },
-        {
-          "name": "Hart Hagerty",
-          "description": "Desktop Support Technician",
-          "price": 25.2
-        }
-      ],
-      "id": 32
-    },
-    {
-      "vehicle": "Lexus RX200",
-      "current_odo": "12312",
-      "next_odo": "1321312321",
-      "garage": "Toyota AUPP",
-      "maintenance_date": "07-11-2023",
-      "service": [
-        {
-          "name": "Oil Filter",
-          "description": "Filter oil with new one.",
-          "price": 12
-        },
-        {
-          "name": "Hart Hagerty",
-          "description": "Desktop Support Technician",
-          "price": 25.2
-        },
-        {
-          "name": "Brice Swyre",
-          "description": "Tax Accountant",
-          "price": 40.1
-        }
-      ],
-      "id": 33
-    },
-    {
-      "vehicle": "Lexus RX200",
-      "current_odo": "21321",
-      "next_odo": "12312321",
-      "garage": "Toyota AUPP",
-      "maintenance_date": "08-11-2023",
-      "service": [
-        {
-          "name": "Oil Filter",
-          "description": "Filter oil with new one.",
-          "price": 12
-        }
-      ],
-      "id": 34
-    },
-    {
-      "vehicle": "Lexus RX200",
-      "current_odo": "2312",
-      "next_odo": "12312321",
-      "garage": "Toyota AUPP",
-      "maintenance_date": "31-12-2023",
-      "service": [
-        {
-          "name": "Oil Filter",
-          "description": "Filter oil with new one.",
-          "price": 12
-        }
-      ],
-      "id": 35
-    },
-    {
-      "vehicle": "Lexus RX200",
-      "current_odo": "1123213",
-      "next_odo": "1321321321",
+      "next_odo": "2312321",
       "garage": "Toyota Terk Tla",
-      "maintenance_date": "07-12-2023",
+      "maintenance_date": "2023-12-20",
       "service": [
         {
-          "name": "Hart Hagerty",
-          "description": "Desktop Support Technician",
-          "price": 25.2
+          "name": "Rim replacement",
+          "description": "change 2 rim",
+          "price": 90
         },
         {
-          "name": "Brice Swyre",
-          "description": "Tax Accountant",
-          "price": 40.1
-        },
-        {
-          "name": "Bottom filter",
-          "description": "clean car bottom.",
-          "price": 120
+          "name": "Car tatton ",
+          "description": "displaying cool text for the car",
+          "price": 100
         }
       ],
-      "id": 36
+      "id": 8
+    },
+    {
+      "vehicle": "Lexus RX200",
+      "current_odo": "123213",
+      "next_odo": "123213",
+      "garage": "Toyota AUPP",
+      "service": [
+        {
+          "name": "Rim replacement",
+          "description": "change 2 rim",
+          "price": 90
+        },
+        {
+          "name": "Car tatton ",
+          "description": "displaying cool text for the car",
+          "price": 100
+        },
+        {
+          "name": "Rim replacement",
+          "description": "change 2 rim",
+          "price": 90
+        }
+      ],
+      "maintenance_date": "2023-06-27",
+      "id": 9
+    },
+    {
+      "vehicle": "Toyota Rush",
+      "current_odo": "123213",
+      "next_odo": "12321321",
+      "garage": "Toyota AUPP",
+      "maintenance_date": "2023-02-15",
+      "service": [
+        {
+          "name": "Rim replacement",
+          "description": "change 2 rim",
+          "price": 90
+        }
+      ],
+      "id": 10
+    },
+    {
+      "vehicle": "Toyota Prius",
+      "current_odo": "132213",
+      "next_odo": "12312321",
+      "garage": "Toyota AUPP",
+      "service": [
+        {
+          "name": "Rim replacement",
+          "description": "change 2 rim",
+          "price": 90
+        },
+        {
+          "name": "Car tatton ",
+          "description": "displaying cool text for the car",
+          "price": 100
+        }
+      ],
+      "maintenance_date": "2023-01-27",
+      "id": 11
+    },
+    {
+      "vehicle": "Lexus RX200",
+      "current_odo": "1232131",
+      "next_odo": "1312321",
+      "garage": "Toyota AUPP",
+      "service": [
+        {
+          "name": "Rim replacement",
+          "description": "change 2 rim",
+          "price": 90
+        },
+        {
+          "name": "Car tatton ",
+          "description": "displaying cool text for the car",
+          "price": 100
+        },
+        {
+          "name": "Rim replacement",
+          "description": "change 2 rim",
+          "price": 90
+        }
+      ],
+      "maintenance_date": "2022-12-01",
+      "id": 12
     }
   ]
 }

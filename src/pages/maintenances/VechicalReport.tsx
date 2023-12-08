@@ -146,8 +146,6 @@ export default function VechicalReport() {
   // handle delete action on the delete button.
   const onDelete = async (maintenanceIDs: MaintenanceID[]) => {
     try {
-      const deletedMaintenanceItems = maintenanceIDs.map((id) => mutate(id));
-      await Promise.all(deletedMaintenanceItems);
     } catch (error) {
       console.error(error);
     }
@@ -157,65 +155,31 @@ export default function VechicalReport() {
   const [sortDescending, setSortDescending] = useState<boolean>(false);
   const [sortBy, setSortBy] = useState<string>("");
   const onSort = async (fieldName: string) => {
+    setSortDescending(!sortDescending);
     const data = await queryClient.fetchQuery({
       queryKey: ["report", ""],
       queryFn: () =>
         getMaintenance(
-          `_limit=${
-            fieldName === "price" ? "" : displayRow
-          }&_sort=${fieldName}&_order=${sortDescending ? "asc" : "desc"}`
+          `_limit=${displayRow}&_sort=${fieldName}&_order=${
+            sortDescending ? "asc" : "desc"
+          }&_page=${currentPage}`
         ),
     });
 
-    if (data) {
-      const isDescending = sortBy === fieldName && !sortDescending;
-      const sortedData: MaintenanceResponse = {
-        headers: data.headers,
-        body: data.body.slice().sort((a, b) => {
-          if (fieldName === "maintenance_date") {
-            const dateA = String(a[fieldName]) ? a[fieldName] : "";
-            const dateB = String(b[fieldName]) ? b[fieldName] : "";
-
-            const parsedDateA = new Date(dateA.split("-").reverse().join("-"));
-            const parsedDateB = new Date(dateB.split("-").reverse().join("-"));
-            const compareResult = parsedDateA.getTime() - parsedDateB.getTime();
-
-            return isDescending ? -compareResult : compareResult;
-          } else if (fieldName === "price") {
-            // For the 'price' field, directly compare the numbers
-            return isDescending
-              ? b.service.reduce((acc, service) => acc + service.price, 0) -
-                  a.service.reduce((acc, service) => acc + service.price, 0)
-              : a.service.reduce((acc, service) => acc + service.price, 0) -
-                  b.service.reduce((acc, service) => acc + service.price, 0);
-          } else {
-            const valueA = a[fieldName as keyof MaintenanceData];
-            const valueB = b[fieldName as keyof MaintenanceData];
-            const compareResult =
-              valueA > valueB ? 1 : valueA < valueB ? -1 : 0;
-
-            return isDescending ? -compareResult : compareResult;
-          }
-        }),
-      };
-
-      queryClient.setQueryData<MaintenanceResponse | undefined>(
-        ["report", ""],
-        sortedData
-      );
-
-      setCurrentPage(1);
-      setReports(sortedData);
-      setSortBy(fieldName);
-      setSortDescending(isDescending);
-    }
+    setReports(data);
+    setSortBy(fieldName);
   };
 
   async function onPaginationChange(page: number) {
     try {
       const newReports = await queryClient.fetchQuery({
         queryKey: ["report", ""],
-        queryFn: () => getMaintenance(`_limit=${displayRow}&_page=${page}`),
+        queryFn: () =>
+          getMaintenance(
+            `_limit=${displayRow}&_sort=${sortBy}&_order=${
+              sortDescending ? "desc" : "asc"
+            }&_page=${page}`
+          ),
       });
       setReports(newReports);
       setCurrentPage(page);
@@ -408,7 +372,7 @@ export default function VechicalReport() {
                 <ColumnTitle
                   fieldName="price"
                   onSort={onSort}
-                  isSortable={true}
+                  isSortable={false}
                 >
                   Price
                 </ColumnTitle>
