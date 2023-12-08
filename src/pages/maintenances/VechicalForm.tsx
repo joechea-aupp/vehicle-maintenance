@@ -8,7 +8,7 @@ import {
 import ErrorLabel from "../../components/Errors/ErrorLabel";
 import SubmitBtn from "../../components/Button/SubmitBtn";
 import { ThemeContext } from "../../contexts/ThemeContext";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import postMaintenance from "../../externals/postMaintenance";
 import { useMutation, useQueryClient, useQuery } from "@tanstack/react-query";
 import Dateselecter from "../../components/Dateselecter";
@@ -34,14 +34,6 @@ const getUniqueService = (
 export default function VechicalForm() {
   const [service, setService] = useState<Service[]>([]);
   const [ServiceSearchText, setServiceSearchText] = useState<string>("");
-  const { data: maintenanceQueryData } = useQuery<MaintenanceResponse>({
-    queryKey: ["report", ""],
-    queryFn: () => getMaintenance(""),
-  });
-  const serviceSearchInitial: Service[] = getUniqueService(
-    maintenanceQueryData!,
-    ""
-  );
   const theme = useContext(ThemeContext);
   const {
     register,
@@ -73,7 +65,17 @@ export default function VechicalForm() {
       reset();
     },
   });
+  const { data: maintenanceQueryData } = useQuery<MaintenanceResponse>({
+    queryKey: ["report", ""],
+    queryFn: () => getMaintenance(""),
+  });
   const [searchService, setSearchService] = useState<Service[]>([]);
+  useEffect(() => {
+    if (maintenanceQueryData) {
+      const initialService = getUniqueService(maintenanceQueryData, "");
+      setSearchService(initialService);
+    }
+  }, [maintenanceQueryData]);
   async function handleSearch(event: React.ChangeEvent<HTMLInputElement>) {
     setServiceSearchText(event.target.value);
     try {
@@ -197,7 +199,7 @@ export default function VechicalForm() {
             </select>
           </div>
           <ServiceSearch
-            items={ServiceSearchText ? searchService : serviceSearchInitial}
+            items={searchService}
             errors={errors}
             status={status}
             getEditorStyle={getEditorStyle}

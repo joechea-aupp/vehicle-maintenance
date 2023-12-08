@@ -9,7 +9,6 @@ export default function ErrorLabel({ fieldError }: Props) {
     return null;
   }
 
-  console.log(fieldError);
   return (
     <span className="label-text-alt text-red-500">{fieldError.message}</span>
   );
