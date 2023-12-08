@@ -27,7 +27,9 @@ const getUniqueService = (
   const matchedServices =
     searchText === ""
       ? uniqueServices
-      : uniqueServices?.filter((service) => service.name.includes(searchText));
+      : uniqueServices?.filter((service) =>
+          service.name.toLowerCase().includes(searchText.toLowerCase())
+        );
   return matchedServices;
 };
 
