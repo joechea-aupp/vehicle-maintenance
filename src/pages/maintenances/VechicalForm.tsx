@@ -14,7 +14,7 @@ import { useMutation, useQueryClient, useQuery } from "@tanstack/react-query";
 import Dateselecter from "../../components/Dateselecter";
 import ServiceSearch from "./ServiceSearch";
 import { getMaintenance } from "../../externals/getMaintenance";
-
+import { MdDeleteOutline } from "react-icons/md";
 const getUniqueService = (
   maintenancePost: MaintenanceResponse,
   searchText: string
@@ -94,6 +94,13 @@ export default function VechicalForm() {
       console.log(error);
     }
   }
+
+  const handleRemoveService = (e: React.MouseEvent, index: number) => {
+    e.preventDefault();
+    const newService = [...service];
+    newService.splice(index, 1);
+    setService(newService);
+  };
 
   return (
     // this therefore values must be pass to the mutate function
@@ -262,6 +269,7 @@ export default function VechicalForm() {
                   <th>Name</th>
                   <th>Description</th>
                   <th>Price</th>
+                  <th>Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -305,11 +313,16 @@ export default function VechicalForm() {
                           readOnly
                         />
                       </td>
+                      <td className="text-center">
+                        <button onClick={(e) => handleRemoveService(e, index)}>
+                          <MdDeleteOutline />
+                        </button>
+                      </td>
                     </tr>
                   ))
                 ) : (
                   <tr className="">
-                    <td className="w-[35rem] py-20 text-center" colSpan={4}>
+                    <td className="w-[35rem] py-20 text-center" colSpan={5}>
                       <span className="italic">No service added</span>
                     </td>
                   </tr>
