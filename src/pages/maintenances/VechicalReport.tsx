@@ -187,7 +187,7 @@ export default function VechicalReport() {
   }
 
   return (
-    <div className="container mx-auto h-screen flex flex-col items-center md:block mb-28">
+    <div className="container mx-auto md:h-screen flex flex-col items-center md:block mb-28">
       <Helmet>
         <title>Vehicle Report</title>
       </Helmet>
@@ -200,7 +200,7 @@ export default function VechicalReport() {
 
       <div className="grid grid-cols-3 w-2/5 gap-2 mx-32 pb-10">
         {/* row 1 */}
-        <div>
+        {/* <div>
           <div className="form-control w-full max-w-xs pt-[32px]">
             <select className="select select-bordered select-sm text-xs">
               <option disabled selected>
@@ -210,7 +210,7 @@ export default function VechicalReport() {
               <option>Vehicle</option>
             </select>
           </div>
-        </div>
+        </div> */}
         <div>
           <label className="label">
             <span className="label-text-alt">Start</span>
@@ -236,7 +236,7 @@ export default function VechicalReport() {
         </div>
 
         {/* row 2 */}
-        <select className="select select-bordered select-sm max-w-xs col-span-3 w-[80px] text-xs">
+        {/* <select className="select select-bordered select-sm max-w-xs col-span-3 w-[80px] text-xs">
           <option disabled selected>
             SEL
           </option>
@@ -276,7 +276,7 @@ export default function VechicalReport() {
           >
             <path d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z" />
           </svg>
-        </button>
+        </button> */}
 
         {/* row 3 */}
       </div>
