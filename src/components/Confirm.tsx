@@ -1,7 +1,9 @@
 type Props = {
   modalId: string;
+  data: any[];
+  action: (data: any[]) => void;
 };
-export default function Confirm({ modalId }: Props) {
+export default function Confirm({ modalId, data, action }: Props) {
   return (
     <>
       <dialog id={modalId} className="modal">
@@ -11,7 +13,9 @@ export default function Confirm({ modalId }: Props) {
           <div className="modal-action">
             <form method="dialog">
               {/* if there is a button in form, it will close the modal */}
-              <button className="btn px-8 mr-5">Yes</button>
+              <button className="btn px-8 mr-5" onClick={() => action(data)}>
+                Yes
+              </button>
               <button className="btn px-8">No</button>
             </form>
           </div>

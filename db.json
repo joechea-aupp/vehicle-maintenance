@@ -105,16 +105,16 @@
       "id": 15
     },
     {
-      "vehicle": "Toyota Rush",
-      "current_odo": "12231",
-      "next_odo": "54421",
-      "garage": "Toyota AUPP",
-      "maintenance_date": "2023-12-31",
+      "vehicle": "Lexus RX200",
+      "current_odo": "2333556",
+      "next_odo": "4455688",
+      "garage": "Toyota Terk Tla",
+      "maintenance_date": "2023-12-12",
       "service": [
         {
-          "name": "Oil Filtering",
-          "description": "Filter oil and clean oil",
-          "price": 50
+          "name": "Rim replacement",
+          "description": "change 2 rim",
+          "price": 90
         }
       ],
       "id": 16

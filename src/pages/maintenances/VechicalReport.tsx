@@ -308,8 +308,7 @@ export default function VechicalReport() {
                 <a>Export</a>
               </li>
               <li>
-                {/* onclick run onDelete function */}
-                {/* <a onClick={() => onDelete(checkedReport)}>Delete</a> */}
+                {/* run modal to confirm action delete */}
                 <a
                   onClick={() => {
                     const myModel = document.getElementById(
@@ -324,7 +323,11 @@ export default function VechicalReport() {
             </ul>
           </div>
 
-          <Confirm modalId="confirmModal" />
+          <Confirm
+            modalId="confirmModal"
+            action={onDelete}
+            data={checkedReport}
+          />
           <div className="max-w-md pb-2">
             <div className="mb-2 block">
               <Label htmlFor="search" />
