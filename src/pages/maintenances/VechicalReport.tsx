@@ -21,6 +21,7 @@ import { useForm } from "react-hook-form";
 import Dateselecter from "../../components/Dateselecter";
 import ColumnTitle from "../../components/ColumnTitle";
 import { Helmet } from "react-helmet";
+import Confirm from "../../components/Confirm";
 type Data = {
   reports: MaintenanceResponse;
 };
@@ -308,11 +309,22 @@ export default function VechicalReport() {
               </li>
               <li>
                 {/* onclick run onDelete function */}
-                <a onClick={() => onDelete(checkedReport)}>Delete</a>
+                {/* <a onClick={() => onDelete(checkedReport)}>Delete</a> */}
+                <a
+                  onClick={() => {
+                    const myModel = document.getElementById(
+                      "confirmModal"
+                    ) as HTMLDialogElement;
+                    myModel.showModal();
+                  }}
+                >
+                  Delete
+                </a>
               </li>
             </ul>
           </div>
 
+          <Confirm modalId="confirmModal" />
           <div className="max-w-md pb-2">
             <div className="mb-2 block">
               <Label htmlFor="search" />
