@@ -7,12 +7,14 @@ type Props = {
   theme: ThemeContextType | null;
   control?: Control<any>;
   size?: "sm" | "base" | "lg" | "xl" | undefined;
+  onDateChange?: (date: string) => void;
 };
 export default function Dateselecter({
   name,
   theme,
   control,
   size = "base",
+  onDateChange,
 }: Props) {
   return (
     <Flowbite theme={{ theme: customDatepickerTheme }}>
@@ -40,6 +42,10 @@ export default function Dateselecter({
               }-${day < 10 ? "0" + day : day}`;
               // use formattedDate as value for the input
               field.onChange(formattedDate);
+              // trigger onDateChange callback
+              if (onDateChange) {
+                onDateChange(formattedDate);
+              }
             }}
             value={field.value}
           />

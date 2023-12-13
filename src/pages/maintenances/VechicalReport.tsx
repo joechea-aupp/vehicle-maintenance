@@ -187,6 +187,23 @@ export default function VechicalReport() {
     }
   }
 
+  async function onStartDateChange(date: string) {
+    try {
+      const newReports = await queryClient.fetchQuery({
+        queryKey: ["report", ""],
+        queryFn: () =>
+          getMaintenance(
+            `_limit=${displayRow}&_sort=${sortBy}&_order=${
+              sortDescending ? "desc" : "asc"
+            }&_page=${currentPage}&maintenance_date_gte=${date}`
+          ),
+      });
+      setReports(newReports);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   return (
     <div className="container mx-auto md:h-screen flex flex-col items-center md:block mb-28">
       <Helmet>
@@ -221,6 +238,7 @@ export default function VechicalReport() {
             theme={theme}
             control={control}
             size="sm"
+            onDateChange={onStartDateChange}
           />
         </div>
 
