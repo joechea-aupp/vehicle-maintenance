@@ -7,7 +7,7 @@ type Props = {
   theme: ThemeContextType | null;
   control?: Control<any>;
   size?: "sm" | "base" | "lg" | "xl" | undefined;
-  onDateChange?: (date: string) => void;
+  onDateChange?: (startDate?: string, endDate?: string) => void;
 };
 export default function Dateselecter({
   name,
@@ -44,7 +44,11 @@ export default function Dateselecter({
               field.onChange(formattedDate);
               // trigger onDateChange callback
               if (onDateChange) {
-                onDateChange(formattedDate);
+                if (name === "start_date") {
+                  onDateChange(formattedDate, "");
+                } else if (name === "end_date") {
+                  onDateChange("", formattedDate);
+                }
               }
             }}
             value={field.value}

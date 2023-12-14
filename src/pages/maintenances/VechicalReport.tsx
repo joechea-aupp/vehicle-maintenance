@@ -37,8 +37,16 @@ export function assertIsData(data: unknown): asserts data is Data {
   }
 }
 
+type DateFilter = {
+  startDate?: string;
+  endDate?: string;
+};
 export default function VechicalReport() {
   const theme = useContext(ThemeContext);
+  const [dateFilterm, setDateFilter] = useState<DateFilter>({
+    startDate: "",
+    endDate: "",
+  });
   const data = useLoaderData();
   // make sure that the data is queryclient of reports with data type of MaintenanceData[]
   assertIsData(data);
@@ -67,7 +75,21 @@ export default function VechicalReport() {
         if (data.body.length < Number(event.target.value)) {
           const newReports = await queryClient.fetchQuery({
             queryKey: ["report", ""],
-            queryFn: () => getMaintenance(`_limit=${event.target.value}`),
+            queryFn: () =>
+              getMaintenance(`_limit=${event.target.value}
+            &_order=${sortDescending ? "asc" : "desc"}&_page=${currentPage}
+         ${
+           dateFilterm.startDate !== ""
+             ? `&maintenance_date_gte=${dateFilterm.startDate}`
+             : ""
+         }
+          ${
+            dateFilterm.endDate !== ""
+              ? `&maintenance_date_lte=${dateFilterm.endDate}`
+              : ""
+          }
+            
+            `),
           });
           setReports(newReports);
         }
@@ -161,7 +183,18 @@ export default function VechicalReport() {
         getMaintenance(
           `_limit=${displayRow}&_sort=${fieldName}&_order=${
             sortDescending ? "asc" : "desc"
-          }&_page=${currentPage}`
+          }&_page=${currentPage}
+         ${
+           dateFilterm.startDate !== ""
+             ? `&maintenance_date_gte=${dateFilterm.startDate}`
+             : ""
+         }
+          ${
+            dateFilterm.endDate !== ""
+              ? `&maintenance_date_lte=${dateFilterm.endDate}`
+              : ""
+          }
+          `
         ),
     });
 
@@ -177,7 +210,17 @@ export default function VechicalReport() {
           getMaintenance(
             `_limit=${displayRow}&_sort=${sortBy}&_order=${
               sortDescending ? "desc" : "asc"
-            }&_page=${page}`
+            }&_page=${page}${
+              dateFilterm.startDate !== ""
+                ? `&maintenance_date_gte=${dateFilterm.startDate}`
+                : ""
+            }
+          ${
+            dateFilterm.endDate !== ""
+              ? `&maintenance_date_lte=${dateFilterm.endDate}`
+              : ""
+          }
+            `
           ),
       });
       setReports(newReports);
@@ -187,17 +230,41 @@ export default function VechicalReport() {
     }
   }
 
-  async function onStartDateChange(date: string) {
+  async function onStartDateChange(startDate?: string, endDate?: string) {
+    if (startDate) {
+      setDateFilter((prevFilters) => ({ ...prevFilters, startDate }));
+    }
+
+    if (endDate) {
+      setDateFilter((prevFilters) => ({ ...prevFilters, endDate }));
+    }
+
     try {
+      let queryString = `_limit=${displayRow}&_sort=${sortBy}&_order=${
+        sortDescending ? "desc" : "asc"
+      }&_page=${currentPage}`;
+
+      // console.log(endDate);
+      if (startDate && startDate.trim() !== "") {
+        queryString += `&maintenance_date_gte=${startDate.trim()}`;
+      } else {
+        if (dateFilterm.startDate !== "") {
+          queryString += `&maintenance_date_gte=${dateFilterm.startDate}`;
+        }
+      }
+      if (endDate && endDate !== "") {
+        queryString += `&maintenance_date_lte=${endDate.trim()}`;
+      } else {
+        if (dateFilterm.endDate !== "") {
+          queryString += `&maintenance_date_lte=${dateFilterm.endDate}`;
+        }
+      }
+
       const newReports = await queryClient.fetchQuery({
         queryKey: ["report", ""],
-        queryFn: () =>
-          getMaintenance(
-            `_limit=${displayRow}&_sort=${sortBy}&_order=${
-              sortDescending ? "desc" : "asc"
-            }&_page=${currentPage}&maintenance_date_gte=${date}`
-          ),
+        queryFn: () => getMaintenance(queryString),
       });
+
       setReports(newReports);
     } catch (error) {
       console.error(error);
@@ -251,6 +318,7 @@ export default function VechicalReport() {
             theme={theme}
             control={control}
             size="sm"
+            onDateChange={onStartDateChange}
           />
         </div>
 
