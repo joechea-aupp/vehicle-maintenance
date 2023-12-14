@@ -13,6 +13,29 @@
       "description": "View or delete vehicle maintenance report"
     }
   ],
+  "vehicle": [
+    {
+      "id": 1,
+      "name": "Lexus RX200",
+      "brand": "Lexus",
+      "color": "Black",
+      "year": "2019"
+    },
+    {
+      "id": 2,
+      "name": "Toyota Prius",
+      "brand": "Toyota",
+      "color": "White",
+      "year": "2018"
+    },
+    {
+      "id": 3,
+      "name": "Toyota Rush",
+      "brand": "Toyota",
+      "color": "White",
+      "year": "2022"
+    }
+  ],
   "reports": [
     {
       "vehicle": "Lexus RX200",
@@ -118,6 +141,26 @@
         }
       ],
       "id": 16
+    },
+    {
+      "vehicle": "Toyota Prius",
+      "current_odo": "12233",
+      "next_odo": "1321321",
+      "garage": "Toyota Terk Tla",
+      "maintenance_date": "2023-12-14",
+      "service": [
+        {
+          "name": "Rim replacement",
+          "description": "change 2 rim",
+          "price": 90
+        },
+        {
+          "name": "Engine check",
+          "description": "Check engine to make sure that there's no issue",
+          "price": 40
+        }
+      ],
+      "id": 17
     }
   ]
 }

@@ -41,3 +41,11 @@ export type MenuData = {
   path: string;
   description: string;
 };
+
+export type VehicleData = {
+  id: number;
+  name: string;
+  brand: string;
+  color: string;
+  year: string;
+};
