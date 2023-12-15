@@ -4,17 +4,21 @@ import {
   MaintenanceResponse,
   MaintenancePost,
   Service,
+  VehicleData,
 } from "../../types/types";
 import ErrorLabel from "../../components/Errors/ErrorLabel";
 import SubmitBtn from "../../components/Button/SubmitBtn";
 import { ThemeContext } from "../../contexts/ThemeContext";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState, Suspense } from "react";
 import postMaintenance from "../../externals/postMaintenance";
 import { useMutation, useQueryClient, useQuery } from "@tanstack/react-query";
 import Dateselecter from "../../components/Dateselecter";
 import ServiceSearch from "./ServiceSearch";
 import { getMaintenance } from "../../externals/getMaintenance";
 import { MdDeleteOutline } from "react-icons/md";
+import { Await, useLoaderData } from "react-router-dom";
+import { assertIsVehicle } from "../../externals/getVehicle";
+
 const getUniqueService = (
   maintenancePost: MaintenanceResponse,
   searchText: string
@@ -33,7 +37,24 @@ const getUniqueService = (
   return matchedServices;
 };
 
+type Data = {
+  vehicles: VehicleData[];
+};
+export function assertIsData(data: unknown): asserts data is Data {
+  if (typeof data !== "object") {
+    throw new Error("Data isn't an object");
+  }
+  if (data === null) {
+    throw new Error("Data is null");
+  }
+  if (!("vehicles" in data)) {
+    throw new Error("data doesn't contain vehicle");
+  }
+}
+
 export default function VechicalForm() {
+  const data = useLoaderData();
+  assertIsData(data);
   const [service, setService] = useState<Service[]>([]);
   const [ServiceSearchText, setServiceSearchText] = useState<string>("");
   const theme = useContext(ThemeContext);
@@ -115,22 +136,47 @@ export default function VechicalForm() {
               <span className="label-text">Select Vechicle</span>
               {errors.vehicle && <ErrorLabel fieldError={errors.vehicle} />}
             </label>
-            <select
-              className={`select select-bordered ${getEditorStyle(
-                errors.vehicle
-              )}`}
-              {...register("vehicle", {
-                required: "Vechical must be provided",
-              })}
-              disabled={status === "pending"}
-            >
-              <option value="" disabled selected>
-                Pick one
-              </option>
-              <option>Toyota Rush</option>
-              <option>Lexus RX200</option>
-              <option>Toyota Prius</option>
-            </select>
+            <Suspense fallback={<div>Loading...</div>}>
+              <Await resolve={data.vehicles}>
+                {(vehicles) => {
+                  assertIsVehicle(vehicles);
+                  return (
+                    <select
+                      className={`select select-bordered ${getEditorStyle(
+                        errors.vehicle
+                      )}`}
+                      {...register("vehicle", {
+                        required: "Vechical must be provided",
+                      })}
+                      disabled={status === "pending"}
+                    >
+                      <option value="" disabled selected>
+                        Pick one
+                      </option>
+                      {vehicles.map((vehicle) => (
+                        <option key={vehicle.id}>{vehicle.name}</option>
+                      ))}
+                    </select>
+                  );
+                }}
+                {/* <select
+                  className={`select select-bordered ${getEditorStyle(
+                    errors.vehicle
+                  )}`}
+                  {...register("vehicle", {
+                    required: "Vechical must be provided",
+                  })}
+                  disabled={status === "pending"}
+                >
+                  <option value="" disabled selected>
+                    Pick one
+                  </option>
+                  <option>Toyota Rush</option>
+                  <option>Lexus RX200</option>
+                  <option>Toyota Prius</option>
+                </select> */}
+              </Await>
+            </Suspense>
           </div>
 
           <div>

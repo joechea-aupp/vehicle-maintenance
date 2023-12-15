@@ -1,6 +1,7 @@
 import { createBrowserRouter, RouterProvider, defer } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { getMaintenance } from "../externals/getMaintenance";
+import { getVehicle } from "../externals/getVehicle";
 import VechicalMain from "../pages/maintenances/VechicalMain";
 import VechicalReport from "../pages/maintenances/VechicalReport";
 import App from "../App";
@@ -11,7 +12,26 @@ const router = createBrowserRouter([
     path: "/",
     element: <App />,
     children: [
-      { index: true, element: <VechicalMain /> },
+      {
+        index: true,
+        loader: async () => {
+          const existingData = queryClient.getQueryData(["vehicle", ""]);
+          if (existingData) {
+            // if existing, defer existing the data to the compoent
+            return defer({ vehicles: existingData });
+          }
+
+          return defer({
+            // create a new query for "report" and fetch the data from getMaintenance function
+            // because getMaintenance take and optional search parameter, that's why we pass an empty string
+            vehicles: queryClient.fetchQuery({
+              queryKey: ["vehicle"],
+              queryFn: () => getVehicle(),
+            }),
+          });
+        },
+        element: <VechicalMain />,
+      },
       {
         path: "report",
         element: <VechicalReport />,

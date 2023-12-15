@@ -33,7 +33,7 @@ export function assertIsData(data: unknown): asserts data is Data {
     throw new Error("Data is null");
   }
   if (!("reports" in data)) {
-    throw new Error("data doesn't contain posts");
+    throw new Error("data doesn't contain reports");
   }
 }
 
