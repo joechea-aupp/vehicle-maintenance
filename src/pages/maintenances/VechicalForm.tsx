@@ -159,22 +159,6 @@ export default function VechicalForm() {
                     </select>
                   );
                 }}
-                {/* <select
-                  className={`select select-bordered ${getEditorStyle(
-                    errors.vehicle
-                  )}`}
-                  {...register("vehicle", {
-                    required: "Vechical must be provided",
-                  })}
-                  disabled={status === "pending"}
-                >
-                  <option value="" disabled selected>
-                    Pick one
-                  </option>
-                  <option>Toyota Rush</option>
-                  <option>Lexus RX200</option>
-                  <option>Toyota Prius</option>
-                </select> */}
               </Await>
             </Suspense>
           </div>
