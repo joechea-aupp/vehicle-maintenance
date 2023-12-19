@@ -13,6 +13,26 @@
       "description": "View or delete vehicle maintenance report"
     }
   ],
+  "garage": [
+    {
+      "id": 1,
+      "name": "Toyota AUPP",
+      "address": "Phnom Penh",
+      "phone": "0123456789"
+    },
+    {
+      "id": 2,
+      "name": "Toyota Terk Tla",
+      "address": "Phnom Penh",
+      "phone": "0123456789"
+    },
+    {
+      "id": 3,
+      "name": "Toyota 60m",
+      "address": "Phnom Penh",
+      "phone": "0123456789"
+    }
+  ],
   "vehicle": [
     {
       "id": 1,

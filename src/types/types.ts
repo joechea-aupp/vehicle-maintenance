@@ -49,3 +49,10 @@ export type VehicleData = {
   color: string;
   year: string;
 };
+
+export type GarageData = {
+  id: number;
+  name: string;
+  address: string;
+  phone: string;
+};

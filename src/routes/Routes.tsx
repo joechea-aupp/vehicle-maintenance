@@ -2,6 +2,7 @@ import { createBrowserRouter, RouterProvider, defer } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { getMaintenance } from "../externals/getMaintenance";
 import { getVehicle } from "../externals/getVehicle";
+import { getGarage } from "../externals/getGarage";
 import VechicalMain from "../pages/maintenances/VechicalMain";
 import VechicalReport from "../pages/maintenances/VechicalReport";
 import App from "../App";
@@ -15,10 +16,14 @@ const router = createBrowserRouter([
       {
         index: true,
         loader: async () => {
-          const existingData = queryClient.getQueryData(["vehicle", ""]);
-          if (existingData) {
+          const existingVehicleData = queryClient.getQueryData(["vehicle"]);
+          const existingGarageData = queryClient.getQueryData(["garage"]);
+          if (existingVehicleData || existingGarageData) {
             // if existing, defer existing the data to the compoent
-            return defer({ vehicles: existingData });
+            return defer({
+              vehicles: existingVehicleData,
+              garages: existingGarageData,
+            });
           }
 
           return defer({
@@ -27,6 +32,10 @@ const router = createBrowserRouter([
             vehicles: queryClient.fetchQuery({
               queryKey: ["vehicle"],
               queryFn: () => getVehicle(),
+            }),
+            garages: queryClient.fetchQuery({
+              queryKey: ["garage"],
+              queryFn: () => getGarage(),
             }),
           });
         },

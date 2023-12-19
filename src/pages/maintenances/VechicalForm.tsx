@@ -5,6 +5,7 @@ import {
   MaintenancePost,
   Service,
   VehicleData,
+  GarageData,
 } from "../../types/types";
 import ErrorLabel from "../../components/Errors/ErrorLabel";
 import SubmitBtn from "../../components/Button/SubmitBtn";
@@ -18,6 +19,7 @@ import { getMaintenance } from "../../externals/getMaintenance";
 import { MdDeleteOutline } from "react-icons/md";
 import { Await, useLoaderData } from "react-router-dom";
 import { assertIsVehicle } from "../../externals/getVehicle";
+import { assertIsGarage } from "../../externals/getGarage";
 
 const getUniqueService = (
   maintenancePost: MaintenanceResponse,
@@ -39,6 +41,7 @@ const getUniqueService = (
 
 type Data = {
   vehicles: VehicleData[];
+  garages: GarageData[];
 };
 export function assertIsData(data: unknown): asserts data is Data {
   if (typeof data !== "object") {
@@ -223,21 +226,31 @@ export default function VechicalForm() {
               <span className="label-text">Select Garage</span>
               {errors.garage && <ErrorLabel fieldError={errors.garage} />}
             </label>
-            <select
-              className={`select select-bordered ${getEditorStyle(
-                errors.garage
-              )}`}
-              {...register("garage", {
-                required: "Garage must be provided",
-              })}
-              disabled={status === "pending"}
-            >
-              <option value="" disabled selected>
-                Pick one
-              </option>
-              <option>Toyota AUPP</option>
-              <option>Toyota Terk Tla</option>
-            </select>
+            <Suspense fallback={<div>Loading...</div>}>
+              <Await resolve={data.garages}>
+                {(garages) => {
+                  assertIsGarage(garages);
+                  return (
+                    <select
+                      className={`select select-bordered ${getEditorStyle(
+                        errors.garage
+                      )}`}
+                      {...register("garage", {
+                        required: "Garage must be provided",
+                      })}
+                      disabled={status === "pending"}
+                    >
+                      <option value="" disabled selected>
+                        Pick one
+                      </option>
+                      {garages.map((garage) => (
+                        <option key={garage.id}>{garage.name}</option>
+                      ))}
+                    </select>
+                  );
+                }}
+              </Await>
+            </Suspense>
           </div>
           <ServiceSearch
             items={searchService}
