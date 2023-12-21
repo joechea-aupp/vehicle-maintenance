@@ -182,5 +182,19 @@
       ],
       "id": 17
     }
+  ],
+  "template": [
+    {
+      "id": 1,
+      "name": "Oil replacement",
+      "description": "Replace oil and filter oil",
+      "service": [
+        {
+          "name": "Oil Filtering",
+          "description": "Filter oil and clean oil",
+          "price": 50
+        }
+      ]
+    }
   ]
 }
