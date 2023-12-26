@@ -24,7 +24,7 @@ npm run server
 - [ ] beautify error message
 - [x] toggle dark and light mode
 - [x] add spotlight like for global search
-- [ ] add place holder for car service when it is empty
+- [x] add place holder for car service when it is empty
 
 ### functionality
 
@@ -33,7 +33,7 @@ npm run server
 - [x] add sort functionality on report table
 - [x] add pagination on report table
 - [x] save user's toggle dark and light mode in localstorage
-- [ ] add service search functionality in the vehicle management page
+- [x] add service search functionality in the vehicle management page
   - [x] add new service item from search service to the vehicle record
   - [x] insert new service item to the search result and add it in the vehicle record
   - [x] remove service item from the vehicle record from
@@ -48,4 +48,4 @@ npm run server
 ### validation
 
 - [x] add validation on post vehicle form
-- [ ] add validation on report filter
+- [x] add validation on report filter
