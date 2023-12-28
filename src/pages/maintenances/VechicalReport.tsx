@@ -41,6 +41,7 @@ type DateFilter = {
   startDate?: string;
   endDate?: string;
 };
+
 export default function VechicalReport() {
   const theme = useContext(ThemeContext);
   const [dateFilterm, setDateFilter] = useState<DateFilter>({
@@ -114,6 +115,7 @@ export default function VechicalReport() {
       console.error(error);
     }
   }
+
   // update checkbox action for table report data
   const [checkedReport, setCheckedReport] = useState<number[]>([]);
   const onCheckboxChange = (
