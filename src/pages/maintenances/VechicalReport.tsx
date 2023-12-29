@@ -130,6 +130,7 @@ export default function VechicalReport() {
       setCheckedReport(checkedReport.filter((id) => id !== reportId));
     }
   };
+
   // handle data from deleted button to table report, this also include cache
   const queryClient = useQueryClient();
   const { mutate, status } = useMutation({
@@ -164,6 +165,7 @@ export default function VechicalReport() {
       setReports(newReports);
     },
   });
+
   // handle delete action on the delete button.
   const onDelete = async (maintenanceIDs: MaintenanceID[]) => {
     try {
@@ -173,10 +175,14 @@ export default function VechicalReport() {
       console.error(error);
     }
   };
+
   const { control } = useForm();
+
   // handle sort action on the table report
   const [sortDescending, setSortDescending] = useState<boolean>(false);
+
   const [sortBy, setSortBy] = useState<string>("");
+
   const onSort = async (fieldName: string) => {
     setSortDescending(!sortDescending);
     const data = await queryClient.fetchQuery({
