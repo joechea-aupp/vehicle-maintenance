@@ -417,7 +417,7 @@ export default function VechicalForm() {
           </div>
 
           <div className="flex gap-5 justify-end items-baseline">
-            <div className="flex items-center gap-2 dark self-end pb-1.5">
+            {/* <div className="flex items-center gap-2 dark self-end pb-1.5">
               <label className="label">
                 <span className="label-text">Use as template</span>
               </label>
@@ -426,7 +426,7 @@ export default function VechicalForm() {
                 id="template"
                 disabled={status === "pending"}
               />
-            </div>
+            </div> */}
             <div className="self-end">
               <SubmitBtn isSubmitting={status === "pending"} />
             </div>
