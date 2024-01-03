@@ -21,7 +21,7 @@ import { MdDeleteOutline } from "react-icons/md";
 import { Await, useLoaderData } from "react-router-dom";
 import { assertIsVehicle } from "../../externals/getVehicle";
 import { assertIsGarage } from "../../externals/getGarage";
-import { assertIsTemplate } from "../../externals/getTemplate";
+import { getTemplate, assertIsTemplate } from "../../externals/getTemplate";
 
 const getUniqueService = (
   maintenancePost: MaintenanceResponse,
@@ -128,6 +128,16 @@ export default function VechicalForm() {
     newService.splice(index, 1);
     setService(newService);
   };
+
+  async function onChangeTemplate(templateId: number) {
+    const templateData: TemplateData = await queryClient.fetchQuery({
+      queryKey: ["temp", templateId],
+      queryFn: () => getTemplate(templateId),
+    });
+
+    reset({ service: templateData.service });
+    setService(templateData.service);
+  }
 
   return (
     // this therefore values must be pass to the mutate function
@@ -297,13 +307,17 @@ export default function VechicalForm() {
                     return (
                       <select
                         className="select select-bordered w-4/5"
-                        disabled={status === "pending"}
+                        onChange={(e) =>
+                          onChangeTemplate(Number(e.target.value))
+                        }
                       >
                         <option disabled selected>
                           Pick one
                         </option>
                         {templates.map((template) => (
-                          <option key={template.id}>{template.name}</option>
+                          <option key={template.id} value={template.id}>
+                            {template.name}
+                          </option>
                         ))}
                       </select>
                     );
@@ -328,7 +342,7 @@ export default function VechicalForm() {
               <tbody>
                 {service.length > 0 ? (
                   service.map((row, index) => (
-                    <tr key={index}>
+                    <tr key={row.name}>
                       <th>{index + 1}</th>
                       <td>
                         <input

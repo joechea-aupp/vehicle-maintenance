@@ -1,7 +1,11 @@
 import { TemplateData } from "../types/types";
 
-export async function getTemplate() {
-  const response = await fetch(`${process.env.REACT_APP_API_URL_TEMPL!}`);
+export async function getTemplate(templateId?: number) {
+  const response = await fetch(
+    `${process.env.REACT_APP_API_URL_TEMPL!}${
+      templateId ? `/${templateId}` : ""
+    }`
+  );
 
   if (!response.ok) {
     throw new Error("Failed to fetch template data");
@@ -16,16 +20,9 @@ export function assertIsTemplate(
   templateData: unknown
 ): asserts templateData is TemplateData[] {
   if (!Array.isArray(templateData)) {
-    console.log(templateData);
-    throw new Error("TemplateData is not array");
-  }
-  templateData.forEach((template) => {
-    if (
-      typeof template.id !== "number" ||
-      typeof template.name !== "string" ||
-      typeof template.description !== "string"
-    ) {
-      throw new Error("TemplateData is invalid");
+    // check if templateData is type TemplateData
+    if (typeof templateData !== "object") {
+      throw new Error("TemplateData is not array");
     }
-  });
+  }
 }

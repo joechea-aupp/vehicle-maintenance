@@ -181,6 +181,65 @@
         }
       ],
       "id": 17
+    },
+    {
+      "service": [
+        {
+          "name": "Replace front tired",
+          "description": "Replace 2 front tired",
+          "price": 210
+        },
+        {
+          "name": "Tighten tired",
+          "description": "Add air and tighten the screw",
+          "price": 1
+        }
+      ],
+      "current_odo": "123213",
+      "next_odo": "12312321",
+      "vehicle": "Toyota Prius",
+      "garage": "Toyota AUPP",
+      "id": 18
+    },
+    {
+      "service": [
+        {
+          "name": "Replace front tired",
+          "description": "Replace 2 front tired",
+          "price": 210
+        },
+        {
+          "name": "Tighten tired",
+          "description": "Add air and tighten the screw",
+          "price": 1
+        }
+      ],
+      "current_odo": "123213",
+      "next_odo": "1231231",
+      "vehicle": "Toyota Prius",
+      "maintenance_date": "2024-01-10",
+      "garage": "Toyota AUPP",
+      "id": 19
+    },
+    {
+      "service": [
+        {
+          "name": "Replace front tired",
+          "description": "Replace 2 front tired",
+          "price": 210
+        },
+        {
+          "name": "Tighten tired",
+          "description": "Add air and tighten the screw",
+          "price": 1
+        }
+      ],
+      "current_odo": "123213",
+      "next_odo": "12321321",
+      "vehicle": "Toyota Prius",
+      "maintenance_date": "2024-01-10",
+      "garage": "Toyota AUPP",
+      "id": 20
     }
   ],
   "template": [
@@ -193,6 +252,28 @@
           "name": "Oil Filtering",
           "description": "Filter oil and clean oil",
           "price": 50
+        },
+        {
+          "name": "Basic car check",
+          "description": "Check water, oil, and other basic stuff",
+          "price": 3
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Tired replacement",
+      "description": "Replace tired and tigten the tired",
+      "service": [
+        {
+          "name": "Replace front tired",
+          "description": "Replace 2 front tired",
+          "price": 210
+        },
+        {
+          "name": "Tighten tired",
+          "description": "Add air and tighten the screw",
+          "price": 1
         }
       ]
     }
