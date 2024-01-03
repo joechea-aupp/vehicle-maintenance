@@ -129,13 +129,23 @@ export default function VechicalForm() {
     setService(newService);
   };
 
+  const [maintenanceDate, setMaintenanceDate] = useState<string>("");
+  const onDateChange = (
+    date?: string,
+    startDate?: string,
+    endDate?: string
+  ) => {
+    if (date) {
+      setMaintenanceDate(date);
+    }
+  };
   async function onChangeTemplate(templateId: number) {
     const templateData: TemplateData = await queryClient.fetchQuery({
       queryKey: ["temp", templateId],
       queryFn: () => getTemplate(templateId),
     });
 
-    reset({ service: templateData.service });
+    reset({ service: templateData.service, maintenance_date: maintenanceDate });
     setService(templateData.service);
   }
 
@@ -190,6 +200,7 @@ export default function VechicalForm() {
               name="maintenance_date"
               theme={theme}
               control={control}
+              onDateChange={onDateChange}
             />
           </div>
 
@@ -417,7 +428,7 @@ export default function VechicalForm() {
           </div>
 
           <div className="flex gap-5 justify-end items-baseline">
-            {/* <div className="flex items-center gap-2 dark self-end pb-1.5">
+            <div className="flex items-center gap-2 dark self-end pb-1.5">
               <label className="label">
                 <span className="label-text">Use as template</span>
               </label>
@@ -426,7 +437,7 @@ export default function VechicalForm() {
                 id="template"
                 disabled={status === "pending"}
               />
-            </div> */}
+            </div>
             <div className="self-end">
               <SubmitBtn isSubmitting={status === "pending"} />
             </div>

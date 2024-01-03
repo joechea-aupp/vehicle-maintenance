@@ -7,7 +7,7 @@ type Props = {
   theme: ThemeContextType | null;
   control?: Control<any>;
   size?: "sm" | "base" | "lg" | "xl" | undefined;
-  onDateChange?: (startDate?: string, endDate?: string) => void;
+  onDateChange?: (date?: string, startDate?: string, endDate?: string) => void;
 };
 export default function Dateselecter({
   name,
@@ -48,6 +48,8 @@ export default function Dateselecter({
                   onDateChange(formattedDate, "");
                 } else if (name === "end_date") {
                   onDateChange("", formattedDate);
+                } else {
+                  onDateChange(formattedDate);
                 }
               }
             }}
