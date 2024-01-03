@@ -1,7 +1,6 @@
 import { GarageData } from "../types/types";
 export async function getGarage() {
   const response = await fetch(`${process.env.REACT_APP_API_URL_GAR!}`);
-  console.log(process.env.REACT_APP_API_URL_GAR!);
   if (!response.ok) {
     throw new Error("Failed to fetch garage data");
   }

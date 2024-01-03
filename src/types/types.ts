@@ -56,3 +56,10 @@ export type GarageData = {
   address: string;
   phone: string;
 };
+
+export type TemplateData = {
+  id: number;
+  name: string;
+  description: string;
+  service: Service[];
+};
