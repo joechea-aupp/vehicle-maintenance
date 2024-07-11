@@ -17,7 +17,7 @@ code {
 
 @font-face {
   font-family: "Anton-Regular";
-  src: url("\\fonts\\Anton-Regular.ttf");
+  src: url("fonts/Anton-Regular.ttf");
   format: "truetype";
   font-weight: normal;
   font-style: normal;
@@ -25,7 +25,7 @@ code {
 
 @font-face {
   font-family: "Dashhorizon-eZ5wg";
-  src: url("\\fonts\\Dashhorizon-eZ5wg.otf");
+  src: url("fonts/Dashhorizon-eZ5wg.otf");
   format: "truetype";
   font-weight: normal;
   font-style: normal;
