@@ -6,6 +6,12 @@ Install dependencies
 npm install
 ```
 
+Copy `example.env` content to the `.env` file
+
+```bash
+cat example.env > .env
+```
+
 # Start Server
 
 ```bash
